@@ -6,15 +6,15 @@
 [![Vite](https://img.shields.io/badge/Vite-5.2.0-646CFF?logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.3-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/votre-username/mybi/workflows/CI%20-%20Tests%20and%20Linting/badge.svg)](https://github.com/votre-username/mybi/actions)
-[![Deploy](https://github.com/votre-username/mybi/workflows/Build%20and%20Deploy%20to%20GitHub%20Pages/badge.svg)](https://github.com/votre-username/mybi/actions)
-[![GitHub Pages](https://img.shields.io/badge/Pages-Live-success)](https://votre-username.github.io/mybi/)
+[![CI](https://github.com/LIILVAME/MyBI/workflows/CI%20-%20Tests%20and%20Linting/badge.svg)](https://github.com/LIILVAME/MyBI/actions)
+[![Deploy](https://github.com/LIILVAME/MyBI/workflows/Build%20and%20Deploy%20to%20GitHub%20Pages/badge.svg)](https://github.com/LIILVAME/MyBI/actions)
+[![GitHub Pages](https://img.shields.io/badge/Pages-Live-success)](https://liilvame.github.io/MyBI/)
 
 <div align="center">
 
 **Supervisez vos biens immobiliers depuis une seule plateforme**
 
-[🚀 Démo Live](https://votre-username.github.io/mybi/) • [📖 Documentation](docs/project_overview.md) • [🤝 Contribuer](CONTRIBUTING.md) • [📝 Changelog](CHANGELOG.md)
+[🚀 Démo Live](https://liilvame.github.io/MyBI/) • [📖 Documentation](docs/project_overview.md) • [🤝 Contribuer](CONTRIBUTING.md) • [📝 Changelog](CHANGELOG.md)
 
 </div>
 
@@ -119,8 +119,8 @@ npm --version   # 9.0.0 ou supérieur
 ### 1. Cloner le repository
 
 ```bash
-git clone https://github.com/votre-username/mybi.git
-cd mybi
+git clone https://github.com/LIILVAME/MyBI.git
+cd MyBI
 ```
 
 ### 2. Installer les dépendances
@@ -381,8 +381,8 @@ Les contributions sont les bienvenues ! Pour contribuer au projet :
 ### 1. Fork le projet
 
 ```bash
-git clone https://github.com/votre-username/mybi.git
-cd mybi
+git clone https://github.com/LIILVAME/MyBI.git
+cd MyBI
 ```
 
 ### 2. Créer une branche
@@ -496,7 +496,7 @@ SOFTWARE.
 ## 📞 Contact & Support
 
 - **Email** : contact@mybi.fr
-- **Issues** : [GitHub Issues](https://github.com/votre-username/mybi/issues)
+- **Issues** : [GitHub Issues](https://github.com/LIILVAME/MyBI/issues)
 - **Documentation** : Voir la section [Documentation](#-structure-du-projet)
 
 ---

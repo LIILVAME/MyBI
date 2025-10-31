@@ -2,9 +2,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 
-// Base path pour GitHub Pages (remplacer 'mybi' par votre nom de repo)
+// Base path pour GitHub Pages
 const base = process.env.NODE_ENV === 'production' 
-  ? '/mybi/'  // ⚠️ IMPORTANT: Remplacez 'mybi' par le nom exact de votre repository GitHub
+  ? '/MyBI/'  // Nom du repository GitHub
   : '/'
 
 export default defineConfig({
