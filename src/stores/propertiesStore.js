@@ -340,10 +340,21 @@ export const usePropertiesStore = defineStore('properties', () => {
    * Écoute les changements INSERT/UPDATE/DELETE sur la table properties
    */
   const initRealtime = () => {
-    // Évite d'initialiser plusieurs fois
-    if (isRealtimeInitialized || realtimeChannel) {
+    // Évite d'initialiser plusieurs fois - vérifie aussi si le channel est actif
+    if (isRealtimeInitialized && realtimeChannel && isRealtimeActive) {
       console.log('⚠️ Realtime already initialized for properties')
       return
+    }
+
+    // Si le channel existe mais n'est plus actif, le nettoie d'abord
+    if (realtimeChannel && !isRealtimeActive) {
+      try {
+        supabase.removeChannel(realtimeChannel)
+      } catch (e) {
+        // Ignore les erreurs de nettoyage
+      }
+      realtimeChannel = null
+      isRealtimeInitialized = false
     }
 
     const toast = useToastStore()
@@ -356,6 +367,7 @@ export const usePropertiesStore = defineStore('properties', () => {
     }
 
     isRealtimeInitialized = true
+    isRealtimeActive = true
 
     realtimeChannel = supabase
       .channel('public:properties')
@@ -368,8 +380,8 @@ export const usePropertiesStore = defineStore('properties', () => {
           filter: `user_id=eq.${authStore.user.id}` // Seulement les biens de l'utilisateur
         },
         async (payload) => {
-          // Vérifie que le store est encore valide (évite les erreurs lors du logout)
-          if (!properties || !properties.value) return
+          // Vérifie que Realtime est toujours actif et que le store est valide
+          if (!isRealtimeActive || !properties || !properties.value) return
           
           const { eventType, new: rowNew, old: rowOld } = payload
           const toast = useToastStore()
@@ -472,12 +484,14 @@ export const usePropertiesStore = defineStore('properties', () => {
         } else if (status === 'CHANNEL_ERROR') {
           console.error('❌ Realtime error for properties')
           isRealtimeInitialized = false // Réinitialise pour permettre une nouvelle tentative
+          isRealtimeActive = false
           realtimeChannel = null
           // Ne pas afficher d'erreur toast pour éviter le spam
           // Le Realtime est optionnel, l'application fonctionne sans
         } else if (status === 'CLOSED') {
           console.log('🔌 Realtime channel closed for properties')
           isRealtimeInitialized = false
+          isRealtimeActive = false
           realtimeChannel = null
         }
       })
@@ -487,8 +501,16 @@ export const usePropertiesStore = defineStore('properties', () => {
    * Arrête l'abonnement temps réel
    */
   const stopRealtime = () => {
+    // Désactive les callbacks en premier pour éviter les erreurs
+    isRealtimeActive = false
+    
     if (realtimeChannel) {
-      supabase.removeChannel(realtimeChannel)
+      try {
+        supabase.removeChannel(realtimeChannel)
+      } catch (e) {
+        // Ignore les erreurs lors du nettoyage
+        console.warn('Error removing Realtime channel (non blocking):', e)
+      }
       realtimeChannel = null
       isRealtimeInitialized = false
       console.log('🔌 Realtime unsubscribed from properties')
