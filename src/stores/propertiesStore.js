@@ -342,10 +342,10 @@ export const usePropertiesStore = defineStore('properties', () => {
    * Écoute les changements INSERT/UPDATE/DELETE sur la table properties
    */
   const initRealtime = () => {
-    // Se désabonne si déjà abonné
-    if (realtimeChannel) {
-      supabase.removeChannel(realtimeChannel)
-      realtimeChannel = null
+    // Évite d'initialiser plusieurs fois
+    if (isRealtimeInitialized || realtimeChannel) {
+      console.log('⚠️ Realtime already initialized for properties')
+      return
     }
 
     const toast = useToastStore()
@@ -353,9 +353,11 @@ export const usePropertiesStore = defineStore('properties', () => {
 
     // Vérifie que l'utilisateur est authentifié
     if (!authStore.user) {
-      console.warn('Cannot init realtime: user not authenticated')
+      console.warn('⚠️ Cannot init Realtime: user not authenticated')
       return
     }
+
+    isRealtimeInitialized = true
 
     realtimeChannel = supabase
       .channel('public:properties')
