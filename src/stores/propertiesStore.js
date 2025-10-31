@@ -16,6 +16,7 @@ export const usePropertiesStore = defineStore('properties', () => {
   const error = ref(null)
   let realtimeChannel = null
   let isRealtimeInitialized = false
+  let isRealtimeActive = false // Flag pour désactiver les callbacks lors du cleanup
   let lastFetchTime = 0
   const FETCH_CACHE_MS = 5000 // Cache de 5 secondes pour éviter les requêtes multiples
 
