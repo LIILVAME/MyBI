@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
   // State
   const user = ref(null)
   const loading = ref(false)
+  const loadingSession = ref(true) // État de chargement de la session au démarrage
   const error = ref(null)
   const session = ref(null)
   const profile = ref(null)
@@ -179,8 +180,51 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   /**
+   * Initialise et restaure la session Supabase au démarrage de l'application
+   * Méthode principale appelée dans App.vue avant toute autre initialisation
+   */
+  const initSession = async () => {
+    loadingSession.value = true
+    error.value = null
+
+    try {
+      const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession()
+
+      if (sessionError) {
+        console.error('Erreur lors de la récupération de la session:', sessionError)
+        user.value = null
+        session.value = null
+        loadingSession.value = false
+        return
+      }
+
+      if (currentSession?.user) {
+        user.value = currentSession.user
+        session.value = currentSession
+
+        // Charge le profil utilisateur si disponible (ne bloque pas en cas d'erreur)
+        try {
+          await fetchProfile()
+        } catch (err) {
+          console.warn('Impossible de charger le profil (non bloquant):', err)
+        }
+      } else {
+        user.value = null
+        session.value = null
+      }
+    } catch (err) {
+      console.error('Erreur initSession:', err)
+      error.value = err.message
+      user.value = null
+      session.value = null
+    } finally {
+      loadingSession.value = false
+    }
+  }
+
+  /**
    * Récupère l'utilisateur actuel depuis Supabase
-   * Utilisé pour restaurer la session au chargement de l'app
+   * Utilisé pour restaurer la session au chargement de l'app (legacy, utilise initSession de préférence)
    */
   const fetchUser = async () => {
     loading.value = true
@@ -400,6 +444,7 @@ export const useAuthStore = defineStore('auth', () => {
     // State
     user,
     loading,
+    loadingSession,
     error,
     session,
     profile,
@@ -409,6 +454,7 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     signUp,
     logout,
+    initSession,
     fetchUser,
     resetPassword,
     initAuthListener,

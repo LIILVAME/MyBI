@@ -87,54 +87,53 @@ const router = createRouter({
 
 /**
  * Navigation guard : vérifie l'authentification avant d'accéder aux routes protégées
+ * Note: L'initialisation de la session est gérée dans App.vue
  */
 router.beforeEach(async (to, from, next) => {
   try {
-  const authStore = useAuthStore()
+    const authStore = useAuthStore()
 
-  // Initialise l'écouteur d'événements Supabase (une seule fois)
-  if (!authStore.session) {
-    authStore.initAuthListener()
-  }
-
-  // Si la route nécessite une authentification
-  if (to.meta.requiresAuth) {
-    // Récupère l'utilisateur depuis Supabase
-    if (!authStore.user) {
-        try {
-      await authStore.fetchUser()
-        } catch (err) {
-          console.error('Erreur lors de la récupération de l\'utilisateur:', err)
-          // En cas d'erreur, redirige vers login pour sécurité
-          next({
-            path: '/login',
-            query: { redirect: to.fullPath }
-          })
-          return
-        }
+    // Attend que l'initialisation de la session soit terminée
+    // Cela évite les problèmes de race condition lors du refresh
+    if (authStore.loadingSession) {
+      // Attend que loadingSession passe à false (max 5 secondes)
+      let attempts = 0
+      while (authStore.loadingSession && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
     }
 
-    // Si toujours pas d'utilisateur, redirige vers login
-    if (!authStore.user) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath } // Sauvegarde l'URL de destination
-      })
+    // Si la route nécessite une authentification
+    if (to.meta.requiresAuth) {
+      // Si pas d'utilisateur après initialisation, redirige vers login
+      if (!authStore.user) {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath } // Sauvegarde l'URL de destination
+        })
+        return
+      }
+    }
+
+    // Si l'utilisateur est connecté et essaie d'accéder à /login, redirige vers le dashboard
+    if (to.path === '/login' && authStore.user) {
+      next('/dashboard')
       return
     }
-  }
 
-  // Si l'utilisateur est connecté et essaie d'accéder à /login, redirige vers le dashboard
-  if (to.path === '/login' && authStore.user) {
-    next('/dashboard')
-    return
-  }
-
-  next()
+    next()
   } catch (error) {
     console.error('Erreur dans le router guard:', error)
-    // En cas d'erreur, laisse passer pour éviter l'écran blanc
-    next()
+    // En cas d'erreur, redirige vers login si route protégée
+    if (to.meta.requiresAuth) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
   }
 })
 

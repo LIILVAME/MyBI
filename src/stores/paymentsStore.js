@@ -26,6 +26,13 @@ export const usePaymentsStore = defineStore('payments', () => {
    * Récupère tous les paiements de l'utilisateur depuis Supabase
    */
   const fetchPayments = async (force = false) => {
+    // Vérifie que l'utilisateur est authentifié avant de fetcher
+    const authStore = useAuthStore()
+    if (!authStore.user) {
+      console.warn('fetchPayments: User not authenticated, skipping fetch')
+      return
+    }
+
     // Évite les requêtes multiples si déjà en cours
     if (loading.value && !force) {
       return
@@ -41,10 +48,6 @@ export const usePaymentsStore = defineStore('payments', () => {
     error.value = null
 
     try {
-      const authStore = useAuthStore()
-      if (!authStore.user) {
-        throw new Error('User not authenticated')
-      }
 
       const { data, error: fetchError } = await supabase
         .from('payments_view')
@@ -306,6 +309,13 @@ export const usePaymentsStore = defineStore('payments', () => {
    * Écoute les changements INSERT/UPDATE/DELETE sur la table payments
    */
   const initRealtime = () => {
+    // Vérifie que l'utilisateur est authentifié avant d'initialiser
+    const authStore = useAuthStore()
+    if (!authStore.user) {
+      console.warn('⚠️ Cannot init Realtime: user not authenticated')
+      return
+    }
+
     // Évite d'initialiser plusieurs fois - vérifie aussi si le channel est actif
     if (isRealtimeInitialized && realtimeChannel && isRealtimeActive) {
       console.log('⚠️ Realtime already initialized for payments')
@@ -324,13 +334,6 @@ export const usePaymentsStore = defineStore('payments', () => {
     }
 
     const toast = useToastStore()
-    const authStore = useAuthStore()
-
-    // Vérifie que l'utilisateur est authentifié
-    if (!authStore.user) {
-      console.warn('⚠️ Cannot init Realtime: user not authenticated')
-      return
-    }
 
     isRealtimeInitialized = true
     isRealtimeActive = true

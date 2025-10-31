@@ -1,30 +1,102 @@
 <template>
-  <router-view />
+  <!-- Loader global pendant l'initialisation de la session -->
+  <div v-if="authStore.loadingSession" class="flex justify-center items-center min-h-screen bg-gray-50">
+    <div class="text-center">
+      <div class="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+      <p class="text-gray-600">Chargement de l'application...</p>
+    </div>
+  </div>
+
+  <!-- Application normale une fois la session initialisée -->
+  <router-view v-else />
   <Toast />
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
 import { useAuthStore } from '@/stores/authStore'
+import { usePropertiesStore } from '@/stores/propertiesStore'
+import { usePaymentsStore } from '@/stores/paymentsStore'
 import Toast from '@/components/common/Toast.vue'
 
+const authStore = useAuthStore()
+const propertiesStore = usePropertiesStore()
+const paymentsStore = usePaymentsStore()
+
 /**
- * Initialise l'authentification au démarrage de l'application
- * - Restaure la session depuis Supabase si présente
- * - Initialise l'écouteur d'événements Supabase Auth
+ * Initialise l'application de manière centralisée
+ * - Étape 1 : Restaure la session Supabase
+ * - Étape 2 : Charge les données si utilisateur connecté
+ * - Étape 3 : Configure l'écouteur d'événements auth
  */
 onMounted(async () => {
   try {
-  const authStore = useAuthStore()
-  
-  // Initialise l'écouteur d'événements Supabase (déconnexion automatique, refresh token, etc.)
-  authStore.initAuthListener()
-  
-  // Restaure la session utilisateur si elle existe
-  await authStore.fetchUser()
+    // Étape 1 — Restaurer la session Supabase
+    await authStore.initSession()
+
+    // Étape 2 — Si session active, charger les données des stores
+    if (authStore.user) {
+      await Promise.all([
+        propertiesStore.fetchProperties(),
+        paymentsStore.fetchPayments()
+      ])
+
+      // Initialise le realtime après avoir chargé les données
+      propertiesStore.initRealtime()
+      paymentsStore.initRealtime()
+    }
+
+    // Étape 3 — Surveiller les changements de session (login, logout, token refresh)
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      authStore.user = session?.user ?? null
+      authStore.session = session
+
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        // Connexion ou rafraîchissement de token
+        if (session?.user) {
+          // Charge le profil après connexion
+          try {
+            await authStore.fetchProfile()
+          } catch (err) {
+            console.warn('Impossible de charger le profil après connexion (non bloquant):', err)
+          }
+
+          // Charge les données des stores
+          await Promise.all([
+            propertiesStore.fetchProperties(),
+            paymentsStore.fetchPayments()
+          ])
+
+          // Réactive le realtime
+          propertiesStore.initRealtime()
+          paymentsStore.initRealtime()
+        }
+      } else if (event === 'SIGNED_OUT') {
+        // Déconnexion : nettoie les stores
+        try {
+          // Arrête le realtime en premier
+          propertiesStore.stopRealtime()
+          paymentsStore.stopRealtime()
+
+          // Réinitialise les stores
+          propertiesStore.$reset()
+          paymentsStore.$reset()
+
+          // Réinitialise le profil
+          authStore.profile = null
+        } catch (err) {
+          console.warn('Erreur lors du nettoyage après SIGNED_OUT (non bloquant):', err)
+        }
+      }
+    })
+
+    // Initialise aussi l'écouteur legacy pour compatibilité
+    authStore.initAuthListener()
   } catch (error) {
     console.error('Erreur lors de l\'initialisation de l\'application:', error)
     // Ne pas bloquer le rendu même en cas d'erreur
+    authStore.loadingSession = false
   }
 })
 </script>
