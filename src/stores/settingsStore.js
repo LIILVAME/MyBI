@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
+import { setSettingsStoreCache } from '@/utils/formatters'
 
 /**
  * Store Pinia pour gérer les paramètres utilisateur
@@ -70,10 +71,15 @@ export const useSettingsStore = defineStore('settings', () => {
       
       // Met à jour i18n immédiatement
       try {
-        const i18n = require('@/i18n').default
-        if (i18n && i18n.global) {
-          i18n.global.locale.value = lang
-        }
+        // Utilise un import dynamique pour charger i18n
+        import('@/i18n').then((module) => {
+          const i18n = module.default
+          if (i18n && i18n.global) {
+            i18n.global.locale.value = lang
+          }
+        }).catch((error) => {
+          console.warn('Impossible de mettre à jour i18n:', error)
+        })
       } catch (error) {
         console.warn('Impossible de mettre à jour i18n:', error)
       }
@@ -138,6 +144,20 @@ export const useSettingsStore = defineStore('settings', () => {
   watch([language, currency, theme, alertThreshold, notifications], () => {
     saveSettings()
   }, { deep: true })
+
+  // Expose le store dans le cache pour formatCurrency
+  // Utilise un watch pour mettre à jour le cache quand currency change
+  watch(currency, () => {
+    const storeForCache = {
+      get currency() {
+        return currency.value
+      },
+      get language() {
+        return language.value
+      }
+    }
+    setSettingsStoreCache(storeForCache)
+  }, { immediate: true })
 
   return {
     // State

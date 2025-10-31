@@ -4,6 +4,47 @@
  */
 
 /**
+ * Cache pour le store settings (évite les imports circulaires)
+ * Sera initialisé lors de la première utilisation
+ */
+let settingsStoreCache = null
+
+/**
+ * Récupère le store settings de manière synchrone
+ * @returns {Object|null} Le store settings ou null si non disponible
+ */
+function getSettingsStore() {
+  if (settingsStoreCache) {
+    return settingsStoreCache
+  }
+  
+  try {
+    // Essaie de récupérer le store depuis un contexte Vue si disponible
+    // Dans les composants Vue, on peut utiliser useSettingsStore() directement
+    // Cette fonction est utilisée dans des contextes non-Vue (utils)
+    if (typeof window !== 'undefined' && window.__mybi_settingsStore) {
+      settingsStoreCache = window.__mybi_settingsStore
+      return settingsStoreCache
+    }
+  } catch (error) {
+    // Ignore les erreurs
+  }
+  
+  return null
+}
+
+/**
+ * Définit le store settings dans le cache (appelé depuis les composants)
+ * @param {Object} store - Le store settings
+ */
+export function setSettingsStoreCache(store) {
+  settingsStoreCache = store
+  if (typeof window !== 'undefined') {
+    window.__mybi_settingsStore = store
+  }
+}
+
+/**
  * Formate un montant selon la devise sélectionnée dans settingsStore
  * @param {number} amount - Montant à formater
  * @param {Object} options - Options de formatage
@@ -16,30 +57,27 @@ export function formatCurrency(amount, options = {}) {
     return '-'
   }
 
-  // Récupère le store settings de manière dynamique (évite les imports circulaires)
+  // Si une devise est explicitement fournie dans les options, l'utiliser directement
   let currency = options.currency || 'EUR'
   let locale = options.locale || 'fr-FR'
 
-  try {
-    // Import dynamique pour éviter les problèmes de circular dependency
-    const { useSettingsStore } = require('@/stores/settingsStore')
-    const settingsStore = useSettingsStore()
-    currency = options.currency || settingsStore.currency || 'EUR'
-    
-    // Détermine la locale selon la devise
-    // Pour XOF (CFA), on utilise fr-FR mais avec la devise XOF
-    if (currency === 'XOF') {
-      locale = 'fr-FR'
-    } else if (currency === 'USD') {
-      locale = 'en-US'
-    } else if (currency === 'GBP') {
-      locale = 'en-GB'
-    } else {
-      locale = options.locale || 'fr-FR'
+  // Si aucune devise explicite, essaie de récupérer depuis le store
+  if (!options.currency) {
+    const store = getSettingsStore()
+    if (store && store.currency) {
+      currency = store.currency
     }
-  } catch (error) {
-    // Si le store n'est pas disponible, utilise les valeurs par défaut
-    console.warn('Impossible de récupérer la devise depuis settingsStore:', error)
+  }
+
+  // Détermine la locale selon la devise
+  if (currency === 'XOF') {
+    locale = 'fr-FR'
+  } else if (currency === 'USD') {
+    locale = 'en-US'
+  } else if (currency === 'GBP') {
+    locale = 'en-GB'
+  } else {
+    locale = options.locale || 'fr-FR'
   }
 
   return new Intl.NumberFormat(locale, {

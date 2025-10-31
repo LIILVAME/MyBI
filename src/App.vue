@@ -18,11 +18,26 @@ import { supabase } from '@/lib/supabaseClient'
 import { useAuthStore } from '@/stores/authStore'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { usePaymentsStore } from '@/stores/paymentsStore'
+import { useSettingsStore } from '@/stores/settingsStore'
+import { setSettingsStoreCache } from '@/utils/formatters'
 import Toast from '@/components/common/Toast.vue'
 
 const authStore = useAuthStore()
 const propertiesStore = usePropertiesStore()
 const paymentsStore = usePaymentsStore()
+const settingsStore = useSettingsStore()
+
+// Initialise le cache du store settings pour formatCurrency
+// Crée un proxy pour exposer currency et language comme propriétés
+const storeForCache = {
+  get currency() {
+    return settingsStore.currency
+  },
+  get language() {
+    return settingsStore.language
+  }
+}
+setSettingsStoreCache(storeForCache)
 
 /**
  * Initialise l'application de manière centralisée
