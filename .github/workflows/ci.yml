@@ -1,0 +1,37 @@
+name: CI - Tests and Linting
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Lint code (if ESLint configured)
+        run: |
+          echo "Linting will be added when ESLint is configured"
+          # npm run lint
+        continue-on-error: true
+
+      - name: 🏗️ Build project
+        run: npm run build
+
+      - name: ✅ Build successful
+        run: echo "Build completed successfully"
+
