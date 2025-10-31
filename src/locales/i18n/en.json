@@ -99,6 +99,7 @@
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "Manage your preferences and personal information",
     "profile": "Profile",
     "appPreferences": "Application preferences",
     "security": "Security",
@@ -108,6 +109,8 @@
     "auto": "Automatic (system)",
     "currency": "Main currency",
     "language": "Interface language",
+    "languageDescription": "Choose the interface language",
+    "currencyDescription": "All amounts will be displayed in this currency",
     "alertThreshold": "Late payment alert threshold (days)",
     "alertThresholdDescription": "Number of days after due date before sending an alert",
     "notifications": "Notifications",
@@ -117,7 +120,22 @@
     "maintenanceNotifications": "Property maintenance notifications",
     "savePreferences": "Save preferences",
     "saving": "Saving...",
-    "preferencesSaved": "Preferences saved successfully"
+    "preferencesSaved": "Preferences saved successfully",
+    "sections": {
+      "general": "General",
+      "notifications": "Notifications",
+      "security": "Security",
+      "languageCurrency": "Language & Currency",
+      "theme": "Theme",
+      "integrations": "Integrations"
+    },
+    "preview": "Live preview",
+    "previewExample": "Formatting example",
+    "themeLightDescription": "Bright and light interface",
+    "themeDarkDescription": "Dark interface for visual comfort",
+    "themeAutoDescription": "Follows system preferences",
+    "integrationsComingSoon": "Integrations coming soon",
+    "integrationsDescription": "Connect MyBI to your favorite tools"
   },
   "login": {
     "title": "Login",

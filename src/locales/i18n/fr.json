@@ -99,6 +99,7 @@
   },
   "settings": {
     "title": "Paramètres",
+    "subtitle": "Gérez vos préférences et informations personnelles",
     "profile": "Profil",
     "appPreferences": "Préférences de l'application",
     "security": "Sécurité",
@@ -108,6 +109,8 @@
     "auto": "Automatique (système)",
     "currency": "Devise principale",
     "language": "Langue de l'interface",
+    "languageDescription": "Choisissez la langue de l'interface utilisateur",
+    "currencyDescription": "Tous les montants seront affichés dans cette devise",
     "alertThreshold": "Seuil d'alerte de retard de paiement (jours)",
     "alertThresholdDescription": "Nombre de jours après l'échéance avant d'envoyer une alerte",
     "notifications": "Notifications",
@@ -117,7 +120,22 @@
     "maintenanceNotifications": "Notifications de maintenance des biens",
     "savePreferences": "Enregistrer les préférences",
     "saving": "Sauvegarde...",
-    "preferencesSaved": "Préférences enregistrées avec succès"
+    "preferencesSaved": "Préférences enregistrées avec succès",
+    "sections": {
+      "general": "Général",
+      "notifications": "Notifications",
+      "security": "Sécurité",
+      "languageCurrency": "Langue & Devise",
+      "theme": "Thème",
+      "integrations": "Intégrations"
+    },
+    "preview": "Aperçu en direct",
+    "previewExample": "Exemple de formatage",
+    "themeLightDescription": "Interface claire et lumineuse",
+    "themeDarkDescription": "Interface sombre pour un confort visuel",
+    "themeAutoDescription": "Suit les préférences système",
+    "integrationsComingSoon": "Intégrations disponibles prochainement",
+    "integrationsDescription": "Connectez MyBI à vos outils préférés"
   },
   "login": {
     "title": "Connexion",
