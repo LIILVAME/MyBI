@@ -17,11 +17,27 @@ export const usePaymentsStore = defineStore('payments', () => {
   const loading = ref(false)
   const error = ref(null)
   let realtimeChannel = null
+  let isRealtimeInitialized = false
+  let lastFetchTime = 0
+  const FETCH_CACHE_MS = 5000 // Cache de 5 secondes pour éviter les requêtes multiples
 
   /**
    * Récupère tous les paiements de l'utilisateur depuis Supabase
    */
-  const fetchPayments = async () => {
+  const fetchPayments = async (force = false) => {
+    // Évite les requêtes multiples si déjà en cours
+    if (loading.value && !force) {
+      console.log('⏸️ fetchPayments déjà en cours, skip')
+      return
+    }
+
+    // Cache de 5 secondes pour éviter les requêtes trop fréquentes
+    const now = Date.now()
+    if (!force && now - lastFetchTime < FETCH_CACHE_MS && payments.value.length > 0) {
+      console.log('⏸️ fetchPayments: données récentes, skip (cache)')
+      return
+    }
+
     loading.value = true
     error.value = null
 
@@ -47,6 +63,8 @@ export const usePaymentsStore = defineStore('payments', () => {
         `)
         .eq('user_id', authStore.user.id)
         .order('due_date', { ascending: false })
+
+      lastFetchTime = Date.now()
 
       if (fetchError) throw fetchError
 
@@ -404,7 +422,14 @@ export const usePaymentsStore = defineStore('payments', () => {
           console.log('✅ Realtime subscribed to payments')
         } else if (status === 'CHANNEL_ERROR') {
           console.error('❌ Realtime error for payments')
-          toast.error('Erreur de connexion temps réel')
+          isRealtimeInitialized = false // Réinitialise pour permettre une nouvelle tentative
+          realtimeChannel = null
+          // Ne pas afficher d'erreur toast pour éviter le spam
+          // Le Realtime est optionnel, l'application fonctionne sans
+        } else if (status === 'CLOSED') {
+          console.log('🔌 Realtime channel closed for payments')
+          isRealtimeInitialized = false
+          realtimeChannel = null
         }
       })
   }
@@ -416,6 +441,7 @@ export const usePaymentsStore = defineStore('payments', () => {
     if (realtimeChannel) {
       supabase.removeChannel(realtimeChannel)
       realtimeChannel = null
+      isRealtimeInitialized = false
       console.log('🔌 Realtime unsubscribed from payments')
     }
   }

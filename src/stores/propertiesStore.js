@@ -15,11 +15,27 @@ export const usePropertiesStore = defineStore('properties', () => {
   const loading = ref(false)
   const error = ref(null)
   let realtimeChannel = null
+  let isRealtimeInitialized = false
+  let lastFetchTime = 0
+  const FETCH_CACHE_MS = 5000 // Cache de 5 secondes pour éviter les requêtes multiples
 
   /**
    * Récupère toutes les propriétés de l'utilisateur depuis Supabase
    */
-  const fetchProperties = async () => {
+  const fetchProperties = async (force = false) => {
+    // Évite les requêtes multiples si déjà en cours
+    if (loading.value && !force) {
+      console.log('⏸️ fetchProperties déjà en cours, skip')
+      return
+    }
+
+    // Cache de 5 secondes pour éviter les requêtes trop fréquentes
+    const now = Date.now()
+    if (!force && now - lastFetchTime < FETCH_CACHE_MS && properties.value.length > 0) {
+      console.log('⏸️ fetchProperties: données récentes, skip (cache)')
+      return
+    }
+
     loading.value = true
     error.value = null
 
@@ -39,6 +55,8 @@ export const usePropertiesStore = defineStore('properties', () => {
         .order('created_at', { ascending: false })
 
       if (fetchError) throw fetchError
+
+      lastFetchTime = Date.now()
 
       // Transforme les données Supabase pour correspondre au format attendu
       properties.value = data.map(prop => ({
@@ -444,7 +462,14 @@ export const usePropertiesStore = defineStore('properties', () => {
           console.log('✅ Realtime subscribed to properties')
         } else if (status === 'CHANNEL_ERROR') {
           console.error('❌ Realtime error for properties')
-          toast.error('Erreur de connexion temps réel')
+          isRealtimeInitialized = false // Réinitialise pour permettre une nouvelle tentative
+          realtimeChannel = null
+          // Ne pas afficher d'erreur toast pour éviter le spam
+          // Le Realtime est optionnel, l'application fonctionne sans
+        } else if (status === 'CLOSED') {
+          console.log('🔌 Realtime channel closed for properties')
+          isRealtimeInitialized = false
+          realtimeChannel = null
         }
       })
   }
@@ -456,6 +481,7 @@ export const usePropertiesStore = defineStore('properties', () => {
     if (realtimeChannel) {
       supabase.removeChannel(realtimeChannel)
       realtimeChannel = null
+      isRealtimeInitialized = false
       console.log('🔌 Realtime unsubscribed from properties')
     }
   }
