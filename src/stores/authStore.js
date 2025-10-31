@@ -233,9 +233,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // State pour le profil utilisateur
-  const profile = ref(null)
-
   /**
    * Récupère le profil utilisateur depuis Supabase
    */
