@@ -33,7 +33,10 @@ export const useSettingsStore = defineStore('settings', () => {
         const parsed = JSON.parse(stored)
         if (parsed.language) language.value = parsed.language
         if (parsed.currency) currency.value = parsed.currency
-        if (parsed.theme) theme.value = parsed.theme
+        if (parsed.theme) {
+          // Normalise 'auto' en 'system' pour la cohérence
+          theme.value = parsed.theme === 'auto' ? 'system' : parsed.theme
+        }
         if (parsed.alertThreshold !== undefined) alertThreshold.value = parsed.alertThreshold
         if (parsed.notifications) notifications.value = { ...notifications.value, ...parsed.notifications }
       }
