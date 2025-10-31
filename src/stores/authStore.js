@@ -14,6 +14,10 @@ export const useAuthStore = defineStore('auth', () => {
   const loading = ref(false)
   const error = ref(null)
   const session = ref(null)
+  const profile = ref(null)
+  let lastProfileFetchTime = 0
+  let profileFetchInProgress = false
+  const PROFILE_CACHE_MS = 5000 // Cache de 5 secondes
 
   /**
    * Computed : Vérifie si l'utilisateur est connecté
@@ -235,12 +239,27 @@ export const useAuthStore = defineStore('auth', () => {
   /**
    * Récupère le profil utilisateur depuis Supabase
    */
-  const fetchProfile = async () => {
+  const fetchProfile = async (force = false) => {
+    // Évite les requêtes multiples si déjà en cours
+    if (profileFetchInProgress && !force) {
+      console.log('⏸️ fetchProfile déjà en cours, skip')
+      return profile.value
+    }
+
+    // Cache de 5 secondes
+    const now = Date.now()
+    if (!force && now - lastProfileFetchTime < PROFILE_CACHE_MS && profile.value !== undefined) {
+      console.log('⏸️ fetchProfile: données récentes, skip (cache)')
+      return profile.value
+    }
+
     try {
       if (!user.value) {
         profile.value = null
         return null
       }
+
+      profileFetchInProgress = true
 
       const { data, error: profileError } = await supabase
         .from('profiles')
@@ -252,14 +271,18 @@ export const useAuthStore = defineStore('auth', () => {
       if (profileError) {
         console.error('Error fetching profile:', profileError)
         profile.value = null
+        profileFetchInProgress = false
         return null
       }
 
       profile.value = data || null
+      lastProfileFetchTime = Date.now()
+      profileFetchInProgress = false
       return data || null
     } catch (err) {
       console.error('Error fetching profile:', err)
       profile.value = null
+      profileFetchInProgress = false
       return null
     }
   }
