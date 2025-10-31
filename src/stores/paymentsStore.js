@@ -370,14 +370,17 @@ export const usePaymentsStore = defineStore('payments', () => {
               }
 
               // Ajoute seulement s'il n'existe pas déjà
-              if (!payments.value.find(p => p.id === newPayment.id)) {
+              if (payments.value && !payments.value.find(p => p.id === newPayment.id)) {
                 payments.value.unshift(newPayment)
-                toast.info(`Nouveau paiement : ${formatCurrency(newPayment.amount)}`)
+                if (toast) toast.info(`Nouveau paiement : ${formatCurrency(newPayment.amount)}`)
               }
             }
           }
 
           if (eventType === 'UPDATE') {
+            // Vérifie que le store est encore valide
+            if (!payments || !payments.value) return
+            
             // Recharge le paiement avec ses relations (via la vue pour avoir due_date)
             const { data, error: fetchError } = await supabase
               .from('payments_view')

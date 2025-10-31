@@ -408,14 +408,17 @@ export const usePropertiesStore = defineStore('properties', () => {
               }
 
               // Ajoute seulement s'il n'existe pas déjà
-              if (!properties.value.find(p => p.id === newProperty.id)) {
+              if (properties.value && !properties.value.find(p => p.id === newProperty.id)) {
                 properties.value.unshift(newProperty)
-                toast.info(`Nouveau bien : ${newProperty.name}`)
+                if (toast) toast.info(`Nouveau bien : ${newProperty.name}`)
               }
             }
           }
 
           if (eventType === 'UPDATE') {
+            // Vérifie que le store est encore valide
+            if (!properties || !properties.value) return
+            
             // Recharge la propriété avec ses relations
             const { data, error: fetchError } = await supabase
               .from('properties')
