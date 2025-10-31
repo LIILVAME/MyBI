@@ -5,7 +5,7 @@
       @click.stop="toggleMenu"
       class="p-2 rounded-lg hover:bg-gray-100 text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
       aria-label="Actions du paiement"
-      aria-expanded="open"
+      :aria-expanded="open"
     >
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
