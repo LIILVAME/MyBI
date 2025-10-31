@@ -29,10 +29,18 @@
 </template>
 
 <script setup>
+import { onErrorCaptured } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import ProfileSettings from '../components/settings/ProfileSettings.vue'
 import AppPreferences from '../components/settings/AppPreferences.vue'
 import SecuritySettings from '../components/settings/SecuritySettings.vue'
+
+// Capture les erreurs pour éviter que la page ne crash complètement
+onErrorCaptured((err, instance, info) => {
+  console.error('Erreur dans ParametresPage:', err, info)
+  // Ne pas propager l'erreur pour éviter l'écran blanc
+  return false
+})
 
 /**
  * Gère le changement de mot de passe

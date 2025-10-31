@@ -147,6 +147,13 @@ onMounted(async () => {
   isLoading.value = true
   
   try {
+    // Vérifie que l'utilisateur est connecté avant de charger le profil
+    if (!authStore.user) {
+      console.warn('ProfileSettings: User not authenticated')
+      isLoading.value = false
+      return
+    }
+
     // Récupère le profil depuis Supabase
     const profileData = await authStore.fetchProfile()
     
@@ -173,7 +180,10 @@ onMounted(async () => {
     }
   } catch (err) {
     console.error('Error loading profile:', err)
-    toastStore.error('Erreur lors du chargement du profil')
+    // Ne bloque pas le rendu si le profil ne peut pas être chargé
+    if (toastStore) {
+      toastStore.error('Erreur lors du chargement du profil')
+    }
   } finally {
     isLoading.value = false
   }
