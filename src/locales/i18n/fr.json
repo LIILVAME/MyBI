@@ -175,6 +175,49 @@
     "pending": "En attente",
     "late": "En retard",
     "onTime": "À jour"
+  },
+  "security": {
+    "title": "Sécurité & Connexion",
+    "subtitle": "Gérez votre mot de passe, la vérification en deux étapes et vos sessions actives.",
+    "password": {
+      "title": "Mot de passe",
+      "description": "Changez régulièrement votre mot de passe pour sécuriser votre compte.",
+      "changeButton": "Modifier le mot de passe",
+      "modalTitle": "Modifier le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "currentPasswordPlaceholder": "Entrez votre mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+      "passwordHint": "Minimum 6 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+      "currentPasswordIncorrect": "Le mot de passe actuel est incorrect",
+      "updateButton": "Mettre à jour",
+      "updating": "Mise à jour...",
+      "changedSuccess": "Mot de passe modifié avec succès",
+      "changeError": "Erreur lors du changement de mot de passe"
+    },
+    "twoFactor": {
+      "title": "Authentification à deux facteurs",
+      "description": "Ajoutez une couche de sécurité avec la double authentification.",
+      "enabled": "Activé",
+      "disabled": "Désactivé",
+      "enable": "Activer",
+      "disable": "Désactiver",
+      "enabledMessage": "Authentification à deux facteurs activée",
+      "disabledMessage": "Authentification à deux facteurs désactivée"
+    },
+    "sessions": {
+      "title": "Sessions actives",
+      "description": "Gérez les appareils connectés à votre compte.",
+      "signOutAll": "Déconnexion de tous les appareils",
+      "signingOut": "Déconnexion...",
+      "confirmSignOut": "Êtes-vous sûr de vouloir déconnecter tous vos appareils ? Vous devrez vous reconnecter.",
+      "signedOutSuccess": "Déconnexion réussie de tous les appareils",
+      "signOutError": "Erreur lors de la déconnexion"
+    }
   }
 }
 
