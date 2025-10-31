@@ -133,29 +133,48 @@ export const useAuthStore = defineStore('auth', () => {
 
   /**
    * Déconnexion
+   * Nettoie tous les stores et redirige vers /login
    */
   const logout = async () => {
     loading.value = true
     error.value = null
 
+    try {
+      // Étape 1 : Nettoie les abonnements Realtime AVANT de réinitialiser les stores
       try {
-        // Nettoie les abonnements Realtime AVANT de réinitialiser le profil
-        try {
-          const { usePropertiesStore } = await import('@/stores/propertiesStore')
-          const { usePaymentsStore } = await import('@/stores/paymentsStore')
-          const propertiesStore = usePropertiesStore()
-          const paymentsStore = usePaymentsStore()
-          
-          // Arrête Realtime en premier pour éviter que les callbacks accèdent à null
-          propertiesStore.stopRealtime()
-          paymentsStore.stopRealtime()
-        } catch (cleanupError) {
-          console.warn('Erreur lors du nettoyage Realtime (non bloquant):', cleanupError)
-        }
+        const { usePropertiesStore } = await import('@/stores/propertiesStore')
+        const { usePaymentsStore } = await import('@/stores/paymentsStore')
+        const { useTenantsStore } = await import('@/stores/tenantsStore')
+        const { useAlertsStore } = await import('@/stores/alertsStore')
+        const { useAnalyticsStore } = await import('@/stores/analyticsStore')
+        const { useReportsStore } = await import('@/stores/reportsStore')
+        
+        const propertiesStore = usePropertiesStore()
+        const paymentsStore = usePaymentsStore()
+        const tenantsStore = useTenantsStore()
+        const alertsStore = useAlertsStore()
+        const analyticsStore = useAnalyticsStore()
+        const reportsStore = useReportsStore()
+        
+        // Arrête Realtime en premier pour éviter que les callbacks accèdent à null
+        propertiesStore.stopRealtime()
+        paymentsStore.stopRealtime()
+        
+        // Réinitialise tous les stores
+        propertiesStore.$reset()
+        paymentsStore.$reset()
+        tenantsStore.$reset()
+        alertsStore.$reset()
+        analyticsStore.$reset()
+        reportsStore.$reset()
+      } catch (cleanupError) {
+        console.warn('Erreur lors du nettoyage des stores (non bloquant):', cleanupError)
+      }
 
-        // Réinitialise le profil après avoir arrêté Realtime
-        profile.value = null
+      // Étape 2 : Réinitialise le profil utilisateur
+      profile.value = null
 
+      // Étape 3 : Déconnecte de Supabase
       const { error: authError } = await supabase.auth.signOut()
 
       if (authError) {
@@ -164,13 +183,13 @@ export const useAuthStore = defineStore('auth', () => {
         return { success: false, error: authError.message }
       }
 
+      // Étape 4 : Réinitialise l'état de session
       user.value = null
       session.value = null
       loading.value = false
 
-      // La redirection vers /login sera gérée automatiquement
-      // par le router guard (beforeEach) qui détecte authStore.user === null
-
+      // Étape 5 : Redirection vers /login (via router)
+      // La redirection se fait dans Sidebar.vue après le logout
       return { success: true }
     } catch (err) {
       error.value = err.message

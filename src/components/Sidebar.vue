@@ -223,8 +223,25 @@ const getIcon = (iconName) => {
  * Gère la déconnexion
  */
 const handleLogout = async () => {
-  await authStore.logout()
-  closeSidebar()
+  try {
+    const result = await authStore.logout()
+    
+    if (result?.success) {
+      // Ferme la sidebar
+      closeSidebar()
+      
+      // Redirection immédiate vers /login
+      // Utilise window.location pour forcer un rechargement complet et éviter les états résiduels
+      window.location.href = '/login'
+    } else {
+      // En cas d'erreur, affiche un message (le toast est géré dans authStore)
+      console.error('Erreur lors de la déconnexion:', result?.error)
+    }
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion:', error)
+    // Redirige quand même vers login en cas d'erreur
+    window.location.href = '/login'
+  }
 }
 </script>
 

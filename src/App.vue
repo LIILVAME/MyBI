@@ -73,15 +73,34 @@ onMounted(async () => {
           paymentsStore.initRealtime()
         }
       } else if (event === 'SIGNED_OUT') {
-        // Déconnexion : nettoie les stores
+        // Déconnexion : nettoie tous les stores
         try {
           // Arrête le realtime en premier
           propertiesStore.stopRealtime()
           paymentsStore.stopRealtime()
 
-          // Réinitialise les stores
-          propertiesStore.$reset()
-          paymentsStore.$reset()
+          // Réinitialise tous les stores (déjà fait dans logout(), mais on s'assure ici aussi)
+          try {
+            const { useTenantsStore } = await import('@/stores/tenantsStore')
+            const { useAlertsStore } = await import('@/stores/alertsStore')
+            const { useAnalyticsStore } = await import('@/stores/analyticsStore')
+            const { useReportsStore } = await import('@/stores/reportsStore')
+            
+            const tenantsStore = useTenantsStore()
+            const alertsStore = useAlertsStore()
+            const analyticsStore = useAnalyticsStore()
+            const reportsStore = useReportsStore()
+            
+            propertiesStore.$reset()
+            paymentsStore.$reset()
+            tenantsStore.$reset()
+            alertsStore.$reset()
+            analyticsStore.$reset()
+            reportsStore.$reset()
+          } catch (resetError) {
+            // Si certains stores n'existent pas, continue quand même
+            console.warn('Erreur lors de la réinitialisation des stores (non bloquant):', resetError)
+          }
 
           // Réinitialise le profil
           authStore.profile = null
