@@ -22,21 +22,27 @@
       <div
         v-for="payment in payments"
         :key="payment.id"
-        class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        class="relative flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
       >
         <div class="flex-1">
           <p class="font-semibold text-gray-900">{{ payment.tenant }}</p>
           <p class="text-sm text-gray-600">{{ payment.property }}</p>
           <p class="text-xs text-gray-500 mt-1">Échéance: {{ formatDate(payment.dueDate, { shortMonth: false }) }}</p>
         </div>
-        <div class="text-right ml-4">
-          <p class="text-lg font-bold text-gray-900 mb-1">{{ formatCurrency(payment.amount) }}</p>
-          <span 
-            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-            :class="getStatusClass(payment.status)"
-          >
-            {{ getStatusText(payment.status) }}
-          </span>
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <p class="text-lg font-bold text-gray-900 mb-1">{{ formatCurrency(payment.amount) }}</p>
+            <span 
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+              :class="getStatusClass(payment.status)"
+            >
+              {{ getStatusText(payment.status) }}
+            </span>
+          </div>
+          <!-- Bouton d'actions pour télécharger la facture -->
+          <div class="flex-shrink-0">
+            <PaymentActions :payment="payment" />
+          </div>
         </div>
       </div>
     </div>
@@ -48,6 +54,7 @@ import { computed } from 'vue'
 import { formatCurrency, formatDate } from '@/utils/formatters'
 import { TRANSACTION_STATUS, STATUS_LABELS, STATUS_CLASSES } from '@/utils/constants'
 import { useRoute } from 'vue-router'
+import PaymentActions from '@/components/payments/PaymentActions.vue'
 
 const route = useRoute()
 
