@@ -4,19 +4,47 @@
  */
 
 /**
- * Formate un montant en euros (EUR)
+ * Formate un montant selon la devise sélectionnée dans settingsStore
  * @param {number} amount - Montant à formater
  * @param {Object} options - Options de formatage
- * @returns {string} Montant formaté (ex: "950 €")
+ * @param {string} options.currency - Devise à utiliser (optionnel, utilise celle du store par défaut)
+ * @param {string} options.locale - Locale pour le formatage (optionnel)
+ * @returns {string} Montant formaté
  */
 export function formatCurrency(amount, options = {}) {
   if (amount === null || amount === undefined) {
     return '-'
   }
-  
-  return new Intl.NumberFormat('fr-FR', {
+
+  // Récupère le store settings de manière dynamique (évite les imports circulaires)
+  let currency = options.currency || 'EUR'
+  let locale = options.locale || 'fr-FR'
+
+  try {
+    // Import dynamique pour éviter les problèmes de circular dependency
+    const { useSettingsStore } = require('@/stores/settingsStore')
+    const settingsStore = useSettingsStore()
+    currency = options.currency || settingsStore.currency || 'EUR'
+    
+    // Détermine la locale selon la devise
+    // Pour XOF (CFA), on utilise fr-FR mais avec la devise XOF
+    if (currency === 'XOF') {
+      locale = 'fr-FR'
+    } else if (currency === 'USD') {
+      locale = 'en-US'
+    } else if (currency === 'GBP') {
+      locale = 'en-GB'
+    } else {
+      locale = options.locale || 'fr-FR'
+    }
+  } catch (error) {
+    // Si le store n'est pas disponible, utilise les valeurs par défaut
+    console.warn('Impossible de récupérer la devise depuis settingsStore:', error)
+  }
+
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: 'EUR',
+    currency: currency,
     minimumFractionDigits: options.minimumFractionDigits ?? 0,
     maximumFractionDigits: options.maximumFractionDigits ?? 2,
     ...options

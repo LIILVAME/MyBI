@@ -1,0 +1,162 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset",
+    "viewAll": "View all",
+    "noData": "No data",
+    "actions": "Actions"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "properties": "Properties",
+    "payments": "Payments",
+    "tenants": "Tenants",
+    "stats": "Statistics",
+    "reports": "Reports",
+    "alerts": "Alerts",
+    "settings": "Settings",
+    "logout": "Logout",
+    "loggingOut": "Logging out...",
+    "language": "Language"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your real estate properties",
+    "totalProperties": "Total properties",
+    "occupied": "Occupied",
+    "vacant": "Vacant",
+    "monthlyRent": "Monthly rent",
+    "properties": "Properties",
+    "payments": "Payments",
+    "recentPayments": "Recent payments"
+  },
+  "properties": {
+    "title": "Properties management",
+    "subtitle": "Manage all your real estate properties",
+    "addProperty": "Add property",
+    "noProperties": "No properties registered",
+    "noPropertiesDescription": "Start by adding your first real estate property",
+    "name": "Property name",
+    "address": "Address",
+    "city": "City",
+    "type": "Type",
+    "rent": "Rent",
+    "status": "Status",
+    "occupied": "Occupied",
+    "vacant": "Vacant",
+    "underMaintenance": "Under maintenance"
+  },
+  "payments": {
+    "title": "Payment tracking",
+    "subtitle": "Manage all your rental payments in one place",
+    "addPayment": "Add payment",
+    "noPayments": "No payments registered",
+    "pending": "Pending",
+    "late": "Late",
+    "paidThisMonth": "Paid this month",
+    "amount": "Amount",
+    "dueDate": "Due date",
+    "paymentDate": "Payment date",
+    "tenant": "Tenant",
+    "property": "Property",
+    "status": "Status",
+    "downloadInvoice": "Download invoice (PDF)"
+  },
+  "tenants": {
+    "title": "Tenants management",
+    "subtitle": "Manage your tenants and their information",
+    "addTenant": "Add tenant",
+    "noTenants": "No tenants registered",
+    "name": "Name",
+    "entryDate": "Entry date",
+    "exitDate": "Exit date",
+    "rent": "Rent"
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "Analyze your portfolio performance"
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Generate and export your reports"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "subtitle": "Stay informed of important events",
+    "noAlerts": "No alerts",
+    "latePayments": "Late payments",
+    "upcomingPayments": "Upcoming payments"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "appPreferences": "Application preferences",
+    "security": "Security",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Automatic (system)",
+    "currency": "Main currency",
+    "language": "Interface language",
+    "alertThreshold": "Late payment alert threshold (days)",
+    "alertThresholdDescription": "Number of days after due date before sending an alert",
+    "notifications": "Notifications",
+    "emailNotifications": "Receive email notifications",
+    "paymentAlerts": "Late payment alerts",
+    "paymentReminders": "Upcoming payment reminders",
+    "maintenanceNotifications": "Property maintenance notifications",
+    "savePreferences": "Save preferences",
+    "saving": "Saving...",
+    "preferencesSaved": "Preferences saved successfully"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "login": "Sign in",
+    "signup": "Sign up",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "fullName": "Full name",
+    "phone": "Phone"
+  },
+  "currency": {
+    "EUR": "Euro (€)",
+    "USD": "US Dollar ($)",
+    "GBP": "British Pound (£)",
+    "XOF": "CFA Franc (CFA)"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English"
+  },
+  "toasts": {
+    "invoiceDownloaded": "Invoice PDF downloaded successfully",
+    "errorGeneratingInvoice": "Error generating invoice",
+    "propertyAdded": "Property added successfully",
+    "propertyUpdated": "Property updated successfully",
+    "propertyDeleted": "Property deleted successfully",
+    "paymentAdded": "Payment added successfully",
+    "paymentUpdated": "Payment updated successfully",
+    "tenantAdded": "Tenant added successfully",
+    "profileUpdated": "Profile updated successfully"
+  },
+  "status": {
+    "paid": "Paid",
+    "pending": "Pending",
+    "late": "Late",
+    "onTime": "On time"
+  }
+}
+

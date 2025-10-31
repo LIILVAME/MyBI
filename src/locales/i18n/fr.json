@@ -1,0 +1,162 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "reset": "Réinitialiser",
+    "viewAll": "Voir tout",
+    "noData": "Aucune donnée",
+    "actions": "Actions"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "properties": "Biens",
+    "payments": "Paiements",
+    "tenants": "Locataires",
+    "stats": "Statistiques",
+    "reports": "Rapports",
+    "alerts": "Alertes",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "loggingOut": "Déconnexion...",
+    "language": "Langue"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Vue d'ensemble de vos biens immobiliers",
+    "totalProperties": "Biens totaux",
+    "occupied": "Occupés",
+    "vacant": "Vacants",
+    "monthlyRent": "Loyers mensuels",
+    "properties": "Biens",
+    "payments": "Paiements",
+    "recentPayments": "Paiements récents"
+  },
+  "properties": {
+    "title": "Gestion des biens",
+    "subtitle": "Gérez tous vos biens immobiliers",
+    "addProperty": "Ajouter un bien",
+    "noProperties": "Aucun bien enregistré",
+    "noPropertiesDescription": "Commencez par ajouter votre premier bien immobilier",
+    "name": "Nom du bien",
+    "address": "Adresse",
+    "city": "Ville",
+    "type": "Type",
+    "rent": "Loyer",
+    "status": "Statut",
+    "occupied": "Occupé",
+    "vacant": "Vacant",
+    "underMaintenance": "En maintenance"
+  },
+  "payments": {
+    "title": "Suivi des paiements",
+    "subtitle": "Gérez tous vos paiements locatifs en un seul endroit",
+    "addPayment": "Ajouter un paiement",
+    "noPayments": "Aucun paiement enregistré",
+    "pending": "À venir",
+    "late": "En retard",
+    "paidThisMonth": "Payés ce mois",
+    "amount": "Montant",
+    "dueDate": "Date d'échéance",
+    "paymentDate": "Date de paiement",
+    "tenant": "Locataire",
+    "property": "Bien",
+    "status": "Statut",
+    "downloadInvoice": "Télécharger la facture (PDF)"
+  },
+  "tenants": {
+    "title": "Gestion des locataires",
+    "subtitle": "Gérez vos locataires et leurs informations",
+    "addTenant": "Ajouter un locataire",
+    "noTenants": "Aucun locataire enregistré",
+    "name": "Nom",
+    "entryDate": "Date d'entrée",
+    "exitDate": "Date de sortie",
+    "rent": "Loyer"
+  },
+  "stats": {
+    "title": "Statistiques",
+    "subtitle": "Analysez les performances de votre portefeuille"
+  },
+  "reports": {
+    "title": "Rapports",
+    "subtitle": "Générez et exportez vos rapports"
+  },
+  "alerts": {
+    "title": "Alertes",
+    "subtitle": "Restez informé des événements importants",
+    "noAlerts": "Aucune alerte",
+    "latePayments": "Paiements en retard",
+    "upcomingPayments": "Paiements à venir"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "profile": "Profil",
+    "appPreferences": "Préférences de l'application",
+    "security": "Sécurité",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "auto": "Automatique (système)",
+    "currency": "Devise principale",
+    "language": "Langue de l'interface",
+    "alertThreshold": "Seuil d'alerte de retard de paiement (jours)",
+    "alertThresholdDescription": "Nombre de jours après l'échéance avant d'envoyer une alerte",
+    "notifications": "Notifications",
+    "emailNotifications": "Recevoir les notifications par email",
+    "paymentAlerts": "Alertes de paiements en retard",
+    "paymentReminders": "Rappels de paiements à venir",
+    "maintenanceNotifications": "Notifications de maintenance des biens",
+    "savePreferences": "Enregistrer les préférences",
+    "saving": "Sauvegarde...",
+    "preferencesSaved": "Préférences enregistrées avec succès"
+  },
+  "login": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "fullName": "Nom complet",
+    "phone": "Téléphone"
+  },
+  "currency": {
+    "EUR": "Euro (€)",
+    "USD": "Dollar US ($)",
+    "GBP": "Livre Sterling (£)",
+    "XOF": "Franc CFA (CFA)"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English"
+  },
+  "toasts": {
+    "invoiceDownloaded": "Facture PDF téléchargée avec succès",
+    "errorGeneratingInvoice": "Erreur lors de la génération de la facture",
+    "propertyAdded": "Bien ajouté avec succès",
+    "propertyUpdated": "Bien mis à jour avec succès",
+    "propertyDeleted": "Bien supprimé avec succès",
+    "paymentAdded": "Paiement ajouté avec succès",
+    "paymentUpdated": "Paiement mis à jour avec succès",
+    "tenantAdded": "Locataire ajouté avec succès",
+    "profileUpdated": "Profil mis à jour avec succès"
+  },
+  "status": {
+    "paid": "Payé",
+    "pending": "En attente",
+    "late": "En retard",
+    "onTime": "À jour"
+  }
+}
+

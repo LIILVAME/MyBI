@@ -46,7 +46,21 @@
           <span class="font-medium">{{ item.name }}</span>
         </router-link>
       </nav>
+      
+      <!-- Sélecteur de langue -->
       <div class="mt-8 pt-8 border-t border-gray-200">
+        <div class="px-4 py-2 mb-4">
+          <label class="block text-xs font-medium text-gray-500 mb-2">{{ $t('sidebar.language') }}</label>
+          <select
+            :value="settingsStore.language"
+            @change="handleLanguageChange"
+            class="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+          >
+            <option value="fr">🇫🇷 Français</option>
+            <option value="en">🇺🇸 English</option>
+          </select>
+        </div>
+        
         <button
           @click="handleLogout"
           :disabled="authStore.loading"
@@ -55,7 +69,7 @@
           <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          <span class="font-medium">{{ authStore.loading ? 'Déconnexion...' : 'Déconnexion' }}</span>
+          <span class="font-medium">{{ authStore.loading ? $t('sidebar.loggingOut') : $t('sidebar.logout') }}</span>
         </button>
       </div>
     </div>
@@ -65,7 +79,12 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
+import { useSettingsStore } from '@/stores/settingsStore'
+
+const { t } = useI18n()
+const settingsStore = useSettingsStore()
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -158,48 +177,52 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
 })
 
-const menuItems = [
+const menuItems = computed(() => [
   {
-    name: 'Dashboard',
+    name: t('sidebar.dashboard'),
     path: '/dashboard',
     icon: 'home'
   },
   {
-    name: 'Biens',
+    name: t('sidebar.properties'),
     path: '/biens',
     icon: 'building'
   },
   {
-    name: 'Paiements',
+    name: t('sidebar.payments'),
     path: '/paiements',
     icon: 'currency'
   },
   {
-    name: 'Locataires',
+    name: t('sidebar.tenants'),
     path: '/locataires',
     icon: 'users'
   },
   {
-    name: 'Statistiques',
+    name: t('sidebar.stats'),
     path: '/stats',
     icon: 'chart'
   },
   {
-    name: 'Rapports',
+    name: t('sidebar.reports'),
     path: '/rapports',
     icon: 'report'
   },
   {
-    name: 'Alertes',
+    name: t('sidebar.alerts'),
     path: '/alertes',
     icon: 'alert'
   },
   {
-    name: 'Paramètres',
+    name: t('sidebar.settings'),
     path: '/parametres',
     icon: 'cog'
   }
-]
+])
+
+const handleLanguageChange = (event) => {
+  settingsStore.setLanguage(event.target.value)
+}
 
 const isActive = (path) => {
   return route.path === path || route.path.startsWith(path + '/')

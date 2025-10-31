@@ -10,8 +10,8 @@
         <div class="mb-8">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 class="text-3xl font-bold text-gray-900 mb-2">Suivi des paiements</h1>
-              <p class="text-gray-600">Gérez tous vos paiements locatifs en un seul endroit</p>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('payments.title') }}</h1>
+              <p class="text-gray-600">{{ $t('payments.subtitle') }}</p>
             </div>
             <button
               @click="isModalOpen = true"
@@ -20,7 +20,7 @@
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
-              Ajouter un paiement
+              {{ $t('payments.addPayment') }}
             </button>
           </div>
         </div>
@@ -30,7 +30,7 @@
           <div class="card">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-500 mb-1">À venir</p>
+                <p class="text-sm text-gray-500 mb-1">{{ $t('payments.pending') }}</p>
                 <p class="text-2xl font-bold text-gray-900">{{ pendingPayments.length }}</p>
               </div>
               <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -44,7 +44,7 @@
           <div class="card">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-500 mb-1">En retard</p>
+                <p class="text-sm text-gray-500 mb-1">{{ $t('payments.late') }}</p>
                 <p class="text-2xl font-bold text-red-600">{{ latePayments.length }}</p>
               </div>
               <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -58,7 +58,7 @@
           <div class="card">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-500 mb-1">Payés ce mois</p>
+                <p class="text-sm text-gray-500 mb-1">{{ $t('payments.paidThisMonth') }}</p>
                 <p class="text-2xl font-bold text-green-600">{{ paidPayments.length }}</p>
               </div>
               <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -73,7 +73,7 @@
                 <!-- État de chargement -->
                 <div v-if="paymentsStore.loading && paymentsStore.payments.length === 0" class="text-center py-16">
                   <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
-                  <p class="text-gray-500">Chargement des paiements...</p>
+                  <p class="text-gray-500">{{ $t('common.loading') }} {{ $t('payments.title').toLowerCase() }}...</p>
                 </div>
                 
                 <!-- Loader inline si données déjà chargées -->

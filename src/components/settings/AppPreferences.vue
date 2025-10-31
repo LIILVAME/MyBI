@@ -1,18 +1,18 @@
 <template>
-  <SettingsSection title="Préférences de l'application">
+  <SettingsSection :title="$t('settings.appPreferences')">
     <form @submit.prevent="savePreferences" class="space-y-6">
       <!-- Thème -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          Thème
+          {{ $t('settings.theme') }}
         </label>
         <select
-          v-model="preferences.theme"
+          v-model="localPreferences.theme"
           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
         >
-          <option value="light">Clair</option>
-          <option value="dark">Sombre</option>
-          <option value="auto">Automatique (système)</option>
+          <option value="light">{{ $t('settings.light') }}</option>
+          <option value="dark">{{ $t('settings.dark') }}</option>
+          <option value="auto">{{ $t('settings.auto') }}</option>
         </select>
         <p class="text-xs text-gray-500 mt-1">Choisissez le thème d'affichage de l'application</p>
       </div>
@@ -20,90 +20,90 @@
       <!-- Devise -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          Devise principale
+          {{ $t('settings.currency') }}
         </label>
         <select
-          v-model="preferences.currency"
+          v-model="localPreferences.currency"
           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
         >
-          <option value="EUR">€ Euro (EUR)</option>
-          <option value="USD">$ Dollar US (USD)</option>
-          <option value="GBP">£ Livre Sterling (GBP)</option>
-          <option value="CHF">₣ Franc Suisse (CHF)</option>
+          <option value="EUR">{{ $t('currency.EUR') }}</option>
+          <option value="USD">{{ $t('currency.USD') }}</option>
+          <option value="GBP">{{ $t('currency.GBP') }}</option>
+          <option value="XOF">{{ $t('currency.XOF') }}</option>
         </select>
+        <p class="text-xs text-gray-500 mt-1">Les montants seront affichés dans cette devise</p>
       </div>
 
       <!-- Langue -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          Langue de l'interface
+          {{ $t('settings.language') }}
         </label>
         <select
-          v-model="preferences.language"
+          v-model="localPreferences.language"
           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
         >
-          <option value="fr">Français</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="de">Deutsch</option>
+          <option value="fr">{{ $t('language.fr') }}</option>
+          <option value="en">{{ $t('language.en') }}</option>
         </select>
+        <p class="text-xs text-gray-500 mt-1">Langue de l'interface utilisateur</p>
       </div>
 
       <!-- Seuil d'alerte -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          Seuil d'alerte de retard de paiement (jours)
+          {{ $t('settings.alertThreshold') }}
         </label>
         <input
-          v-model.number="preferences.alertThreshold"
+          v-model.number="localPreferences.alertThreshold"
           type="number"
           min="0"
           max="30"
           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
           placeholder="5"
         />
-        <p class="text-xs text-gray-500 mt-1">Nombre de jours après l'échéance avant d'envoyer une alerte</p>
+        <p class="text-xs text-gray-500 mt-1">{{ $t('settings.alertThresholdDescription') }}</p>
       </div>
 
       <!-- Notifications -->
       <div class="border-t border-gray-100 pt-4">
-        <h3 class="text-sm font-semibold text-gray-900 mb-4">Notifications</h3>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">{{ $t('settings.notifications') }}</h3>
         
         <div class="space-y-3">
           <label class="flex items-center cursor-pointer group">
             <input
-              v-model="preferences.notifications.email"
+              v-model="localPreferences.notifications.email"
               type="checkbox"
               class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
             />
-            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">Recevoir les notifications par email</span>
+            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ $t('settings.emailNotifications') }}</span>
           </label>
 
           <label class="flex items-center cursor-pointer group">
             <input
-              v-model="preferences.notifications.payments"
+              v-model="localPreferences.notifications.payments"
               type="checkbox"
               class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
             />
-            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">Alertes de paiements en retard</span>
+            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ $t('settings.paymentAlerts') }}</span>
           </label>
 
           <label class="flex items-center cursor-pointer group">
             <input
-              v-model="preferences.notifications.reminders"
+              v-model="localPreferences.notifications.reminders"
               type="checkbox"
               class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
             />
-            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">Rappels de paiements à venir</span>
+            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ $t('settings.paymentReminders') }}</span>
           </label>
 
           <label class="flex items-center cursor-pointer group">
             <input
-              v-model="preferences.notifications.maintenance"
+              v-model="localPreferences.notifications.maintenance"
               type="checkbox"
               class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
             />
-            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">Notifications de maintenance des biens</span>
+            <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ $t('settings.maintenanceNotifications') }}</span>
           </label>
         </div>
       </div>
@@ -119,7 +119,7 @@
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          {{ isSaving ? 'Sauvegarde...' : 'Enregistrer les préférences' }}
+          {{ isSaving ? $t('settings.saving') : $t('settings.savePreferences') }}
         </button>
       </div>
     </form>
@@ -127,52 +127,87 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useSettingsStore } from '@/stores/settingsStore'
+import { useToastStore } from '@/stores/toastStore'
 import SettingsSection from './SettingsSection.vue'
+
+const { t } = useI18n()
+const settingsStore = useSettingsStore()
+const toastStore = useToastStore()
 
 const isSaving = ref(false)
 
-const preferences = ref({
-  theme: 'light',
-  currency: 'EUR',
-  language: 'fr',
-  alertThreshold: 5,
-  notifications: {
-    email: true,
-    payments: true,
-    reminders: false,
-    maintenance: false
+// Préférences locales (copie du store pour éviter les mutations directes)
+const localPreferences = ref({
+  theme: settingsStore.theme,
+  currency: settingsStore.currency,
+  language: settingsStore.language,
+  alertThreshold: settingsStore.alertThreshold,
+  notifications: { ...settingsStore.notifications }
+})
+
+// Synchronise avec le store quand il change
+watch(() => settingsStore.theme, (newVal) => {
+  localPreferences.value.theme = newVal
+})
+watch(() => settingsStore.currency, (newVal) => {
+  localPreferences.value.currency = newVal
+})
+watch(() => settingsStore.language, (newVal) => {
+  localPreferences.value.language = newVal
+})
+watch(() => settingsStore.alertThreshold, (newVal) => {
+  localPreferences.value.alertThreshold = newVal
+})
+watch(() => settingsStore.notifications, (newVal) => {
+  localPreferences.value.notifications = { ...newVal }
+}, { deep: true })
+
+// Recharge les préférences depuis le store au montage
+onMounted(() => {
+  localPreferences.value = {
+    theme: settingsStore.theme,
+    currency: settingsStore.currency,
+    language: settingsStore.language,
+    alertThreshold: settingsStore.alertThreshold,
+    notifications: { ...settingsStore.notifications }
   }
 })
 
 /**
- * Sauvegarde les préférences
- * TODO v0.2.0 : Relier au store settings + localStorage + backend API
+ * Sauvegarde les préférences dans le store
  */
 const savePreferences = async () => {
   isSaving.value = true
   
-  // Simule une sauvegarde
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  
-  isSaving.value = false
-  
-  // TODO v0.2.0 : Persister dans localStorage
-  // localStorage.setItem('appPreferences', JSON.stringify(preferences.value))
-  
-  // TODO v0.2.0 : Appeler l'API pour sauvegarder les préférences
-  // await settingsStore.updatePreferences(preferences.value)
-  
-  // TODO v0.2.0 : Appliquer le thème si changé
-  // if (preferences.value.theme !== 'auto') {
-  //   applyTheme(preferences.value.theme)
-  // }
-  
-  // Version temporaire v0.1.0
-  console.log('✅ Préférences sauvegardées (mock):', preferences.value)
-  
-  // TODO v0.2.0 : Remplacer par notification toast
-  // showToast('Préférences enregistrées avec succès !', { type: 'success' })
+  try {
+    // Sauvegarde dans le store (qui persiste automatiquement dans localStorage)
+    settingsStore.setTheme(localPreferences.value.theme)
+    settingsStore.setCurrency(localPreferences.value.currency)
+    
+    // La langue est gérée séparément car elle nécessite un rechargement
+    if (localPreferences.value.language !== settingsStore.language) {
+      settingsStore.setLanguage(localPreferences.value.language)
+      // Le setLanguage() fait déjà le rechargement, donc pas besoin de continuer
+      return
+    }
+    
+    settingsStore.setAlertThreshold(localPreferences.value.alertThreshold)
+    settingsStore.setNotifications(localPreferences.value.notifications)
+    
+    // Toast de confirmation
+    if (toastStore) {
+      toastStore.success(t('settings.preferencesSaved'))
+    }
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde des préférences:', error)
+    if (toastStore) {
+      toastStore.error('Erreur lors de la sauvegarde')
+    }
+  } finally {
+    isSaving.value = false
+  }
 }
 </script>
-
