@@ -1,18 +1,17 @@
-# 🏠 MyBI - Monitoring de Biens Immobiliers
+# 🏠 MyBI - Monitoring Immobilier
 
-> Plateforme web moderne pour la supervision et le monitoring de biens immobiliers en temps réel
+> Plateforme web temps réel pour la gestion locative et le suivi des paiements
 
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/LIILVAME/MyBI/releases)
 [![Vue 3](https://img.shields.io/badge/Vue-3.4.21-4FC08D?logo=vue.js)](https://vuejs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase)](https://supabase.com/)
 [![Vite](https://img.shields.io/badge/Vite-5.2.0-646CFF?logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.3-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/LIILVAME/MyBI/workflows/CI%20-%20Tests%20and%20Linting/badge.svg)](https://github.com/LIILVAME/MyBI/actions)
-[![Deploy](https://github.com/LIILVAME/MyBI/workflows/Build%20and%20Deploy%20to%20GitHub%20Pages/badge.svg)](https://github.com/LIILVAME/MyBI/actions)
-[![GitHub Pages](https://img.shields.io/badge/Pages-Live-success)](https://liilvame.github.io/MyBI/)
 
 <div align="center">
 
-**Supervisez vos biens immobiliers depuis une seule plateforme**
+**Supervisez vos biens immobiliers depuis une seule plateforme en temps réel**
 
 [🚀 Démo Live](https://liilvame.github.io/MyBI/) • [📖 Documentation](docs/project_overview.md) • [🤝 Contribuer](CONTRIBUTING.md) • [📝 Changelog](CHANGELOG.md)
 
@@ -27,74 +26,120 @@
 - [Stack Technique](#️-stack-technique)
 - [Prérequis](#-prérequis)
 - [Installation](#-installation)
+- [Configuration Supabase](#-configuration-supabase)
 - [Structure du Projet](#-structure-du-projet)
 - [Utilisation](#-utilisation)
 - [Design & UX](#-design--ux)
 - [Développement](#-développement)
-- [Roadmap](#-roadmap)
-- [Contribuer](#-contribuer)
+- [Déploiement](#-déploiement)
 - [Documentation](#-documentation)
 - [Sécurité](#️-sécurité)
+- [Roadmap](#-roadmap)
+- [Contribuer](#-contribuer)
 - [Licence](#-licence)
 
 ---
 
 ## 🎯 À propos
 
-**MyBI** est une application web moderne permettant aux propriétaires et gestionnaires de biens immobiliers de suivre à distance l'état de leurs appartements en location.
-
-### 🎨 Aperçu
-
-<!-- TODO: Ajouter des screenshots du dashboard et de la landing page -->
-<!-- 
-![Dashboard Preview](docs/screenshots/dashboard.png)
-![Landing Page Preview](docs/screenshots/landing.png)
--->
+**MyBI** est une application web moderne permettant aux propriétaires et gestionnaires de biens immobiliers de suivre à distance leurs appartements en location, gérer leurs locataires et suivre les paiements en temps réel.
 
 ### ✨ Principales capacités
 
-- 📊 **Monitoring en temps réel** : Température, humidité, qualité de l'air, consommation énergétique
-- 🔔 **Alertes intelligentes** : Notifications instantanées en cas d'anomalie
-- 💰 **Gestion des paiements** : Suivi des loyers et paiements à venir
-- 🔒 **Sécurité** : Aperçu des caméras et capteurs de sécurité
+- 📊 **Monitoring en temps réel** : Synchronisation automatique des données via Supabase Realtime
+- 🔔 **Alertes intelligentes** : Notifications instantanées en cas de paiements en retard ou départs de locataires
+- 💰 **Gestion des paiements** : Suivi des loyers et paiements à venir avec statistiques automatiques
+- 🔒 **Sécurité** : Authentification Supabase avec Row Level Security (RLS) sur toutes les tables
 - 📱 **Interface responsive** : Accessible sur mobile, tablette et desktop
+- 📈 **Analytics** : Graphiques ApexCharts pour visualiser les revenus et taux d'occupation
 
 ---
 
-## 🚀 Fonctionnalités
+## 🚀 Fonctionnalités v0.2.0
 
-### Landing Page
-- Section hero avec message principal et CTA
-- Présentation des 4 avantages clés
-- Preview de l'interface dashboard
-- Témoignages clients
-- Footer complet avec contact
+### 🏠 Dashboard
 
-### Dashboard
-- **Vue d'ensemble** : Statistiques globales (température moyenne, humidité, qualité de l'air, consommation totale)
-- **Liste des biens** : Cartes détaillées avec statut (occupé/libre), alertes, métriques environnementales
-- **Paiements à venir** : Liste des loyers avec échéances et statuts
-- **Sécurité** : Aperçu des caméras avec statut en ligne
-- **Navigation** : Sidebar avec menu complet (Dashboard, Biens, Alertes, Paiements, Paramètres)
+- Vue d'ensemble des biens, locataires, paiements et revenus
+- Statistiques globales en temps réel (nombre de biens, taux d'occupation, revenus totaux)
+- Ajout rapide de biens via modal
+- Synchronisation temps réel entre toutes les pages via Supabase Realtime
+- Liste des paiements à venir avec statuts (payé, en attente, en retard)
+
+### 🏘️ Biens Immobiliers
+
+- **CRUD complet** : Ajouter, modifier, supprimer des biens
+- Filtres dynamiques par statut (occupés/libres) et recherche par nom/ville
+- Affichage des locataires associés à chaque bien
+- Statut automatique basé sur la présence de locataires
+- Cartes visuelles avec toutes les informations essentielles
+
+### 💰 Paiements
+
+- Suivi complet des paiements locatifs avec historique
+- Ajout de nouveaux paiements avec montant, date d'échéance, statut
+- Statistiques automatiques (revenus mensuels, paiements payés/en attente)
+- Filtres par statut (payé, en attente, en retard)
+- Synchronisation temps réel des modifications
+
+### 👥 Locataires
+
+- Suivi des locataires liés à chaque bien immobilier
+- Ajout automatique lors de la création d'un bien occupé
+- Informations détaillées (date d'entrée, date de sortie, statut de paiement)
+- Filtres par statut (à jour, en retard)
+- Gestion des départs et arrivées
+
+### ⚙️ Paramètres
+
+- Gestion du profil utilisateur (nom, email, téléphone, entreprise)
+- Modification des informations personnelles via Supabase
+- Déconnexion sécurisée avec persistance de session
+- Préparation pour intégration multi-comptes (v0.3.0)
+
+### 📊 Statistiques & Analytics
+
+- Graphiques ApexCharts interactifs :
+  - **Revenus mensuels** : Évolution des revenus sur les 12 derniers mois
+  - **Taux d'occupation** : Pourcentage de biens occupés vs libres
+  - **Statut des paiements** : Répartition (payé, en attente, en retard)
+  - **Répartition par bien** : Revenus par bien immobilier
+
+### 🔔 Alertes
+
+- Détection automatique des paiements en retard
+- Alertes pour départs de locataires à venir
+- Notifications visuelles via toast system
+- Page dédiée pour consulter toutes les alertes
+
+### 📄 Rapports
+
+- Génération de rapports mensuels (PDF/Excel)
+- Export des données des biens, locataires et paiements
+- Historique complet des transactions
 
 ---
 
 ## 🛠️ Stack Technique
 
-| Technologie | Version | Usage |
-|------------|---------|-------|
-| **Vue 3** | ^3.4.21 | Framework frontend (Composition API) |
-| **Vite** | ^5.2.0 | Build tool et dev server |
-| **Vue Router** | ^4.3.0 | Navigation et routing |
-| **Tailwind CSS** | ^3.4.3 | Framework CSS utility-first |
-| **PostCSS** | ^8.4.38 | Traitement CSS |
-| **Autoprefixer** | ^10.4.19 | Préfixes CSS automatiques |
+| Côté | Technologie | Version | Usage |
+|------|-------------|---------|-------|
+| **Frontend** | Vue 3 (Composition API) | ^3.4.21 | SPA responsive avec Tailwind CSS |
+| **État global** | Pinia | ^3.0.3 | 8 stores modulaires (auth, properties, payments, tenants, etc.) |
+| **Backend** | Supabase | - | Auth, Realtime, RLS, PostgreSQL, Edge Functions |
+| **Charts** | ApexCharts | ^5.3.5 | Visualisations des revenus et taux d'occupation |
+| **Build** | Vite | ^5.2.0 | Build tool rapide & optimisé |
+| **Routing** | Vue Router | ^4.3.0 | Navigation SPA avec guards d'authentification |
+| **Styling** | Tailwind CSS | ^3.4.3 | Framework CSS utility-first |
+| **Exports** | jsPDF + xlsx | ^3.0.3 | Génération de rapports PDF/Excel |
+| **Hébergement** | GitHub Pages / Netlify | - | Config base `/MyBI/` prête |
 
 ### Architecture
 
 - **Composition API** : Utilisation de `<script setup>` pour une syntaxe moderne
 - **Composants modulaires** : Architecture modulaire et réutilisable
-- **Données mockées** : JSON local pour la démo (prêt pour intégration API)
+- **Stores Pinia** : Gestion d'état centralisée et réactive
+- **Supabase Realtime** : Synchronisation automatique des données entre clients
+- **Row Level Security** : Sécurité au niveau base de données avec `auth.uid()`
 
 ---
 
@@ -104,6 +149,7 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 - **Node.js** >= 18.0.0
 - **npm** >= 9.0.0 (ou **yarn** / **pnpm**)
+- **Compte Supabase** : [https://supabase.com](https://supabase.com)
 
 Pour vérifier vos versions :
 
@@ -129,7 +175,24 @@ cd MyBI
 npm install
 ```
 
-### 3. Lancer le serveur de développement
+### 3. Configuration Supabase
+
+Copiez le fichier `.env.example` vers `.env` :
+
+```bash
+cp .env.example .env
+```
+
+Puis configurez vos variables d'environnement dans `.env` :
+
+```env
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=votre_anon_key_ici
+```
+
+> 📖 **Instructions détaillées** : Voir [Configuration Supabase](#-configuration-supabase) ci-dessous.
+
+### 4. Lancer le serveur de développement
 
 ```bash
 npm run dev
@@ -137,7 +200,7 @@ npm run dev
 
 L'application sera accessible sur **http://localhost:5173**
 
-### 4. Build pour la production
+### 5. Build pour la production
 
 ```bash
 npm run build
@@ -145,11 +208,67 @@ npm run build
 
 Les fichiers optimisés seront générés dans le dossier `dist/`
 
-### 5. Prévisualiser le build de production
+### 6. Prévisualiser le build de production
 
 ```bash
 npm run preview
 ```
+
+---
+
+## ⚙️ Configuration Supabase
+
+### 1. Créer un projet Supabase
+
+1. Connectez-vous sur [https://supabase.com](https://supabase.com)
+2. Créez un nouveau projet
+3. Notez votre **Project URL** et **anon public key**
+
+### 2. Configurer les variables d'environnement
+
+Créez un fichier `.env` à la racine du projet :
+
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=votre_anon_key_ici
+
+# Optionnel : Pour les Edge Functions et tests locaux
+# SUPABASE_SERVICE_ROLE_KEY=votre_service_role_key_ici
+```
+
+### 3. Appliquer les migrations SQL
+
+Les migrations SQL sont disponibles dans `supabase/migrations/` :
+
+1. Via Supabase Dashboard :
+   - Allez dans **SQL Editor**
+   - Copiez-collez le contenu de `supabase/migrations/20251031194132_remote_schema.sql`
+   - Exécutez la requête
+
+2. Via Supabase CLI (recommandé) :
+   ```bash
+   npx supabase link --project-ref votre-project-ref
+   npx supabase db push
+   ```
+
+### 4. Vérifier les tables créées
+
+Dans Supabase Dashboard → **Table Editor**, vous devriez voir :
+
+- ✅ `properties` - Biens immobiliers
+- ✅ `tenants` - Locataires
+- ✅ `payments` - Paiements
+- ✅ `profiles` - Profils utilisateurs
+
+### 5. Vérifier les politiques RLS
+
+Les **Row Level Security (RLS)** sont activées sur toutes les tables :
+
+- Les utilisateurs ne voient que leurs propres données (`auth.uid() = user_id`)
+- Les utilisateurs ne peuvent modifier que leurs propres données
+
+📖 **Documentation complète** : Voir [docs/SUPABASE_INTEGRATION.md](docs/SUPABASE_INTEGRATION.md)
 
 ---
 
@@ -159,34 +278,69 @@ npm run preview
 MyBI/
 ├── src/
 │   ├── components/              # Composants réutilisables
-│   │   ├── Sidebar.vue         # Navigation latérale avec menu
-│   │   ├── StatCard.vue        # Carte de statistique réutilisable
-│   │   └── PropertyCard.vue    # Carte de bien immobilier
-│   ├── pages/                   # Pages de l'application
+│   │   ├── common/             # Composants communs (Toast, Loaders, Skeletons)
+│   │   ├── dashboard/          # Composants du dashboard
+│   │   ├── properties/         # Composants pour les biens
+│   │   ├── tenants/            # Composants pour les locataires
+│   │   ├── payments/           # Composants pour les paiements
+│   │   ├── charts/             # Composants graphiques (BaseChart)
+│   │   └── settings/           # Composants de paramètres
+│   ├── pages/                  # Pages de l'application
 │   │   ├── LandingPage.vue    # Page d'accueil marketing
-│   │   └── DashboardPage.vue  # Tableau de bord principal
-│   ├── router/                  # Configuration du routeur Vue
-│   │   └── index.js            # Routes de l'application
-│   ├── data/                    # Données mockées
-│   │   └── mockData.js         # Données de démonstration
-│   ├── App.vue                  # Composant racine
-│   ├── main.js                  # Point d'entrée de l'application
-│   └── style.css                # Styles globaux Tailwind
-├── index.html                   # Template HTML principal
-├── package.json                 # Dépendances et scripts npm
-├── vite.config.js              # Configuration Vite
-├── tailwind.config.js          # Configuration Tailwind CSS
-├── postcss.config.js           # Configuration PostCSS
-└── README.md                   # Documentation du projet
+│   │   ├── LoginPage.vue      # Authentification (login/signup)
+│   │   ├── DashboardPage.vue  # Tableau de bord principal
+│   │   ├── BiensPage.vue      # Gestion des biens
+│   │   ├── LocatairesPage.vue # Gestion des locataires
+│   │   ├── PaiementsPage.vue  # Gestion des paiements
+│   │   ├── StatsPage.vue      # Statistiques et graphiques
+│   │   ├── AlertsPage.vue     # Alertes et notifications
+│   │   ├── ReportsPage.vue    # Rapports et exports
+│   │   └── ParametresPage.vue # Paramètres utilisateur
+│   ├── stores/                 # Stores Pinia
+│   │   ├── authStore.js       # Authentification Supabase
+│   │   ├── propertiesStore.js # Gestion des biens
+│   │   ├── paymentsStore.js   # Gestion des paiements
+│   │   ├── tenantsStore.js    # Gestion des locataires
+│   │   ├── analyticsStore.js  # Analytics et statistiques
+│   │   ├── alertsStore.js     # Alertes
+│   │   ├── reportsStore.js    # Rapports
+│   │   └── toastStore.js      # Notifications toast
+│   ├── router/                 # Configuration du routeur Vue
+│   │   └── index.js            # Routes avec guards d'authentification
+│   ├── lib/                    # Bibliothèques externes
+│   │   └── supabaseClient.js  # Client Supabase configuré
+│   ├── composables/            # Composables Vue réutilisables
+│   │   └── useRealtime.js     # Hook pour Supabase Realtime
+│   ├── utils/                  # Utilitaires
+│   │   ├── formatters.js      # Formatage de données (devises, dates)
+│   │   ├── constants.js       # Constantes de l'application
+│   │   └── exportUtils.js     # Utilitaires d'export (PDF/Excel)
+│   ├── data/                   # Données mockées (uniquement landing page)
+│   │   └── mockData.js        # Témoignages pour la landing page
+│   ├── App.vue                 # Composant racine
+│   ├── main.js                 # Point d'entrée de l'application
+│   └── style.css               # Styles globaux Tailwind
+├── supabase/
+│   ├── migrations/             # Migrations SQL
+│   │   └── 20251031194132_remote_schema.sql
+│   └── functions/              # Supabase Edge Functions
+│       ├── checkAlerts/       # Fonction pour vérifier les alertes
+│       └── generateMonthlyReport/ # Fonction pour générer les rapports
+├── docs/                       # Documentation du projet
+│   ├── AUDIT_360_PRE_RELEASE_v0.2.0.md
+│   ├── SUPABASE_INTEGRATION.md
+│   ├── SPRINT_3_REALTIME_UX.md
+│   ├── SPRINT_4_ANALYTICS.md
+│   └── ...
+├── public/                     # Assets statiques
+├── index.html                  # Template HTML principal
+├── package.json                # Dépendances et scripts npm
+├── vite.config.js             # Configuration Vite
+├── tailwind.config.js         # Configuration Tailwind CSS
+├── postcss.config.js          # Configuration PostCSS
+├── .env.example               # Exemple de variables d'environnement
+└── README.md                  # Documentation du projet
 ```
-
-### Description des fichiers clés
-
-- **`src/main.js`** : Initialise l'application Vue et configure le routeur
-- **`src/router/index.js`** : Définit les routes (`/` pour landing, `/dashboard` pour dashboard)
-- **`src/data/mockData.js`** : Contient toutes les données mockées (biens, paiements, stats, témoignages)
-- **`src/components/`** : Composants réutilisables pour la construction des pages
-- **`tailwind.config.js`** : Configuration du thème (couleurs primaires vertes)
 
 ---
 
@@ -218,40 +372,9 @@ MyBI/
 
 - **Cards** : Bordures arrondies (`rounded-xl`), ombres légères (`shadow-sm`)
 - **Boutons** : Styles primaire et secondaire avec transitions
-- **StatCards** : Affichage de métriques avec icônes et tendances
-
----
-
-## 🚀 Utilisation
-
-### Navigation
-
-| Route | Description |
-|-------|-------------|
-| `/` | Landing page - Présentation du produit |
-| `/dashboard` | Tableau de bord principal - Monitoring des biens |
-
-### Données mockées
-
-Les données sont disponibles dans `src/data/mockData.js` :
-
-```javascript
-// Exports disponibles
-export const mockProperties      // Array de biens immobiliers
-export const mockPayments        // Array de paiements à venir
-export const mockGlobalStats     // Objet de statistiques globales
-export const mockTestimonials    // Array de témoignages clients
-```
-
-**Exemple d'utilisation** :
-
-```javascript
-import { mockProperties, mockGlobalStats } from '@/data/mockData'
-
-// Utiliser dans un composant
-const properties = ref(mockProperties)
-const stats = ref(mockGlobalStats)
-```
+- **Skeletons** : Loading states avec animations
+- **Toasts** : Notifications utilisateur avec feedback visuel
+- **Modals** : Overlays avec fermeture ESC et focus trap
 
 ---
 
@@ -269,106 +392,143 @@ npm run preview  # Prévisualiser le build de production
 
 #### Composants réutilisables
 
-- **`StatCard`** : Affiche une métrique avec icône, valeur, label et tendance optionnelle
-- **`PropertyCard`** : Carte complète d'un bien avec toutes les métriques
-- **`Sidebar`** : Navigation latérale avec menu et état actif
+- **`Sidebar`** : Navigation latérale avec menu hamburger responsive
+- **`StatCard`** : Affiche une métrique avec icône, valeur, label
+- **`SkeletonCard`** : Loading state pour les cartes de biens
+- **`InlineLoader`** : Loader inline pour les refreshes
+- **`Toast`** : Système de notifications toast global
+- **`BaseChart`** : Wrapper ApexCharts avec gestion d'erreurs
 
 #### Pages
 
 - **`LandingPage`** : Page marketing avec sections hero, features, testimonials
-- **`DashboardPage`** : Interface principale de monitoring
+- **`LoginPage`** : Authentification (login + signup) avec Supabase Auth
+- **`DashboardPage`** : Interface principale de monitoring avec temps réel
+- **`BiensPage`** : CRUD complet des biens avec filtres et recherche
+- **`PaiementsPage`** : Gestion des paiements avec statistiques
+- **`LocatairesPage`** : Gestion des locataires liés aux biens
+- **`StatsPage`** : Analytics avec graphiques ApexCharts
+- **`AlertsPage`** : Alertes et notifications
+- **`ReportsPage`** : Rapports et exports PDF/Excel
+- **`ParametresPage`** : Paramètres utilisateur et profil
 
 ### Notes techniques
 
 - **Icônes SVG** : Définies inline dans les composants (pas de dépendance externe)
 - **Tailwind Purge** : Purge automatique en production pour réduire la taille CSS
 - **Routing** : Vue Router avec history mode (URLs propres sans `#`)
-- **API Ready** : Structure prête pour remplacer `mockData.js` par des appels API réels
+- **Temps réel** : Supabase Realtime pour synchronisation automatique
+- **Authentification** : Supabase Auth avec persistance de session
+
+---
+
+## 🚀 Déploiement
+
+### GitHub Pages
+
+1. **Activer GitHub Pages** :
+   - Settings → Pages → Source → **GitHub Actions**
+
+2. **Workflow automatique** :
+   - Le workflow `deploy.yml` build et déploie automatiquement
+   - Base path : `/MyBI/` (configuré dans `vite.config.js`)
+
+3. **URL de déploiement** :
+   - [https://liilvame.github.io/MyBI/](https://liilvame.github.io/MyBI/)
+
+### Netlify (optionnel)
+
+1. **Connecter le repository** :
+   - Connectez `LIILVAME/MyBI` sur Netlify
+
+2. **Configuration** :
+   - Build command : `npm run build`
+   - Publish directory : `dist/`
+   - Base directory : `/` (racine)
+
+3. **Variables d'environnement** :
+   - Ajoutez `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` dans Netlify Dashboard
+
+---
+
+## 📚 Documentation
+
+### Documentation technique
+
+- **[AUDIT_360_PRE_RELEASE_v0.2.0.md](docs/AUDIT_360_PRE_RELEASE_v0.2.0.md)** : Audit complet pré-publication
+- **[SUPABASE_INTEGRATION.md](docs/SUPABASE_INTEGRATION.md)** : Guide d'intégration Supabase
+- **[SPRINT_3_REALTIME_UX.md](docs/SPRINT_3_REALTIME_UX.md)** : Documentation temps réel
+- **[SPRINT_4_ANALYTICS.md](docs/SPRINT_4_ANALYTICS.md)** : Documentation analytics
+- **[CHECKLIST_PRODUCTION.md](docs/CHECKLIST_PRODUCTION.md)** : Checklist de production
+
+### Documentation utilisateur
+
+- **[project_overview.md](docs/project_overview.md)** : Vue d'ensemble du projet
+- **[CHANGELOG.md](CHANGELOG.md)** : Journal des modifications
+
+---
+
+## 🔒 Sécurité
+
+### Authentification
+
+- ✅ **Supabase Auth** : Authentification email + mot de passe
+- ✅ **Sessions persistantes** : Refresh token automatique
+- ✅ **Redirection automatique** : Si non connecté, redirection vers `/login`
+- ✅ **Router guards** : Protection des routes avec `meta.requiresAuth`
+
+### Base de données
+
+- ✅ **Row Level Security (RLS)** : Activé sur toutes les tables
+- ✅ **Policies basées sur `auth.uid()`** : Chaque utilisateur voit uniquement ses données
+- ✅ **Triggers automatiques** : Mise à jour de `updated_at` et création de profil
+- ✅ **Validation côté serveur** : Contraintes SQL (check constraints, foreign keys)
+
+### Variables d'environnement
+
+- ✅ **`.env` exclu de Git** : Sécurité des clés API
+- ✅ **`.env.example` documenté** : Template pour configuration
+- ✅ **Pas de données sensibles** : Aucune clé dans le code source
+
+### Infrastructure
+
+- ✅ **HTTPS obligatoire** : Tous les déploiements en HTTPS
+- ✅ **CORS configuré** : Supabase gère le CORS automatiquement
+- ✅ **Headers de sécurité** : Configurés par le serveur d'hébergement
 
 ---
 
 ## 🗺️ Roadmap
 
-### Version 0.1.0 (Actuelle) ✅
+### Version 0.2.0 (Actuelle) ✅ MVP Stable
 
-- [x] Landing page complète
-- [x] Dashboard avec statistiques
-- [x] Liste des biens immobiliers
-- [x] Section paiements
-- [x] Aperçu sécurité
-- [x] Navigation sidebar
-- [x] Design responsive
+- [x] Authentification Supabase complète
+- [x] CRUD Biens / Locataires / Paiements
+- [x] Temps réel avec Supabase Realtime
+- [x] Graphiques ApexCharts (analytics)
+- [x] Système de notifications toast
+- [x] Export PDF/Excel
+- [x] Responsive design complet
+- [x] Row Level Security (RLS)
 
-### Version 0.2.0 (Planifiée)
+### Version 0.3.0 (Planifiée)
 
-- [ ] Menu hamburger pour mobile
-- [ ] Page détail par bien
-- [ ] Graphiques de tendances (Chart.js)
-- [ ] Système de notifications toast
-- [ ] Filtres et recherche des biens
-
-### Version 0.3.0 (Future)
-
-- [ ] Authentification (JWT)
-- [ ] API réelle avec backend
-- [ ] WebSockets pour temps réel
+- [ ] Upload d'images pour les biens (Supabase Storage)
+- [ ] Notifications email/SMS pour alertes
+- [ ] Multi-comptes / équipes
 - [ ] Mode sombre (dark mode)
-- [ ] Export PDF des rapports
+- [ ] Optimisation ApexCharts (lazy loading)
+- [ ] Tests unitaires (Vitest)
+- [ ] Amélioration accessibilité (WCAG AA)
 
----
+### Version 0.4.0 (Future)
 
-## 💡 Suggestions d'amélioration UX
-
-### 1. Navigation mobile
-- Menu hamburger pour la sidebar sur mobile
-- Transition slide-in pour l'ouverture/fermeture
-- Overlay pour fermer la sidebar
-
-### 2. Interactivité
-- Tooltips sur les cartes de statistiques
-- Animation de chargement lors du fetch des données
-- Skeleton loaders pour un meilleur feedback visuel
-
-### 3. Filtres et recherche
-- Barre de recherche pour filtrer les biens
-- Filtres par statut (occupé/libre), ville, type
-- Tri par température, consommation, date
-
-### 4. Graphiques et visualisations
-- Graphiques de tendances avec [Chart.js](https://www.chartjs.org/) ou [ApexCharts](https://apexcharts.com/)
-- Timeline des événements et alertes
-- Carte géographique des biens ([Leaflet](https://leafletjs.com/))
-
-### 5. Notifications
-- Système de notifications toast pour les alertes
-- Badge sur l'icône Alertes dans la sidebar
-- Son optionnel pour les alertes critiques
-
-### 6. Détails de bien
-- Page dédiée par bien avec historique complet
-- Graphiques de consommation sur 30 jours
-- Photos et documents associés
-
-### 7. Personnalisation
-- Mode sombre (dark mode)
-- Personnalisation des seuils d'alertes
-- Widgets configurables sur le dashboard
-
-### 8. Accessibilité
-- Contraste amélioré pour WCAG AA
-- Navigation au clavier complète
-- Attributs ARIA sur les éléments interactifs
-
-### 9. Performance
-- Lazy loading des images
-- Code splitting des routes
-- Caching des données mockées
-
-### 10. Intégrations futures
-- API réelle avec authentification
-- WebSockets pour les mises à jour temps réel
-- Export PDF des rapports
-- Notifications email/SMS
+- [ ] API REST complète
+- [ ] Webhooks Supabase
+- [ ] Intégration calendrier (réservations)
+- [ ] Application mobile (React Native / Capacitor)
+- [ ] Analytics avancées (prédictions, tendances)
+- [ ] Intégration paiements en ligne (Stripe)
 
 ---
 
@@ -436,33 +596,6 @@ Créer une PR sur GitHub avec :
 
 ---
 
-## 🔒 Sécurité
-
-Pour la mise en production, les points suivants doivent être implémentés :
-
-### Authentification
-- [ ] JWT ou OAuth 2.0
-- [ ] Refresh tokens
-- [ ] Gestion des sessions
-
-### Validation
-- [ ] Validation des données côté serveur
-- [ ] Sanitization des inputs
-- [ ] Protection CSRF
-
-### Infrastructure
-- [ ] HTTPS obligatoire
-- [ ] Rate limiting sur les API
-- [ ] CORS configuré correctement
-- [ ] Headers de sécurité (CSP, HSTS)
-
-### Données
-- [ ] Chiffrement des données sensibles
-- [ ] Backups réguliers
-- [ ] Conformité RGPD
-
----
-
 ## 📄 Licence
 
 Ce projet est sous licence **MIT**.
@@ -497,14 +630,14 @@ SOFTWARE.
 
 - **Email** : contact@mybi.fr
 - **Issues** : [GitHub Issues](https://github.com/LIILVAME/MyBI/issues)
-- **Documentation** : Voir la section [Documentation](#-structure-du-projet)
+- **Documentation** : Voir la section [Documentation](#-documentation)
 
 ---
 
 <div align="center">
 
-**Fait avec ❤️ en utilisant Vue 3 et Tailwind CSS**
+**Fait avec ❤️ en utilisant Vue 3, Supabase et Tailwind CSS**
 
-[⬆ Retour en haut](#-mybi---monitoring-de-biens-immobiliers)
+[⬆ Retour en haut](#-mybi---monitoring-immobilier)
 
 </div>
