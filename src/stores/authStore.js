@@ -239,14 +239,12 @@ export const useAuthStore = defineStore('auth', () => {
   const fetchProfile = async (force = false) => {
     // Évite les requêtes multiples si déjà en cours
     if (profileFetchInProgress && !force) {
-      console.log('⏸️ fetchProfile déjà en cours, skip')
       return profile.value
     }
 
     // Cache de 5 secondes
     const now = Date.now()
     if (!force && now - lastProfileFetchTime < PROFILE_CACHE_MS && profile.value !== undefined) {
-      console.log('⏸️ fetchProfile: données récentes, skip (cache)')
       return profile.value
     }
 

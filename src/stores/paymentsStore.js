@@ -27,14 +27,12 @@ export const usePaymentsStore = defineStore('payments', () => {
   const fetchPayments = async (force = false) => {
     // Évite les requêtes multiples si déjà en cours
     if (loading.value && !force) {
-      console.log('⏸️ fetchPayments déjà en cours, skip')
       return
     }
 
     // Cache de 5 secondes pour éviter les requêtes trop fréquentes
     const now = Date.now()
     if (!force && now - lastFetchTime < FETCH_CACHE_MS && payments.value.length > 0) {
-      console.log('⏸️ fetchPayments: données récentes, skip (cache)')
       return
     }
 
