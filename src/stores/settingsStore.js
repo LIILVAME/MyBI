@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { setSettingsStoreCache } from '@/utils/formatters'
 
 /**
@@ -104,15 +104,108 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   /**
+   * Applique le thème sur le document HTML
+   * @param {string} themeValue - Thème à appliquer ('light', 'dark', 'auto')
+   */
+  const applyTheme = (themeValue) => {
+    if (typeof window === 'undefined' || !document?.documentElement) {
+      return
+    }
+
+    const html = document.documentElement
+    const root = document.querySelector('html')
+
+    if (!root) return
+
+    // Supprime les classes dark existantes
+    root.classList.remove('dark')
+
+    if (themeValue === 'dark') {
+      root.classList.add('dark')
+    } else if (themeValue === 'auto' || themeValue === 'system') {
+      // Détecte la préférence système
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (prefersDark) {
+        root.classList.add('dark')
+      }
+    }
+    // Si 'light', on ne fait rien (pas de classe dark)
+  }
+
+  /**
+   * Détecte et applique le thème système
+   */
+  const detectSystemTheme = () => {
+    if (theme.value === 'auto' || theme.value === 'system') {
+      applyTheme(theme.value)
+    }
+  }
+
+  /**
    * Change le thème
-   * @param {string} newTheme - Thème ('light', 'dark', 'auto')
+   * @param {string} newTheme - Thème ('light', 'dark', 'auto' ou 'system')
    */
   const setTheme = (newTheme) => {
-    if (['light', 'dark', 'auto'].includes(newTheme)) {
+    if (['light', 'dark', 'auto', 'system'].includes(newTheme)) {
       theme.value = newTheme
       saveSettings()
-      // TODO: Appliquer le thème (à implémenter si nécessaire)
+      applyTheme(newTheme)
+
+      // Si mode système, écoute les changements de préférence
+      if (newTheme === 'auto' || newTheme === 'system') {
+        setupSystemThemeListener()
+      } else {
+        removeSystemThemeListener()
+      }
     }
+  }
+
+  // Listener pour les changements de préférence système
+  let systemThemeListener = null
+
+  /**
+   * Configure l'écouteur pour les changements de préférence système
+   */
+  const setupSystemThemeListener = () => {
+    if (typeof window === 'undefined') return
+
+    // Supprime l'ancien listener s'il existe
+    removeSystemThemeListener()
+
+    // Crée un nouveau listener
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    systemThemeListener = (e) => {
+      if (theme.value === 'auto' || theme.value === 'system') {
+        applyTheme(theme.value)
+      }
+    }
+
+    // Écoute les changements (compatible avec différents navigateurs)
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', systemThemeListener)
+    } else if (mediaQuery.addListener) {
+      // Fallback pour anciens navigateurs
+      mediaQuery.addListener(systemThemeListener)
+    }
+  }
+
+  /**
+   * Supprime l'écouteur de préférence système
+   */
+  const removeSystemThemeListener = () => {
+    if (typeof window === 'undefined' || !systemThemeListener) return
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    if (mediaQuery.removeEventListener) {
+      mediaQuery.removeEventListener('change', systemThemeListener)
+    } else if (mediaQuery.removeListener) {
+      // Fallback pour anciens navigateurs
+      mediaQuery.removeListener(systemThemeListener)
+    }
+
+    systemThemeListener = null
   }
 
   /**
@@ -138,6 +231,14 @@ export const useSettingsStore = defineStore('settings', () => {
   // Charge les paramètres au démarrage
   if (typeof window !== 'undefined') {
     loadSettings()
+    // Applique le thème après chargement
+    nextTick(() => {
+      applyTheme(theme.value)
+      // Si mode système, configure l'écouteur
+      if (theme.value === 'auto' || theme.value === 'system') {
+        setupSystemThemeListener()
+      }
+    })
   }
 
   // Sauvegarde automatique quand les valeurs changent
@@ -173,7 +274,9 @@ export const useSettingsStore = defineStore('settings', () => {
     setNotifications,
     setAlertThreshold,
     loadSettings,
-    saveSettings
+    saveSettings,
+    applyTheme,
+    detectSystemTheme
   }
 })
 

@@ -22,16 +22,21 @@ app.config.errorHandler = (err, instance, info) => {
 
 app.mount('#app')
 
-// Initialise la langue depuis le store settings après le montage de Pinia
+// Initialise la langue et le thème depuis le store settings après le montage de Pinia
 // Utilise nextTick pour s'assurer que Pinia est complètement initialisé
 nextTick(() => {
   try {
     const settingsStore = useSettingsStore()
+    
+    // Initialise la langue
     if (i18n.global.locale.value !== settingsStore.language) {
       i18n.global.locale.value = settingsStore.language
     }
+    
+    // Initialise le thème (le store le fait déjà dans loadSettings, mais on s'assure ici)
+    settingsStore.applyTheme(settingsStore.theme)
   } catch (error) {
-    console.warn('Impossible de charger settingsStore pour i18n:', error)
+    console.warn('Impossible de charger settingsStore (non bloquant):', error)
   }
 })
 
