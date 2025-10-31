@@ -369,9 +369,28 @@ export const useAuthStore = defineStore('auth', () => {
           }
         }
       } else if (event === 'SIGNED_OUT') {
-        user.value = null
-        session.value = null
-        profile.value = null
+        // Nettoie proprement lors de la déconnexion
+        try {
+          // Réinitialise l'état de manière sécurisée
+          if (user.value !== null) user.value = null
+          if (session.value !== null) session.value = null
+          if (profile.value !== null) profile.value = null
+          
+          // Arrête les abonnements Realtime si les stores sont disponibles
+          try {
+            const { usePropertiesStore } = await import('@/stores/propertiesStore')
+            const { usePaymentsStore } = await import('@/stores/paymentsStore')
+            const propertiesStore = usePropertiesStore()
+            const paymentsStore = usePaymentsStore()
+            
+            propertiesStore.stopRealtime()
+            paymentsStore.stopRealtime()
+          } catch (cleanupError) {
+            // Ignore les erreurs de nettoyage (stores peuvent être déjà nettoyés)
+          }
+        } catch (err) {
+          console.warn('Erreur lors du nettoyage après SIGNED_OUT (non bloquant):', err)
+        }
       }
     })
   }
