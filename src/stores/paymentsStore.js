@@ -333,7 +333,11 @@ export const usePaymentsStore = defineStore('payments', () => {
           filter: `user_id=eq.${authStore.user.id}` // Seulement les paiements de l'utilisateur
         },
         async (payload) => {
+          // Vérifie que le store est encore valide (évite les erreurs lors du logout)
+          if (!payments || !payments.value) return
+          
           const { eventType, new: rowNew, old: rowOld } = payload
+          const toast = useToastStore()
 
           if (eventType === 'INSERT') {
             // Charge les données complètes avec relations (via la vue pour avoir due_date)
@@ -404,16 +408,18 @@ export const usePaymentsStore = defineStore('payments', () => {
               }
 
               const index = payments.value.findIndex(p => p.id === updatedPayment.id)
-              if (index !== -1) {
+              if (index !== -1 && payments.value) {
                 payments.value[index] = updatedPayment
-                toast.info(`Paiement mis à jour`)
+                if (toast) toast.info(`Paiement mis à jour`)
               }
             }
           }
 
           if (eventType === 'DELETE') {
+            // Vérifie que le store est encore valide
+            if (!payments || !payments.value) return
             payments.value = payments.value.filter(p => p.id !== rowOld.id)
-            toast.info('Paiement supprimé')
+            if (toast) toast.info('Paiement supprimé')
           }
         }
       )

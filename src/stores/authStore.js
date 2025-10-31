@@ -138,6 +138,22 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
 
     try {
+      // Nettoie les abonnements Realtime AVANT de se déconnecter
+      try {
+        const { usePropertiesStore } = await import('@/stores/propertiesStore')
+        const { usePaymentsStore } = await import('@/stores/paymentsStore')
+        const propertiesStore = usePropertiesStore()
+        const paymentsStore = usePaymentsStore()
+        
+        propertiesStore.stopRealtime()
+        paymentsStore.stopRealtime()
+      } catch (cleanupError) {
+        console.warn('Erreur lors du nettoyage Realtime (non bloquant):', cleanupError)
+      }
+
+      // Réinitialise le profil avant de se déconnecter
+      profile.value = null
+
       const { error: authError } = await supabase.auth.signOut()
 
       if (authError) {

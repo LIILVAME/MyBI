@@ -368,7 +368,11 @@ export const usePropertiesStore = defineStore('properties', () => {
           filter: `user_id=eq.${authStore.user.id}` // Seulement les biens de l'utilisateur
         },
         async (payload) => {
+          // Vérifie que le store est encore valide (évite les erreurs lors du logout)
+          if (!properties || !properties.value) return
+          
           const { eventType, new: rowNew, old: rowOld } = payload
+          const toast = useToastStore()
 
           if (eventType === 'INSERT') {
             // Charge les données complètes avec le tenant si présent
@@ -444,16 +448,18 @@ export const usePropertiesStore = defineStore('properties', () => {
               }
 
               const index = properties.value.findIndex(p => p.id === updatedProperty.id)
-              if (index !== -1) {
+              if (index !== -1 && properties.value) {
                 properties.value[index] = updatedProperty
-                toast.info(`Bien mis à jour : ${updatedProperty.name}`)
+                if (toast) toast.info(`Bien mis à jour : ${updatedProperty.name}`)
               }
             }
           }
 
           if (eventType === 'DELETE') {
+            // Vérifie que le store est encore valide
+            if (!properties || !properties.value) return
             properties.value = properties.value.filter(p => p.id !== rowOld.id)
-            toast.info('Bien supprimé')
+            if (toast) toast.info('Bien supprimé')
           }
         }
       )
