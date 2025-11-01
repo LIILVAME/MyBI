@@ -147,7 +147,13 @@
     "noAccount": "Pas encore de compte ?",
     "hasAccount": "Déjà un compte ?",
     "fullName": "Nom complet",
-    "phone": "Téléphone"
+    "phone": "Téléphone",
+    "or": "OU",
+    "loginWithGoogle": "Se connecter avec Google",
+    "loginWithApple": "Se connecter avec Apple",
+    "oauthLoading": "Connexion...",
+    "oauthSuccess": "✅ Connexion réussie",
+    "oauthError": "❌ Connexion via {provider} échouée"
   },
   "currency": {
     "EUR": "Euro (€)",

@@ -286,6 +286,88 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   /**
+   * Connexion avec Google OAuth
+   * @param {string} redirectTo - URL de redirection après authentification
+   */
+  const loginWithGoogle = async (redirectTo = null) => {
+    loading.value = true
+    error.value = null
+    const toastStore = useToastStore()
+
+    try {
+      // Détermine l'URL de redirection
+      const baseUrl = window.location.origin
+      const redirectUrl = redirectTo || `${baseUrl}/dashboard`
+      
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent'
+          }
+        }
+      })
+
+      if (oauthError) {
+        error.value = oauthError.message
+        toastStore.error(`❌ Connexion via Google échouée : ${oauthError.message}`)
+        loading.value = false
+        return { success: false, error: oauthError.message }
+      }
+
+      // La redirection se fait automatiquement par Supabase
+      // On ne peut pas retourner de succès ici car la page va rediriger
+      return { success: true, redirecting: true }
+    } catch (err) {
+      error.value = err.message
+      toastStore.error(`❌ Erreur lors de la connexion Google : ${err.message}`)
+      loading.value = false
+      return { success: false, error: err.message }
+    }
+  }
+
+  /**
+   * Connexion avec Apple OAuth
+   * @param {string} redirectTo - URL de redirection après authentification
+   */
+  const loginWithApple = async (redirectTo = null) => {
+    loading.value = true
+    error.value = null
+    const toastStore = useToastStore()
+
+    try {
+      // Détermine l'URL de redirection
+      const baseUrl = window.location.origin
+      const redirectUrl = redirectTo || `${baseUrl}/dashboard`
+      
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'apple',
+        options: {
+          redirectTo: redirectUrl
+        }
+      })
+
+      if (oauthError) {
+        error.value = oauthError.message
+        toastStore.error(`❌ Connexion via Apple échouée : ${oauthError.message}`)
+        loading.value = false
+        return { success: false, error: oauthError.message }
+      }
+
+      // La redirection se fait automatiquement par Supabase
+      // On ne peut pas retourner de succès ici car la page va rediriger
+      return { success: true, redirecting: true }
+    } catch (err) {
+      error.value = err.message
+      toastStore.error(`❌ Erreur lors de la connexion Apple : ${err.message}`)
+      loading.value = false
+      return { success: false, error: err.message }
+    }
+  }
+
+  /**
    * Réinitialise le mot de passe
    * @param {string} email - Email pour recevoir le lien de réinitialisation
    */
@@ -478,7 +560,9 @@ export const useAuthStore = defineStore('auth', () => {
     resetPassword,
     initAuthListener,
     fetchProfile,
-    updateProfile
+    updateProfile,
+    loginWithGoogle,
+    loginWithApple
   }
 })
 
