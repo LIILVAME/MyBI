@@ -223,14 +223,19 @@ const router = createRouter({
 })
 
 // Initialise le SEO après la création du router
-router.afterEach((to) => {
+router.afterEach(async (to) => {
   // Le composable useSEO sera appelé dans App.vue après le montage
   // pour mettre à jour les meta tags dynamiquement
   
-  // Track page view pour analytics
+  // Track page view pour analytics (dynamique pour éviter erreur si analytics non disponible)
   if (typeof window !== 'undefined' && window.gtag) {
-    const { trackPageView } = require('@/utils/analytics')
-    trackPageView(to.path, to.meta?.seo?.title || document.title)
+    try {
+      const { trackPageView } = await import('@/utils/analytics')
+      trackPageView(to.path, to.meta?.seo?.title || document.title)
+    } catch (error) {
+      // Analytics non disponible, on continue sans
+      console.warn('Analytics non disponible pour tracking:', error)
+    }
   }
 })
 
