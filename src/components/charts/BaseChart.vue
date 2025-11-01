@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ title }}</h2>
+  <div>
+    <h2 v-if="showTitle" class="text-lg font-semibold text-gray-900 mb-4">{{ title }}</h2>
     <div v-if="loading" class="flex items-center justify-center h-[300px]">
       <InlineLoader />
     </div>
@@ -8,13 +8,13 @@
       <InlineLoader />
     </div>
     <div v-else ref="chartElement" class="chart-container">
-    <apexchart
+      <apexchart
         :key="chartKey"
-      :type="chartType"
-      :height="height"
-      :options="chartOptions"
+        :type="chartType"
+        :height="height"
+        :options="chartOptions"
         :series="normalizedSeries"
-    />
+      />
     </div>
   </div>
 </template>
@@ -27,7 +27,11 @@ import InlineLoader from '@/components/common/InlineLoader.vue'
 const props = defineProps({
   title: {
     type: String,
-    required: true
+    default: ''
+  },
+  showTitle: {
+    type: Boolean,
+    default: true
   },
   type: {
     type: String,
