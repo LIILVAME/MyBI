@@ -11,6 +11,10 @@
     "test:watch": "vitest",
     "lint": "echo 'Linter not configured yet'",
     "audit:lighthouse": "node scripts/run-lighthouse.js",
+    "audit:vercel": "node scripts/audit-vercel-env.js",
+    "audit:supabase": "node scripts/test-supabase-connectivity.js",
+    "audit:health": "node scripts/generate-health-report.js",
+    "audit:all": "npm run audit:vercel && npm run audit:supabase && npm run audit:health",
     "pwa:icons": "node scripts/generate-pwa-icons.js",
     "pwa:validate": "./scripts/validate-pwa.sh",
     "email:audit": "node scripts/audit-email-templates.js"
