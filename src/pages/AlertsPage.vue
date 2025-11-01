@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- Header -->
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('alerts.title') }}</h1>
@@ -152,15 +158,27 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from '@/composables/useLingui'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import { useAlertsStore } from '@/stores/alertsStore'
 import { formatDate } from '@/utils/formatters'
 
 const { t } = useI18n()
 
 const alertsStore = useAlertsStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des alertes
+    await alertsStore.fetchAlerts()
+  },
+  { threshold: 80 }
+)
 
 /**
  * Charge les alertes au montage

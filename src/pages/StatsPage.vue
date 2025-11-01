@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- En-tête avec barre verte -->
         <div class="mb-6 sm:mb-8 animate-fade-in">
           <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{{ $t('stats.title') }}</h1>
@@ -186,6 +192,8 @@
 
 <script setup>
 import { computed, onMounted, ref, onUnmounted } from 'vue'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import BaseChart from '../components/charts/BaseChart.vue'
@@ -198,6 +206,16 @@ import { formatCurrency } from '@/utils/formatters'
 const { t } = useI18n()
 const analyticsStore = useAnalyticsStore()
 const settingsStore = useSettingsStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des analytics
+    await analyticsStore.fetchAnalytics()
+  },
+  { threshold: 80 }
+)
 
 // Hauteur dynamique des graphiques selon la taille d'écran
 const isMobile = ref(typeof window !== 'undefined' ? window.innerWidth < 640 : false)

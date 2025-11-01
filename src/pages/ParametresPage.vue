@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="flex h-full">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="flex flex-col md:flex-row min-h-full">
         <!-- Sous-sidebar de navigation (desktop) -->
         <aside class="hidden md:block w-64 shrink-0">
           <SettingsSidebar 
@@ -15,12 +21,12 @@
         </aside>
 
         <!-- Menu déroulant (mobile) -->
-        <div class="md:hidden w-full">
-          <div class="bg-white border-b border-gray-200 px-6 py-4">
+        <div class="md:hidden w-full bg-white border-b border-gray-200 sticky top-0 z-10">
+          <div class="px-4 sm:px-6 py-3">
             <select
               :value="activeSection"
               @change="handleSectionChange($event.target.value)"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white"
             >
               <option value="general">{{ $t('settings.sections.general') }}</option>
               <option value="notifications">{{ $t('settings.sections.notifications') }}</option>
@@ -34,7 +40,7 @@
 
         <!-- Zone de contenu -->
         <div class="flex-1 overflow-y-auto">
-          <div class="max-w-4xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
             <!-- Header -->
             <div class="mb-8">
               <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('settings.title') }}</h1>
@@ -63,7 +69,9 @@
 
 <script setup>
 import { ref, computed, onErrorCaptured, onMounted, watch } from 'vue'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import SettingsSidebar from '../components/settings/SettingsSidebar.vue'
 import SettingsGeneral from '../components/settings/SettingsGeneral.vue'
 import SettingsNotifications from '../components/settings/SettingsNotifications.vue'
@@ -71,6 +79,7 @@ import SettingsSecurity from '../components/settings/SettingsSecurity.vue'
 import SettingsLanguageCurrency from '../components/settings/SettingsLanguageCurrency.vue'
 import SettingsTheme from '../components/settings/SettingsTheme.vue'
 import SettingsIntegrations from '../components/settings/SettingsIntegrations.vue'
+import { useAuthStore } from '@/stores/authStore'
 
 // Capture les erreurs pour éviter que la page ne crash complètement
 onErrorCaptured((err, instance, info) => {
@@ -79,6 +88,19 @@ onErrorCaptured((err, instance, info) => {
   // mais empêche le crash de l'application
   return true
 })
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const authStore = useAuthStore()
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement du profil utilisateur
+    if (authStore.user) {
+      await authStore.fetchProfile(true)
+    }
+  },
+  { threshold: 80 }
+)
 
 const activeSection = ref('general')
 

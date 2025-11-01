@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- Header -->
         <div class="mb-8 flex items-center justify-between">
           <div>
@@ -126,6 +132,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
@@ -148,6 +156,16 @@ const paymentsStore = usePaymentsStore()
 const propertiesStore = usePropertiesStore()
 const toast = useToastStore()
 const settingsStore = useSettingsStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement du rapport
+    await loadReport()
+  },
+  { threshold: 80 }
+)
 
 // State
 const reportType = ref('global')

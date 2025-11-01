@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-3 pt-16 pb-20 sm:px-6 lg:px-8 sm:pt-10 sm:pb-10">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-20 sm:pt-10 sm:pb-10">
         <!-- Header -->
         <div class="mb-8">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -122,7 +128,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from '@/composables/useLingui'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import PaymentsSection from '../components/dashboard/PaymentsSection.vue'
 import AddPaymentModal from '../components/payments/AddPaymentModal.vue'
 import EditPaymentModal from '../components/payments/EditPaymentModal.vue'
@@ -131,6 +139,16 @@ import { usePaymentsStore } from '@/stores/paymentsStore'
 import { TRANSACTION_STATUS } from '@/utils/constants'
 
 const paymentsStore = usePaymentsStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des paiements
+    await paymentsStore.fetchPayments(true) // force = true pour bypasser le cache
+  },
+  { threshold: 80 }
+)
 
 /**
  * Charge les paiements depuis Supabase au montage

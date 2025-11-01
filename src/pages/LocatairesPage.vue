@@ -4,8 +4,14 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- Header avec statistiques -->
         <TenantsHeader 
           :stats="stats"
@@ -64,7 +70,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from '@/composables/useLingui'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import TenantsHeader from '../components/tenants/TenantsHeader.vue'
 import TenantsList from '../components/tenants/TenantsList.vue'
 import AddTenantModal from '../components/tenants/AddTenantModal.vue'
@@ -76,6 +84,16 @@ import { PAYMENT_STATUS } from '@/utils/constants'
 const { t } = useI18n()
 const tenantsStore = useTenantsStore()
 const propertiesStore = usePropertiesStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des propriétés (les locataires sont dérivés)
+    await propertiesStore.fetchProperties(true) // force = true pour bypasser le cache
+  },
+  { threshold: 80 }
+)
 
 /**
  * Charge les propriétés depuis Supabase au montage (les locataires sont dérivés des propriétés)
