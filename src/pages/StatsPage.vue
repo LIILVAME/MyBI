@@ -192,10 +192,12 @@ import BaseChart from '../components/charts/BaseChart.vue'
 import KpiCard from '../components/stats/KpiCard.vue'
 import ChartCard from '../components/stats/ChartCard.vue'
 import { useAnalyticsStore } from '@/stores/analyticsStore'
+import { useSettingsStore } from '@/stores/settingsStore'
 import { formatCurrency } from '@/utils/formatters'
 
 const { t } = useI18n()
 const analyticsStore = useAnalyticsStore()
+const settingsStore = useSettingsStore()
 
 // Options du graphique de taux d'occupation avec couleur verte MyBI
 const occupancyChartOptions = computed(() => ({
@@ -227,16 +229,382 @@ const occupancyChartOptions = computed(() => ({
   }
 }))
 
-// Options du graphique de revenus mensuels avec couleur verte MyBI
+// Options du graphique de revenus mensuels améliorées
 const revenueChartOptionsWithColors = computed(() => ({
   ...analyticsStore.revenueChartOptions,
-  colors: ['#22c55e']
+  colors: ['#22c55e'],
+  chart: {
+    type: 'bar',
+    toolbar: {
+      show: false
+    },
+    animations: {
+      enabled: true,
+      easing: 'easeinout',
+      speed: 800,
+      animateGradually: {
+        enabled: true,
+        delay: 150
+      },
+      dynamicAnimation: {
+        enabled: true,
+        speed: 350
+      }
+    },
+    sparkline: {
+      enabled: false
+    }
+  },
+  plotOptions: {
+    bar: {
+      borderRadius: 8,
+      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'last',
+      columnWidth: '60%',
+      dataLabels: {
+        position: 'top'
+      },
+      distributed: false,
+      horizontal: false,
+      barHeight: '100%',
+      rangeBarOverlap: true,
+      rangeBarGroupRows: false
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    offsetY: -20,
+    style: {
+      fontSize: '12px',
+      fontWeight: 600,
+      colors: ['#059669']
+    },
+    formatter: (val) => {
+      if (val === 0) return ''
+      const currency = settingsStore.currency || 'EUR'
+      const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+      return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: currency,
+        notation: 'compact',
+        maximumFractionDigits: 1
+      }).format(val)
+    }
+  },
+  grid: {
+    borderColor: '#e5e7eb',
+    strokeDashArray: 3,
+    xaxis: {
+      lines: {
+        show: false
+      }
+    },
+    yaxis: {
+      lines: {
+        show: true
+      }
+    },
+    padding: {
+      top: 0,
+      right: 10,
+      bottom: 0,
+      left: 10
+    }
+  },
+  tooltip: {
+    theme: 'light',
+    style: {
+      fontSize: '13px',
+      fontFamily: 'inherit'
+    },
+    x: {
+      formatter: (val) => `Mois : ${val}`
+    },
+    y: {
+      formatter: (val) => {
+        const currency = settingsStore.currency || 'EUR'
+        const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }).format(val)
+      },
+      title: {
+        formatter: () => 'Revenus'
+      }
+    },
+    marker: {
+      show: true
+    },
+    fixed: {
+      enabled: false,
+      position: 'topRight',
+      offsetX: 0,
+      offsetY: 0
+    }
+  },
+  xaxis: {
+    categories: analyticsStore.revenueChartOptions.xaxis?.categories || [],
+    labels: {
+      style: {
+        colors: '#6b7280',
+        fontSize: '12px',
+        fontWeight: 500,
+        fontFamily: 'inherit'
+      },
+      rotate: -45,
+      rotateAlways: false,
+      hideOverlappingLabels: true
+    },
+    axisBorder: {
+      show: true,
+      color: '#e5e7eb',
+      height: 1,
+      width: '100%',
+      offsetX: 0,
+      offsetY: 0
+    },
+    axisTicks: {
+      show: true,
+      color: '#e5e7eb',
+      height: 6,
+      offsetX: 0,
+      offsetY: 0
+    }
+  },
+  yaxis: {
+    labels: {
+      style: {
+        colors: '#6b7280',
+        fontSize: '12px',
+        fontWeight: 500
+      },
+      formatter: (val) => {
+        const currency = settingsStore.currency || 'EUR'
+        const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency,
+          notation: 'compact',
+          maximumFractionDigits: 0
+        }).format(val)
+      }
+    },
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    }
+  },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      shade: 'light',
+      type: 'vertical',
+      shadeIntensity: 0.3,
+      gradientToColors: ['#16a34a'],
+      inverseColors: false,
+      opacityFrom: 1,
+      opacityTo: 0.8,
+      stops: [0, 100],
+      colorStops: [
+        {
+          offset: 0,
+          color: '#22c55e',
+          opacity: 1
+        },
+        {
+          offset: 100,
+          color: '#16a34a',
+          opacity: 0.8
+        }
+      ]
+    }
+  },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['#16a34a']
+  }
 }))
 
-// Options du graphique de revenus par bien avec couleur verte MyBI
+// Options du graphique de revenus par bien améliorées (horizontal)
 const revenueByPropertyChartOptionsWithColors = computed(() => ({
   ...analyticsStore.revenueByPropertyChartOptions,
-  colors: ['#22c55e']
+  colors: ['#22c55e'],
+  chart: {
+    type: 'bar',
+    toolbar: {
+      show: false
+    },
+    animations: {
+      enabled: true,
+      easing: 'easeinout',
+      speed: 800,
+      animateGradually: {
+        enabled: true,
+        delay: 150
+      },
+      dynamicAnimation: {
+        enabled: true,
+        speed: 350
+      }
+    }
+  },
+  plotOptions: {
+    bar: {
+      borderRadius: 8,
+      borderRadiusApplication: 'end',
+      horizontal: true,
+      barHeight: '70%',
+      dataLabels: {
+        position: 'right'
+      }
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    offsetX: 10,
+    style: {
+      fontSize: '12px',
+      fontWeight: 600,
+      colors: ['#059669']
+    },
+    formatter: (val) => {
+      if (val === 0) return ''
+      const currency = settingsStore.currency || 'EUR'
+      const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+      return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: currency,
+        notation: 'compact',
+        maximumFractionDigits: 1
+      }).format(val)
+    }
+  },
+  grid: {
+    borderColor: '#e5e7eb',
+    strokeDashArray: 3,
+    xaxis: {
+      lines: {
+        show: true
+      }
+    },
+    yaxis: {
+      lines: {
+        show: false
+      }
+    },
+    padding: {
+      top: 0,
+      right: 10,
+      bottom: 0,
+      left: 10
+    }
+  },
+  tooltip: {
+    theme: 'light',
+    style: {
+      fontSize: '13px',
+      fontFamily: 'inherit'
+    },
+    y: {
+      formatter: (val, { dataPointIndex }) => {
+        const property = analyticsStore.revenueByProperty[dataPointIndex]
+        return property?.name || 'Bien'
+      },
+      title: {
+        formatter: () => 'Bien'
+      }
+    },
+    x: {
+      formatter: (val) => {
+        const currency = settingsStore.currency || 'EUR'
+        const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }).format(val)
+      },
+      title: {
+        formatter: () => 'Revenus'
+      }
+    },
+    marker: {
+      show: true
+    }
+  },
+  xaxis: {
+    labels: {
+      style: {
+        colors: '#6b7280',
+        fontSize: '12px',
+        fontWeight: 500
+      },
+      formatter: (val) => {
+        const currency = settingsStore.currency || 'EUR'
+        const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+        return new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currency,
+          notation: 'compact',
+          maximumFractionDigits: 0
+        }).format(val)
+      }
+    },
+    axisBorder: {
+      show: true,
+      color: '#e5e7eb',
+      height: 1
+    },
+    axisTicks: {
+      show: true,
+      color: '#e5e7eb',
+      height: 6
+    }
+  },
+  yaxis: {
+    categories: analyticsStore.revenueByPropertyChartOptions.xaxis?.categories || [],
+    labels: {
+      style: {
+        colors: '#6b7280',
+        fontSize: '12px',
+        fontWeight: 500,
+        fontFamily: 'inherit'
+      },
+      maxWidth: 120,
+      trim: true
+    },
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    }
+  },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      shade: 'light',
+      type: 'horizontal',
+      shadeIntensity: 0.3,
+      gradientToColors: ['#16a34a'],
+      inverseColors: false,
+      opacityFrom: 1,
+      opacityTo: 0.8,
+      stops: [0, 100]
+    }
+  },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['#16a34a']
+  }
 }))
 
 // Options du graphique de statut des paiements avec couleurs harmonisées
