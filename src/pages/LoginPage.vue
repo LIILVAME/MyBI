@@ -155,8 +155,18 @@ const handleOAuth = async (provider) => {
  * Gère aussi le callback OAuth depuis l'URL
  */
 onMounted(async () => {
+  console.log('🔵 LoginPage onMounted - Début')
   try {
     authStore.error = null
+    console.log('🔵 LoginPage - Erreur réinitialisée')
+
+    // Attendre que loadingSession soit terminé avant de faire quoi que ce soit
+    let attempts = 0
+    while (authStore.loadingSession && attempts < 50) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      attempts++
+      console.log(`🔵 LoginPage - Attente loadingSession (${attempts}/50)`)
+    }
 
     // Vérifie s'il y a un token OAuth dans l'URL (callback)
     const hashParams = new URLSearchParams(window.location.hash.substring(1))
@@ -164,9 +174,11 @@ onMounted(async () => {
     const error = hashParams.get('error')
 
     if (error) {
+      console.log('🔵 LoginPage - Erreur OAuth détectée:', error)
       toastStore.error(`Erreur d'authentification : ${error}`)
       window.history.replaceState({}, document.title, window.location.pathname)
     } else if (accessToken) {
+      console.log('🔵 LoginPage - Token OAuth détecté')
       setTimeout(async () => {
         try {
           const user = await authStore.fetchUser(true)
@@ -176,27 +188,34 @@ onMounted(async () => {
             toastStore.success(t('login.oauthSuccess'))
           }
         } catch (err) {
-          console.error('Erreur lors du callback OAuth:', err)
+          console.error('🔴 Erreur lors du callback OAuth:', err)
         }
       }, 500)
     }
 
     // Si l'utilisateur est déjà connecté, redirige vers le dashboard
     if (authStore.user) {
+      console.log('🔵 LoginPage - Utilisateur déjà connecté, redirection vers dashboard')
       router.push('/dashboard')
     } else {
       try {
+        console.log('🔵 LoginPage - Tentative de récupération de session')
         const user = await authStore.fetchUser(true)
         if (user) {
+          console.log('🔵 LoginPage - Session trouvée, redirection vers dashboard')
           router.push('/dashboard')
+        } else {
+          console.log('🔵 LoginPage - Aucune session trouvée, affichage du formulaire')
         }
       } catch (err) {
         // Erreur silencieuse - l'utilisateur peut simplement se connecter
-        console.warn('Impossible de récupérer la session:', err)
+        console.warn('⚠️ LoginPage - Impossible de récupérer la session:', err)
       }
     }
+    console.log('✅ LoginPage onMounted - Terminé avec succès')
   } catch (err) {
-    console.error('Erreur dans onMounted de LoginPage:', err)
+    console.error('🔴 ERREUR CRITIQUE dans onMounted de LoginPage:', err)
+    console.error('Stack:', err.stack)
     // Ne pas bloquer le rendu en cas d'erreur
   }
 })

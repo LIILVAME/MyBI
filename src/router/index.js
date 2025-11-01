@@ -28,6 +28,12 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
+    path: '/login-debug',
+    name: 'LoginDebug',
+    component: () => import('../pages/LoginPageDebug.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
     path: '/signup',
     name: 'Signup',
     component: SignupPage,

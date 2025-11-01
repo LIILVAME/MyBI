@@ -68,7 +68,23 @@ app.config.errorHandler = (err, instance, info) => {
     return // Ignorer silencieusement cette erreur
   }
   
-  console.error('Erreur Vue globale:', err, info)
+  console.error('🚨 Erreur Vue globale:', err)
+  console.error('📍 Info:', info)
+  console.error('🎭 Instance:', instance?.$options?.name || 'Unknown')
+  console.error('📚 Stack:', errStack)
+  
+  // Affiche un message visible dans le DOM pour debug
+  if (typeof document !== 'undefined') {
+    const errorDiv = document.createElement('div')
+    errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ef4444;color:white;padding:16px;z-index:99999;font-family:monospace;'
+    errorDiv.innerHTML = `
+      <strong>Erreur Vue détectée:</strong><br>
+      ${errMessage}<br>
+      <small>Voir console pour détails</small>
+      <button onclick="this.parentElement.remove()" style="float:right;background:white;color:#ef4444;border:none;padding:4px 8px;cursor:pointer;border-radius:4px;">×</button>
+    `
+    document.body.appendChild(errorDiv)
+  }
   
   // Capture l'erreur dans Sentry si disponible (seulement si non ignorée)
   if (window.Sentry) {
