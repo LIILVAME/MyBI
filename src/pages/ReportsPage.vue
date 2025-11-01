@@ -7,75 +7,118 @@
     <main class="flex-1 overflow-y-auto">
       <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- Header -->
-        <div class="mb-8">
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">Rapports</h1>
-          <p class="text-gray-600">Générez et exportez vos rapports mensuels et données</p>
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('reports.title') }}</h1>
+            <p class="text-gray-600">{{ $t('reports.subtitle') }}</p>
+            <div class="border-b-2 border-green-500 w-20 mb-4 mt-3"></div>
+          </div>
+          
+          <!-- Bouton d'action principal -->
+          <button
+            @click="handleExportPDF"
+            :disabled="reportsStore.loading || !reportData"
+            class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            {{ $t('reports.actions.exportPDF') }}
+          </button>
         </div>
 
-        <!-- Actions rapides -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <!-- Rapport mensuel -->
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Rapport mensuel</h3>
-            <p class="text-sm text-gray-600 mb-4">Générez un rapport PDF complet pour un mois donné</p>
-            <div class="flex gap-2">
-              <select
-                v-model="selectedMonth"
-                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-              >
-                <option v-for="month in availableMonths" :key="month.value" :value="month.value">
-                  {{ month.label }}
-                </option>
-              </select>
-              <button
-                @click="generateMonthlyReport"
-                :disabled="reportsStore.loading"
-                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-              >
-                {{ reportsStore.loading ? 'Génération...' : 'Générer PDF' }}
-              </button>
-            </div>
-          </div>
+        <!-- Filtres -->
+        <ReportFilters
+          :selected-month="selectedMonth"
+          :report-type="reportType"
+          :selected-property="selectedProperty"
+          :properties="propertiesStore.properties"
+          :available-months="availableMonths"
+          :loading="reportsStore.loading"
+          @update:period="selectedMonth = $event"
+          @update:reportType="reportType = $event"
+          @update:property="selectedProperty = $event"
+          @refresh="loadReport"
+        />
 
-          <!-- Export paiements -->
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Export paiements</h3>
-            <p class="text-sm text-gray-600 mb-4">Exportez tous vos paiements en Excel</p>
-            <button
-              @click="exportPayments"
-              class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium"
-            >
-              Exporter en Excel
-            </button>
-          </div>
-
-          <!-- Export biens -->
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Export biens</h3>
-            <p class="text-sm text-gray-600 mb-4">Exportez la liste de vos biens en Excel</p>
-            <button
-              @click="exportProperties"
-              class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
-            >
-              Exporter en Excel
-            </button>
-          </div>
+        <!-- KPIs Section -->
+        <div v-if="reportData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <KpiCard
+            :label="$t('reports.kpi.totalRevenue')"
+            :value="reportData.statistics.totalRevenue"
+            icon="currency"
+            icon-color="text-green-600"
+            icon-bg-color="bg-green-50"
+            :formatter="formatCurrency"
+            :tooltip="$t('reports.kpi.totalRevenueTooltip')"
+          />
+          <KpiCard
+            :label="$t('reports.kpi.rentCollected')"
+            :value="reportData.statistics.totalRevenue"
+            icon="currency"
+            icon-color="text-blue-600"
+            icon-bg-color="bg-blue-50"
+            :formatter="formatCurrency"
+            :tooltip="$t('reports.kpi.rentCollectedTooltip')"
+          />
+          <KpiCard
+            :label="$t('reports.kpi.occupancyRate')"
+            :value="reportData.statistics.occupancyRate"
+            icon="home"
+            icon-color="text-purple-600"
+            icon-bg-color="bg-purple-50"
+            :formatter="(val) => `${val}%`"
+            :tooltip="$t('reports.kpi.occupancyRateTooltip')"
+          />
+          <KpiCard
+            :label="$t('reports.kpi.delayedPayments')"
+            :value="reportData.statistics.latePayments"
+            icon="clock"
+            icon-color="text-red-600"
+            icon-bg-color="bg-red-50"
+            :tooltip="$t('reports.kpi.delayedPaymentsTooltip')"
+          />
         </div>
 
-        <!-- Rapports récents -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">Rapports récents</h2>
-          <div v-if="reportsStore.loading" class="text-center py-8">
-            <InlineLoader />
-          </div>
-          <div v-else-if="reportsStore.recentReports.length === 0" class="text-center py-8 text-gray-500">
-            <p>Aucun rapport généré récemment</p>
-            <p class="text-sm mt-2">Générez un rapport mensuel pour commencer</p>
-          </div>
-          <div v-else class="space-y-3">
-            <!-- TODO v0.3.0+ : Afficher les rapports récents depuis Supabase -->
-          </div>
+        <!-- Loading State -->
+        <div v-if="reportsStore.loading && !reportData" class="text-center py-12">
+          <InlineLoader />
+          <p class="mt-4 text-gray-600">{{ $t('reports.loading') }}</p>
         </div>
+
+        <!-- Chart and Table Section -->
+        <div v-if="reportData" class="space-y-6">
+          <!-- Chart -->
+          <ReportChart
+            :title="$t('reports.chart.revenue.title')"
+            :description="$t('reports.chart.revenue.description')"
+            chart-type="bar"
+            :series="chartSeries"
+            :chart-options="chartOptions"
+          />
+
+          <!-- Table -->
+          <ReportTable :table-data="tableData" />
+        </div>
+
+        <!-- Empty State -->
+        <div v-if="!reportsStore.loading && !reportData" class="text-center py-12 text-gray-500">
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <p class="text-lg font-medium mb-2">{{ $t('reports.noData.title') }}</p>
+          <p class="text-sm">{{ $t('reports.noData.message') }}</p>
+        </div>
+
+        <!-- Summary Section -->
+        <ReportSummary
+          v-if="reportData"
+          :statistics="reportData.statistics"
+          :period="reportPeriod"
+          :loading="reportsStore.loading"
+          @export-pdf="handleExportPDF"
+          @send-email="handleSendEmail"
+        />
       </div>
     </main>
   </div>
@@ -83,21 +126,34 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
+import KpiCard from '../components/stats/KpiCard.vue'
+import ReportFilters from '../components/reports/ReportFilters.vue'
+import ReportSummary from '../components/reports/ReportSummary.vue'
+import ReportTable from '../components/reports/ReportTable.vue'
+import ReportChart from '../components/reports/ReportChart.vue'
 import { useReportsStore } from '@/stores/reportsStore'
 import { usePaymentsStore } from '@/stores/paymentsStore'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { useToastStore } from '@/stores/toastStore'
-import { exportToPDF, exportToExcel, exportMonthlyReport } from '@/utils/exportUtils'
-import { formatCurrency } from '@/utils/formatters'
+import { exportMonthlyReport } from '@/utils/exportUtils'
+import { formatCurrency, formatDate } from '@/utils/formatters'
+import { useSettingsStore } from '@/stores/settingsStore'
 
-const router = useRouter()
+const { t } = useI18n()
 const reportsStore = useReportsStore()
 const paymentsStore = usePaymentsStore()
 const propertiesStore = usePropertiesStore()
 const toast = useToastStore()
+const settingsStore = useSettingsStore()
+
+// State
+const reportType = ref('global')
+const selectedProperty = ref('all')
+const reportData = ref(null)
+const selectedMonth = ref('')
 
 // Génère les 12 derniers mois
 const availableMonths = computed(() => {
@@ -117,76 +173,265 @@ const availableMonths = computed(() => {
   return months
 })
 
-const selectedMonth = ref(availableMonths.value[0]?.value || '')
+// Période du rapport
+const reportPeriod = computed(() => {
+  if (!selectedMonth.value) return { startDate: new Date(), endDate: new Date() }
+  
+  // Parse le mois (format "janv. 2025")
+  const [monthName, year] = selectedMonth.value.split(' ')
+  const monthMap = {
+    'janv.': 0, 'févr.': 1, 'mars': 2, 'avr.': 3, 'mai': 4, 'juin': 5,
+    'juil.': 6, 'août': 7, 'sept.': 8, 'oct.': 9, 'nov.': 10, 'déc.': 11
+  }
+  const monthNum = monthMap[monthName] || 0
+  
+  const startDate = new Date(year, monthNum, 1)
+  const endDate = new Date(year, monthNum + 1, 0, 23, 59, 59)
+  
+  return { startDate, endDate }
+})
+
+// Données du tableau
+const tableData = computed(() => {
+  if (!reportData.value) return []
+  
+  const properties = reportData.value.properties || []
+  const payments = reportData.value.payments || []
+  
+  return properties.map(property => {
+    const propertyPayments = payments.filter(p => p.property === property.name)
+    const paidPayments = propertyPayments.filter(p => p.status === 'paid')
+    const totalPaid = paidPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    const delayed = propertyPayments.filter(p => p.status === 'late').length
+    
+    return {
+      property: property.name,
+      city: property.city || '-',
+      rent: property.rent || 0,
+      status: property.status || 'vacant',
+      totalPaid,
+      delayed,
+      occupancy: property.status === 'occupied' ? 100 : 0
+    }
+  })
+})
+
+// Données du graphique
+const chartSeries = computed(() => {
+  if (!reportData.value || !reportData.value.payments) return [{ name: t('reports.chart.revenue.label'), data: [] }]
+  
+  const payments = reportData.value.payments || []
+  const paidPayments = payments.filter(p => p.status === 'paid')
+  
+  if (paidPayments.length === 0) {
+    return [{ name: t('reports.chart.revenue.label'), data: [] }]
+  }
+  
+  // Groupe par semaine
+  const grouped = {}
+  const categories = []
+  
+  paidPayments.forEach(payment => {
+    const date = new Date(payment.dueDate)
+    const weekKey = `${date.getFullYear()}-W${getWeekNumber(date)}`
+    if (!grouped[weekKey]) {
+      grouped[weekKey] = 0
+      if (!categories.includes(weekKey)) {
+        categories.push(weekKey)
+      }
+    }
+    grouped[weekKey] += payment.amount || 0
+  })
+  
+  // Trier les catégories et créer les données
+  categories.sort()
+  const data = categories.map(key => grouped[key] || 0)
+  
+  return [{
+    name: t('reports.chart.revenue.label'),
+    data: data
+  }]
+})
+
+// Catégories pour le graphique
+const chartCategories = computed(() => {
+  if (!reportData.value || !reportData.value.payments) return []
+  
+  const payments = reportData.value.payments || []
+  const paidPayments = payments.filter(p => p.status === 'paid')
+  
+  const categories = []
+  paidPayments.forEach(payment => {
+    const date = new Date(payment.dueDate)
+    const weekKey = `${date.getFullYear()}-W${getWeekNumber(date)}`
+    if (!categories.includes(weekKey)) {
+      categories.push(weekKey)
+    }
+  })
+  
+  return categories.sort()
+})
+
+const chartOptions = computed(() => {
+  const currency = settingsStore.currency
+  const locale = currency === 'USD' ? 'en-US' : currency === 'GBP' ? 'en-GB' : 'fr-FR'
+  
+  return {
+    chart: {
+      type: 'bar',
+      toolbar: { show: false },
+      animations: {
+        enabled: true,
+        easing: 'easeinout',
+        speed: 800,
+        animateGradually: {
+          enabled: true,
+          delay: 150
+        }
+      }
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 8,
+        columnWidth: '60%',
+        dataLabels: {
+          position: 'top',
+          formatter: (val) => {
+            if (val === 0) return ''
+            return new Intl.NumberFormat(locale, {
+              style: 'currency',
+              currency,
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+            }).format(val)
+          },
+          style: {
+            colors: ['#059669'],
+            fontSize: '11px'
+          }
+        }
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    xaxis: {
+      categories: chartCategories.value,
+      labels: {
+        style: {
+          colors: '#6b7280',
+          fontSize: '12px'
+        },
+        rotate: -45,
+        rotateAlways: false
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: (val) => {
+          if (val === 0) return '0'
+          return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          }).format(val)
+        },
+        style: {
+          colors: '#6b7280',
+          fontSize: '12px'
+        }
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: (val) => {
+          return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+          }).format(val)
+        }
+      }
+    },
+    colors: ['#22c55e'],
+    grid: {
+      borderColor: '#e5e7eb',
+      strokeDashArray: 3,
+      xaxis: {
+        lines: {
+          show: true
+        }
+      },
+      yaxis: {
+        lines: {
+          show: true
+        }
+      }
+    }
+  }
+})
+
+// Utilitaires
+const getWeekNumber = (date) => {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  const dayNum = d.getUTCDay() || 7
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum)
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+}
 
 /**
- * Génère un rapport mensuel en PDF
+ * Charge le rapport
  */
-const generateMonthlyReport = async () => {
-  if (!selectedMonth.value) return
-
+const loadReport = async () => {
+  if (!selectedMonth.value) {
+    selectedMonth.value = availableMonths.value[0]?.value || ''
+  }
+  
   try {
-    const reportData = await reportsStore.generateMonthlyReport(selectedMonth.value)
-    exportMonthlyReport(reportData)
-    toast.success('Rapport mensuel généré avec succès')
+    const data = await reportsStore.generateMonthlyReport(selectedMonth.value)
+    reportData.value = data
   } catch (error) {
-    toast.error(`Erreur lors de la génération : ${error.message}`)
+    toast.error(`Erreur lors du chargement du rapport : ${error.message}`)
   }
 }
 
 /**
- * Exporte les paiements en Excel
+ * Exporte le rapport en PDF
  */
-const exportPayments = async () => {
+const handleExportPDF = async () => {
+  if (!reportData.value) {
+    toast.error('Aucun rapport à exporter')
+    return
+  }
+  
   try {
-    if (paymentsStore.payments.length === 0) {
-      await paymentsStore.fetchPayments()
-    }
-
-    const exportData = paymentsStore.payments.map(p => ({
-      'Bien': p.property,
-      'Locataire': p.tenant,
-      'Montant': p.amount,
-      'Date d\'échéance': p.dueDate,
-      'Statut': p.status === 'paid' ? 'Payé' : p.status === 'pending' ? 'En attente' : 'En retard'
-    }))
-
-    exportToExcel('paiements', exportData, 'Paiements')
-    toast.success('Export des paiements réussi')
+    exportMonthlyReport(reportData.value)
+    toast.success(t('reports.export.success'))
   } catch (error) {
     toast.error(`Erreur lors de l'export : ${error.message}`)
   }
 }
 
 /**
- * Exporte les biens en Excel
+ * Envoie le rapport par email (TODO)
  */
-const exportProperties = async () => {
-  try {
-    if (propertiesStore.properties.length === 0) {
-      await propertiesStore.fetchProperties()
-    }
-
-    const exportData = propertiesStore.properties.map(p => ({
-      'Nom': p.name,
-      'Adresse': p.address,
-      'Ville': p.city,
-      'Loyer': p.rent,
-      'Statut': p.status === 'occupied' ? 'Occupé' : 'Libre',
-      'Locataire': p.tenant?.name || '-',
-      'Date d\'entrée': p.tenant?.entryDate || '-',
-      'Loyer locataire': p.tenant?.rent || '-'
-    }))
-
-    exportToExcel('biens', exportData, 'Biens')
-    toast.success('Export des biens réussi')
-  } catch (error) {
-    toast.error(`Erreur lors de l'export : ${error.message}`)
-  }
+const handleSendEmail = () => {
+  toast.info(t('reports.actions.comingSoon'))
 }
 
 onMounted(async () => {
-  await reportsStore.fetchRecentReports()
+  // Charge les propriétés si nécessaire
+  if (propertiesStore.properties.length === 0) {
+    await propertiesStore.fetchProperties()
+  }
+  
+  // Charge le rapport initial
+  if (availableMonths.value.length > 0) {
+    selectedMonth.value = availableMonths.value[0].value
+    await loadReport()
+  }
 })
 </script>
-

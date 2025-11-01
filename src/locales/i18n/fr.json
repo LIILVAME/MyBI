@@ -87,8 +87,68 @@
     "subtitle": "Analysez les performances de votre portefeuille"
   },
   "reports": {
-    "title": "Rapports",
-    "subtitle": "Générez et exportez vos rapports"
+    "title": "Rapports & Synthèses",
+    "subtitle": "Générez et exportez vos rapports de gestion immobilière.",
+    "loading": "Chargement du rapport...",
+    "filters": {
+      "period": "Période",
+      "type": "Type de rapport",
+      "property": "Filtrer par bien",
+      "allProperties": "Tous les biens",
+      "refresh": "Actualiser"
+    },
+    "types": {
+      "global": "Synthèse globale",
+      "monthly": "Revenus mensuels",
+      "rentalStatus": "Statuts locatifs"
+    },
+    "kpi": {
+      "totalRevenue": "Revenu total",
+      "totalRevenueTooltip": "Revenu total perçu sur la période",
+      "rentCollected": "Loyers perçus",
+      "rentCollectedTooltip": "Montant total des loyers collectés",
+      "occupancyRate": "Taux d'occupation",
+      "occupancyRateTooltip": "Pourcentage de biens occupés",
+      "delayedPayments": "Retards",
+      "delayedPaymentsTooltip": "Nombre de paiements en retard"
+    },
+    "chart": {
+      "revenue": {
+        "title": "Revenus sur la période",
+        "description": "Évolution des revenus",
+        "label": "Revenus"
+      }
+    },
+    "table": {
+      "title": "Récapitulatif par bien",
+      "noData": "Aucune donnée disponible",
+      "days": "jours",
+      "columns": {
+        "property": "Bien",
+        "city": "Ville",
+        "rent": "Loyer",
+        "status": "Statut",
+        "totalPaid": "Total payé",
+        "delayed": "Retard",
+        "occupancy": "Taux d'occupation"
+      }
+    },
+    "summary": {
+      "text": "Sur la période du {startDate} au {endDate}, vous avez perçu {revenue}, avec un taux d'occupation moyen de {occupancy}%."
+    },
+    "actions": {
+      "exportPDF": "📄 Exporter en PDF",
+      "sendEmail": "📧 Envoyer par mail",
+      "comingSoon": "Bientôt disponible",
+      "exportSuccess": "Export réussi"
+    },
+    "export": {
+      "success": "Rapport exporté avec succès"
+    },
+    "noData": {
+      "title": "Aucun rapport disponible",
+      "message": "Sélectionnez une période et cliquez sur Actualiser pour générer un rapport"
+    }
   },
   "alerts": {
     "title": "Alertes",

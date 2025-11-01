@@ -87,8 +87,68 @@
     "subtitle": "Analyze your portfolio performance"
   },
   "reports": {
-    "title": "Reports",
-    "subtitle": "Generate and export your reports"
+    "title": "Reports & Summaries",
+    "subtitle": "Generate and export your property management reports.",
+    "loading": "Loading report...",
+    "filters": {
+      "period": "Period",
+      "type": "Report type",
+      "property": "Filter by property",
+      "allProperties": "All properties",
+      "refresh": "Refresh"
+    },
+    "types": {
+      "global": "Global summary",
+      "monthly": "Monthly revenue",
+      "rentalStatus": "Rental status"
+    },
+    "kpi": {
+      "totalRevenue": "Total Revenue",
+      "totalRevenueTooltip": "Total revenue received for the period",
+      "rentCollected": "Rent Collected",
+      "rentCollectedTooltip": "Total amount of rent collected",
+      "occupancyRate": "Occupancy Rate",
+      "occupancyRateTooltip": "Percentage of occupied properties",
+      "delayedPayments": "Delayed",
+      "delayedPaymentsTooltip": "Number of late payments"
+    },
+    "chart": {
+      "revenue": {
+        "title": "Revenue for the period",
+        "description": "Revenue evolution",
+        "label": "Revenue"
+      }
+    },
+    "table": {
+      "title": "Summary by property",
+      "noData": "No data available",
+      "days": "days",
+      "columns": {
+        "property": "Property",
+        "city": "City",
+        "rent": "Rent",
+        "status": "Status",
+        "totalPaid": "Total Paid",
+        "delayed": "Delay",
+        "occupancy": "Occupancy Rate"
+      }
+    },
+    "summary": {
+      "text": "For the period from {startDate} to {endDate}, you received {revenue}, with an average occupancy rate of {occupancy}%."
+    },
+    "actions": {
+      "exportPDF": "📄 Export to PDF",
+      "sendEmail": "📧 Send by email",
+      "comingSoon": "Coming soon",
+      "exportSuccess": "Export successful"
+    },
+    "export": {
+      "success": "Report exported successfully"
+    },
+    "noData": {
+      "title": "No report available",
+      "message": "Select a period and click Refresh to generate a report"
+    }
   },
   "alerts": {
     "title": "Alerts",
