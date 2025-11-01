@@ -15,9 +15,21 @@
 
   <!-- Application normale une fois la session initialisée -->
   <div v-else>
-    <transition name="fade" mode="out-in">
-      <router-view :key="$route.fullPath" />
-    </transition>
+    <Suspense>
+      <template #default>
+        <transition name="fade" mode="out-in">
+          <router-view :key="$route.fullPath" />
+        </transition>
+      </template>
+      <template #fallback>
+        <div class="flex justify-center items-center min-h-screen bg-gray-50">
+          <div class="text-center">
+            <div class="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p class="text-gray-600">Chargement...</p>
+          </div>
+        </div>
+      </template>
+    </Suspense>
   </div>
   <Toast />
 </template>

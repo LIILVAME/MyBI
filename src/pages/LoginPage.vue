@@ -81,15 +81,34 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onErrorCaptured } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
-import AuthLayout from '@/layouts/AuthLayout.vue'
-import AuthInput from '@/components/auth/AuthInput.vue'
-import AuthButton from '@/components/auth/AuthButton.vue'
-import AuthOAuth from '@/components/auth/AuthOAuth.vue'
+
+// Import avec gestion d'erreur pour éviter les blocages
+let AuthLayout, AuthInput, AuthButton, AuthOAuth
+
+try {
+  AuthLayout = (await import('@/layouts/AuthLayout.vue')).default
+  AuthInput = (await import('@/components/auth/AuthInput.vue')).default
+  AuthButton = (await import('@/components/auth/AuthButton.vue')).default
+  AuthOAuth = (await import('@/components/auth/AuthOAuth.vue')).default
+} catch (err) {
+  console.error('❌ Erreur import composants Auth:', err)
+  // En cas d'erreur, on utilise des imports synchrones comme fallback
+  AuthLayout = (await import('@/layouts/AuthLayout.vue')).default
+  AuthInput = (await import('@/components/auth/AuthInput.vue')).default
+  AuthButton = (await import('@/components/auth/AuthButton.vue')).default
+  AuthOAuth = (await import('@/components/auth/AuthOAuth.vue')).default
+}
+
+// Capture les erreurs de rendu
+onErrorCaptured((err, instance, info) => {
+  console.error('🔴 Erreur dans LoginPage:', err, info)
+  return false // Ne propage pas l'erreur pour éviter l'écran blanc
+})
 
 const { t } = useI18n()
 const router = useRouter()
