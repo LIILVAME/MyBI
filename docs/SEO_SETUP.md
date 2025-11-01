@@ -231,11 +231,11 @@ curl https://doogoo.vercel.app | grep -A 50 "application/ld+json"
 
 ## 🎯 Prochaines étapes recommandées
 
-1. ✅ **Configuration Analytics** (Google Analytics 4 ou Plausible)
-2. ✅ **Soumission du sitemap** dans Google Search Console
-3. ✅ **Vérification Lighthouse** (objectif SEO ≥ 90)
-4. ✅ **Test des données structurées** avec Google Rich Results Test
-5. ✅ **Monitoring régulier** des métriques SEO
+1. ✅ **Configuration Analytics** (Google Analytics 4 ou Plausible) - Voir `docs/ANALYTICS_SETUP.md`
+2. ⏳ **Soumission du sitemap** dans Google Search Console
+3. ⏳ **Vérification Lighthouse** (objectif SEO ≥ 90)
+4. ⏳ **Test des données structurées** avec Google Rich Results Test
+5. ⏳ **Monitoring régulier** des métriques SEO
 
 ---
 

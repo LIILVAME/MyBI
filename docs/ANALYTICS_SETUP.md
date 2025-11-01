@@ -106,13 +106,13 @@ VITE_ENABLE_ANALYTICS=true
 ### Événements personnalisés (à implémenter)
 
 #### Paiements
-- ⏳ `PAYMENT_ADDED` : Ajout d'un paiement
-- ⏳ `PAYMENT_UPDATED` : Modification d'un paiement
-- ⏳ `PAYMENT_DELETED` : Suppression d'un paiement
+- ✅ `PAYMENT_ADDED` : Ajout d'un paiement (avec `amount`, `status`)
+- ✅ `PAYMENT_UPDATED` : Modification d'un paiement (avec `payment_id`, `status`)
+- ✅ `PAYMENT_DELETED` : Suppression d'un paiement (avec `payment_id`)
 
 #### Paramètres
-- ⏳ `LANGUAGE_CHANGED` : Changement de langue (avec `language`)
-- ⏳ `CURRENCY_CHANGED` : Changement de devise (avec `currency`)
+- ✅ `LANGUAGE_CHANGED` : Changement de langue (avec `language`)
+- ✅ `CURRENCY_CHANGED` : Changement de devise (avec `currency`)
 
 ---
 
