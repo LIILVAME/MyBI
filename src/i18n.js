@@ -15,7 +15,15 @@ const i18n = createI18n({
     en
   },
   // Mode global pour permettre l'utilisation dans les templates et composants
-  globalInjection: true
+  globalInjection: true,
+  // Désactive l'échappement HTML par défaut pour éviter les problèmes de parsing
+  escapeParameter: false,
+  // Mode silencieux pour les clés manquantes (évite les erreurs de console)
+  missingWarn: false,
+  fallbackWarn: false,
+  // Désactive les warnings de traduction silencieux (production)
+  silentTranslationWarn: true,
+  silentFallbackWarn: true
 })
 
 export default i18n
