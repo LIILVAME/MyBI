@@ -204,6 +204,15 @@ export const useAuthStore = defineStore('auth', () => {
       // Étape 4 : Réinitialise l'état de session
       user.value = null
       session.value = null
+
+      // Track logout event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.USER_LOGGED_OUT)
+        }).catch(() => {})
+      }
+
+      profile.value = null
       loading.value = false
 
       // Étape 5 : Redirection vers /login (via router)
