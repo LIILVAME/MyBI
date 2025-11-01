@@ -168,5 +168,20 @@ nextTick(() => {
   } catch (error) {
     console.warn('Impossible de charger settingsStore (non bloquant):', error)
   }
+
+  // Initialise les analytics (après le chargement initial de l'app)
+  try {
+    // Initialise Google Analytics 4 si configuré
+    if (import.meta.env.VITE_GA4_MEASUREMENT_ID) {
+      initGoogleAnalytics()
+    }
+
+    // Initialise Plausible Analytics si configuré
+    if (import.meta.env.VITE_PLAUSIBLE_DOMAIN) {
+      initPlausible()
+    }
+  } catch (error) {
+    console.warn('Impossible d\'initialiser les analytics (non bloquant):', error)
+  }
 })
 
