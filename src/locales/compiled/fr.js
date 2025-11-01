@@ -438,7 +438,7 @@ export default {
       "currentPasswordIncorrect": "Le mot de passe actuel est incorrect",
       "updateButton": "Mettre à jour",
       "updating": "Mise à jour...",
-      "changedSuccess": "✅ Mot de passe modifié avec succès ! Votre compte reste connecté.",
+      "changedSuccess": "✅ Mot de passe modifié avec succès ! Votre compte reste connecté. Un email de confirmation vous a été envoyé.",
       "changeError": "Erreur lors du changement de mot de passe",
       "samePassword": "Le nouveau mot de passe doit être différent de l'ancien",
       "passwordTooWeak": "Le mot de passe est trop faible. Utilisez au moins 8 caractères avec des lettres, chiffres et caractères spéciaux"

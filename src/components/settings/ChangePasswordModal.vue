@@ -253,10 +253,13 @@ const handleSubmit = async () => {
     // Émet l'événement success avant de fermer
     emit('success')
 
-    // Affiche le toast de succès
+    // Affiche le toast de succès avec mention de l'email
     toastStore.success(t('security.password.changedSuccess'), {
       timeout: 5000 // 5 secondes pour que l'utilisateur le voie bien
     })
+    
+    // Note: Supabase envoie automatiquement un email de confirmation
+    // si le template "Password Changed Notification" est activé dans le dashboard
 
     // Ferme le modal après un court délai pour laisser voir le toast
     setTimeout(() => {

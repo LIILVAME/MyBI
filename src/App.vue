@@ -191,6 +191,13 @@ onMounted(async () => {
           authStore.user = session.user
           authStore.session = session
           
+          // Log pour debugging (peut être retiré en production)
+          console.log('✅ USER_UPDATED: Session utilisateur mise à jour', {
+            userId: session.user.id,
+            email: session.user.email,
+            timestamp: new Date().toISOString()
+          })
+          
           // Rafraîchit le profil si nécessaire
           try {
             await authStore.fetchProfile()

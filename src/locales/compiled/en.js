@@ -438,7 +438,7 @@ export default {
       "currentPasswordIncorrect": "Current password is incorrect",
       "updateButton": "Update",
       "updating": "Updating...",
-      "changedSuccess": "✅ Password changed successfully! Your account remains logged in.",
+      "changedSuccess": "✅ Password changed successfully! Your account remains logged in. A confirmation email has been sent to you.",
       "changeError": "Error changing password",
       "samePassword": "The new password must be different from the current one",
       "passwordTooWeak": "Password is too weak. Use at least 8 characters with letters, numbers and special characters"
