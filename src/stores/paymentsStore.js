@@ -309,25 +309,11 @@ export const usePaymentsStore = defineStore('payments', () => {
           const toast = useToastStore()
 
           if (eventType === 'INSERT') {
-            // Charge les données complètes avec relations (via la vue pour avoir due_date)
-            const { data, error: fetchError } = await supabase
-              .from('payments_view')
-              .select(`
-                *,
-                properties (
-                  id,
-                  name,
-                  city
-                ),
-                tenants (
-                  id,
-                  name
-                )
-              `)
-              .eq('id', rowNew.id)
-              .single()
+            // Charge les données complètes avec relations via l'API
+            const result = await paymentsApi.getPaymentById(rowNew.id, authStore.user.id)
 
-            if (!fetchError && data) {
+            if (result.success && result.data) {
+              const data = result.data
               const newPayment = {
                 id: data.id,
                 propertyId: data.property_id,
@@ -350,25 +336,11 @@ export const usePaymentsStore = defineStore('payments', () => {
             // Vérifie que le store est encore valide
             if (!payments || !payments.value) return
             
-            // Recharge le paiement avec ses relations (via la vue pour avoir due_date)
-            const { data, error: fetchError } = await supabase
-              .from('payments_view')
-              .select(`
-                *,
-                properties (
-                  id,
-                  name,
-                  city
-                ),
-                tenants (
-                  id,
-                  name
-                )
-              `)
-              .eq('id', rowNew.id)
-              .single()
+            // Recharge le paiement avec ses relations via l'API
+            const result = await paymentsApi.getPaymentById(rowNew.id, authStore.user.id)
 
-            if (!fetchError && data) {
+            if (result.success && result.data) {
+              const data = result.data
               const updatedPayment = {
                 id: data.id,
                 propertyId: data.property_id,

@@ -356,17 +356,11 @@ export const usePropertiesStore = defineStore('properties', () => {
           const toast = useToastStore()
 
           if (eventType === 'INSERT') {
-            // Charge les données complètes avec le tenant si présent
-            const { data, error: fetchError } = await supabase
-              .from('properties')
-              .select(`
-                *,
-                tenants (*)
-              `)
-              .eq('id', rowNew.id)
-              .single()
+            // Charge les données complètes avec le tenant si présent via l'API
+            const result = await propertiesApi.getPropertyById(rowNew.id, authStore.user.id)
 
-            if (!fetchError && data) {
+            if (result.success && result.data) {
+              const data = result.data
               // Transforme pour le format attendu
               const newProperty = {
                 id: data.id,
@@ -400,17 +394,11 @@ export const usePropertiesStore = defineStore('properties', () => {
             // Vérifie que le store est encore valide
             if (!properties || !properties.value) return
             
-            // Recharge la propriété avec ses relations
-            const { data, error: fetchError } = await supabase
-              .from('properties')
-              .select(`
-                *,
-                tenants (*)
-              `)
-              .eq('id', rowNew.id)
-              .single()
+            // Recharge la propriété avec ses relations via l'API
+            const result = await propertiesApi.getPropertyById(rowNew.id, authStore.user.id)
 
-            if (!fetchError && data) {
+            if (result.success && result.data) {
+              const data = result.data
               const updatedProperty = {
                 id: data.id,
                 name: data.name,
