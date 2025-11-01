@@ -10,11 +10,12 @@
     <div class="text-center">
       <div class="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
       <p class="text-gray-600">Chargement de l'application...</p>
+      <p class="text-xs text-gray-400 mt-2">Initialisation de la session...</p>
     </div>
   </div>
 
   <!-- Application normale une fois la session initialisée -->
-  <div v-else>
+  <div v-else class="min-h-screen">
     <transition name="fade" mode="out-in">
       <router-view :key="$route.fullPath" />
     </transition>
