@@ -4,7 +4,13 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
       <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-20 sm:pt-10 sm:pb-10">
         <!-- Header avec statistiques -->
         <PropertiesHeader 
@@ -79,6 +85,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from '@/composables/useLingui'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
 import PropertiesHeader from '../components/properties/PropertiesHeader.vue'
 import PropertiesFilters from '../components/properties/PropertiesFilters.vue'
@@ -88,11 +95,22 @@ import EditPropertyModal from '../components/properties/EditPropertyModal.vue'
 import SkeletonCard from '../components/common/SkeletonCard.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
 import FloatingActionButton from '../components/common/FloatingActionButton.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
 
 const propertiesStore = usePropertiesStore()
 const { t } = useI18n()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des données
+    await propertiesStore.fetchProperties(true) // force = true pour bypasser le cache
+  },
+  { threshold: 80 }
+)
 
 /**
  * Charge les propriétés depuis Supabase au montage

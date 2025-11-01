@@ -29,7 +29,8 @@ export default {
     "optional": "optional",
     "selectStatus": "Select a status",
     "selectProperty": "Select a property",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "refreshing": "Refreshing..."
   },
   "sidebar": {
     "dashboard": "Dashboard",

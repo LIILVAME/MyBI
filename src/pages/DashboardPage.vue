@@ -4,7 +4,13 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
+    <main ref="mainElement" class="flex-1 overflow-y-auto">
+      <PullToRefresh
+        :is-pulling="isPulling"
+        :pull-distance="pullDistance"
+        :is-refreshing="isRefreshing"
+        :threshold="80"
+      />
       <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-20 sm:pt-10 sm:pb-10">
         <!-- Header avec statistiques -->
         <DashboardHeader :stats="globalStats" />
@@ -66,6 +72,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from '@/composables/useLingui'
+import { usePullToRefresh } from '@/composables/usePullToRefresh'
 import Sidebar from '../components/Sidebar.vue'
 import DashboardHeader from '../components/dashboard/DashboardHeader.vue'
 import PropertiesList from '../components/dashboard/PropertiesList.vue'
@@ -74,6 +81,7 @@ import AddPropertyModal from '../components/dashboard/AddPropertyModal.vue'
 import SkeletonCard from '../components/common/SkeletonCard.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
 import FloatingActionButton from '../components/common/FloatingActionButton.vue'
+import PullToRefresh from '../components/common/PullToRefresh.vue'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { usePaymentsStore } from '@/stores/paymentsStore'
 
@@ -81,6 +89,19 @@ const router = useRouter()
 const { t } = useI18n()
 const propertiesStore = usePropertiesStore()
 const paymentsStore = usePaymentsStore()
+
+// Pull-to-refresh
+const mainElement = ref(null)
+const { isPulling, pullDistance, isRefreshing } = usePullToRefresh(
+  async () => {
+    // Force le rafraîchissement des données
+    await Promise.all([
+      propertiesStore.fetchProperties(true), // force = true pour bypasser le cache
+      paymentsStore.fetchPayments(true)
+    ])
+  },
+  { threshold: 80 }
+)
 
 // Utilise les propriétés du store Pinia (synchronisé avec BiensPage)
 const properties = computed(() => propertiesStore.properties)

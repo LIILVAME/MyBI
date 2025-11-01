@@ -29,7 +29,8 @@ export default {
     "optional": "optionnel",
     "selectStatus": "Sélectionner un statut",
     "selectProperty": "Sélectionner un bien",
-    "unknown": "Inconnu"
+    "unknown": "Inconnu",
+    "refreshing": "Actualisation..."
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
