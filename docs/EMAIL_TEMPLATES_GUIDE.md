@@ -1,13 +1,13 @@
-# 📧 Guide des Templates Email Vylo
+# 📧 Guide des Templates Email Doogoo
 
-Ce guide documente les templates d'email Supabase personnalisés pour Vylo, leurs règles graphiques, et les bonnes pratiques de maintenance.
+Ce guide documente les templates d'email Supabase personnalisés pour Doogoo, leurs règles graphiques, et les bonnes pratiques de maintenance.
 
 ---
 
 ## 📋 Table des matières
 
 1. [Structure des Templates](#structure-des-templates)
-2. [Charte Graphique Vylo](#charte-graphique-vylo)
+2. [Charte Graphique Doogoo](#charte-graphique-vylo)
 3. [Templates Disponibles](#templates-disponibles)
 4. [Variables Supabase](#variables-supabase)
 5. [Configuration](#configuration)
@@ -34,7 +34,7 @@ emails/
 
 ---
 
-## 🎨 Charte Graphique Vylo
+## 🎨 Charte Graphique Doogoo
 
 ### Palette de Couleurs
 
@@ -76,7 +76,7 @@ emails/
 - `{{ .SiteURL }}` : URL du site
 
 **Contenu** :
-- Titre : "Bienvenue sur Vylo !"
+- Titre : "Bienvenue sur Doogoo !"
 - Bouton : "Confirmer mon compte"
 - Validité : 24 heures
 
@@ -91,8 +91,8 @@ emails/
 - `{{ .SiteURL }}` : URL du site
 
 **Contenu** :
-- Titre : "Connexion à Vylo"
-- Bouton : "Se connecter à Vylo"
+- Titre : "Connexion à Doogoo"
+- Bouton : "Se connecter à Doogoo"
 - Validité : 1 heure
 
 ---
@@ -123,7 +123,7 @@ emails/
 - `{{ .SiteURL }}` : URL du site
 
 **Contenu** :
-- Titre : "Vous êtes invité(e) à rejoindre Vylo"
+- Titre : "Vous êtes invité(e) à rejoindre Doogoo"
 - Bouton : "Accepter l'invitation"
 - Validité : 7 jours
 
@@ -170,12 +170,12 @@ Le fichier `emails/config.json` contient la configuration globale :
 
 ```json
 {
-  "logo_url": "https://liilvame.github.io/Vylo/icons/icon-192x192.png",
+  "logo_url": "https://liilvame.github.io/Doogoo/icons/icon-192x192.png",
   "primary_color": "#2ECC71",
   "support_email": "support@vylo.app",
   "support_url": "https://vylo.app/support",
   "website_url": "https://vylo.app",
-  "company_name": "Vylo",
+  "company_name": "Doogoo",
   "font_family": "Inter, -apple-system, ..."
 }
 ```
@@ -201,7 +201,7 @@ curl -X PUT 'https://<project-ref>.supabase.co/rest/v1/auth/email_templates' \
   -H "Content-Type: application/json" \
   -d '{
     "template_name": "confirmation",
-    "subject": "Confirmer votre compte Vylo",
+    "subject": "Confirmer votre compte Doogoo",
     "body": "<!DOCTYPE html>..."
   }'
 ```

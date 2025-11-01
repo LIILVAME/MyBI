@@ -1,7 +1,7 @@
 {
-  "name": "vylo",
+  "name": "doogoo",
   "version": "0.2.0",
-  "description": "Plateforme de monitoring de biens immobiliers",
+  "description": "Smart Property Monitoring & Analytics Platform",
   "type": "module",
   "scripts": {
     "dev": "vite",

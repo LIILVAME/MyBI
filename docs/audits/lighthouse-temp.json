@@ -2565,7 +2565,7 @@
                 "height": 56
               },
               "snippet": "<p class=\"text-xl text-primary-100 mb-8\">",
-              "nodeLabel": "Rejoignez des centaines de propriétaires qui font confiance à Vylo",
+              "nodeLabel": "Rejoignez des centaines de propriétaires qui font confiance à Doogoo",
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 3 (foreground color: #dcfce7, background color: #16a34a, font size: 15.0pt (20px), font weight: normal). Expected contrast ratio of 4.5:1"
             },
             "subItems": {
@@ -4094,7 +4094,7 @@
                 "height": 4889
               },
               "snippet": "<div class=\"min-h-screen bg-white\">",
-              "nodeLabel": "Vylo\nEssayer\nSupervisez vos biens immobiliers depuis une seule plateforme\n\nMoni…"
+              "nodeLabel": "Doogoo\nEssayer\nSupervisez vos biens immobiliers depuis une seule plateforme\n\nMoni…"
             },
             "statistic": "Maximum Child Elements",
             "value": {
@@ -4706,7 +4706,7 @@
                 "height": 4889
               },
               "snippet": "<div class=\"min-h-screen bg-white\">",
-              "nodeLabel": "Vylo\nEssayer\nSupervisez vos biens immobiliers depuis une seule plateforme\n\nMoni…"
+              "nodeLabel": "Doogoo\nEssayer\nSupervisez vos biens immobiliers depuis une seule plateforme\n\nMoni…"
             },
             "value": {
               "type": "numeric",

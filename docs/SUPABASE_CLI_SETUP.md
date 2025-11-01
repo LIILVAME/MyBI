@@ -1,4 +1,4 @@
-# 🔗 Configuration Supabase CLI - Vylo
+# 🔗 Configuration Supabase CLI - Doogoo
 
 ## ✅ Statut actuel
 

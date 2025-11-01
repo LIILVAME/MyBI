@@ -3,7 +3,7 @@ import fr from './locales/i18n/fr.json'
 import en from './locales/i18n/en.json'
 
 /**
- * Configuration i18n pour l'application Vylo
+ * Configuration i18n pour l'application Doogoo
  * Supporte FR et EN
  */
 const i18n = createI18n({

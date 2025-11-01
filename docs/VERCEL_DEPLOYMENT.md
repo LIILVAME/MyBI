@@ -1,4 +1,4 @@
-# 🚀 Déploiement Vercel - Vylo v0.2.0
+# 🚀 Déploiement Vercel - Doogoo v0.2.0
 
 **Date** : 31 janvier 2025  
 **Statut** : ✅ **Déployé en production**
@@ -50,11 +50,11 @@ Variables configurées dans Vercel Dashboard :
 Le fichier `vite.config.js` détecte automatiquement Vercel :
 
 ```javascript
-const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ? '/Vylo/' : '/')
+const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ? '/Doogoo/' : '/')
 ```
 
 - **Sur Vercel** : Base path = `/` (détection automatique)
-- **Sur GitHub Pages** : Base path = `/Vylo/`
+- **Sur GitHub Pages** : Base path = `/Doogoo/`
 
 ---
 
@@ -68,7 +68,7 @@ const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ?
 
 2. **Connecter le repository GitHub** :
    - Cliquer sur "Connect Git Repository"
-   - Sélectionner `LIILVAME/Vylo`
+   - Sélectionner `LIILVAME/Doogoo`
    - Autoriser Vercel à accéder au repository
 
 3. **Configuration automatique** :
@@ -173,7 +173,7 @@ vercel promote <deployment-url>
 
 2. **Base path** :
    - Sur Vercel, le base path est automatiquement `/`
-   - Pour GitHub Pages, il reste `/Vylo/`
+   - Pour GitHub Pages, il reste `/Doogoo/`
 
 3. **Build optimisé** :
    - Vercel détecte automatiquement Vite

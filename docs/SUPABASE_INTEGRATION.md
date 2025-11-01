@@ -1,4 +1,4 @@
-# 🗄️ Intégration Supabase - Vylo
+# 🗄️ Intégration Supabase - Doogoo
 
 ## ✅ Tables créées dans Supabase
 

@@ -1,4 +1,4 @@
-# 🔧 Optimisations Finales - Vylo v0.1.0
+# 🔧 Optimisations Finales - Doogoo v0.1.0
 
 **Date** : Décembre 2024  
 **Version** : v0.1.0 → Préparation v0.2.0

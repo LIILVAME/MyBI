@@ -1,4 +1,4 @@
-# Rapport de Déploiement Vylo v0.2.0
+# Rapport de Déploiement Doogoo v0.2.0
 
 **Date de déploiement** : 2025-11-01 09:41:47  
 **Version** : `0.2.0`  
@@ -140,7 +140,7 @@
 
 ### 4. PWA
 
-- [ ] **Installabilité** : Bouton "Installer Vylo" apparaît
+- [ ] **Installabilité** : Bouton "Installer Doogoo" apparaît
 - [ ] **Manifest** : `manifest.webmanifest` accessible
 - [ ] **Service Worker** : `sw.js` enregistré et actif
 - [ ] **Mode Offline** :
@@ -205,8 +205,8 @@ npm run preview
 
 ```bash
 git add .
-git commit -m "chore(deploy): prepare Vylo v0.2.0 for production"
-git tag -a v0.2.0 -m "Vylo stable release v0.2.0"
+git commit -m "chore(deploy): prepare Doogoo v0.2.0 for production"
+git tag -a v0.2.0 -m "Doogoo stable release v0.2.0"
 git push origin main --tags
 ```
 
@@ -263,5 +263,5 @@ vercel --prod
 
 **Généré automatiquement le** : 2025-11-01 09:41:47  
 **Par** : Cursor AI Assistant  
-**Version Vylo** : `0.2.0`
+**Version Doogoo** : `0.2.0`
 

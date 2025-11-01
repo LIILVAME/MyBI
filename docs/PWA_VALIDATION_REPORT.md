@@ -1,4 +1,4 @@
-# 📱 Rapport de Validation PWA - Vylo
+# 📱 Rapport de Validation PWA - Doogoo
 
 **Date de validation** : 2025-11-01  
 **Version** : 0.2.0  
@@ -30,8 +30,8 @@ Exécutez `npm run pwa:validate` pour une validation automatique.
 
 ```json
 {
-  "name": "Vylo - Suivi Intelligent de Biens Immobiliers",
-  "short_name": "Vylo",
+  "name": "Doogoo - Suivi Intelligent de Biens Immobiliers",
+  "short_name": "Doogoo",
   "description": "Plateforme de gestion et de suivi intelligent de biens immobiliers avec monitoring en temps réel",
   "start_url": "/",
   "display": "standalone",
@@ -99,7 +99,7 @@ Le service worker est enregistré automatiquement dans `src/main.js` :
 
 1. Ouvrir l'application dans Chrome/Edge
 2. Vérifier l'icône "Installer" dans la barre d'adresse
-3. Cliquer sur "Installer Vylo"
+3. Cliquer sur "Installer Doogoo"
 4. Confirmer que l'application s'ouvre en mode standalone
 
 **Résultat attendu** : ✅ L'application est installable
@@ -169,7 +169,7 @@ npm run audit:lighthouse
 
 ## 🚀 Préparation Play Store (PWA installable)
 
-Pour soumettre Vylo au Play Store comme PWA installable :
+Pour soumettre Doogoo au Play Store comme PWA installable :
 
 1. ✅ **TWA (Trusted Web Activity)** : Utiliser Bubblewrap ou PWA Builder
 2. ✅ **Signing** : Générer un keystore pour signer l'APK

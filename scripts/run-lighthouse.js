@@ -18,7 +18,7 @@ if (!fs.existsSync(AUDITS_DIR)) {
 const REPORT_HTML = path.join(AUDITS_DIR, `lighthouse-${DATE}.html`)
 const REPORT_JSON = path.join(AUDITS_DIR, `lighthouse-${DATE}.json`)
 
-console.log('🚀 Audit Lighthouse PWA Vylo')
+console.log('🚀 Audit Lighthouse PWA Doogoo')
 console.log('==============================\n')
 
 // Vérifier que le serveur répond

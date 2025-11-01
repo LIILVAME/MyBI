@@ -28,14 +28,14 @@ const REQUIRED_VARIABLES = {
 }
 
 const REQUIRED_ELEMENTS = [
-  'Vylo',
+  'Doogoo',
   '#2ECC71',
   'button',
   'logo',
   'footer'
 ]
 
-console.log('🔍 Audit des Templates Email Vylo')
+console.log('🔍 Audit des Templates Email Doogoo')
 console.log('==================================\n')
 
 let globalStatus = '✅'
@@ -129,7 +129,7 @@ REQUIRED_TEMPLATES.forEach(templateName => {
 })
 
 // 4. Générer le rapport
-const report = `# 📊 Rapport d'Audit - Templates Email Vylo
+const report = `# 📊 Rapport d'Audit - Templates Email Doogoo
 
 **Date** : ${new Date().toISOString().split('T')[0]}  
 **Statut global** : ${globalStatus}

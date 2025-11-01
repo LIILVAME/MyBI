@@ -263,7 +263,7 @@ const exportDiagnostics = () => {
   const url = URL.createObjectURL(dataBlob)
   const link = document.createElement('a')
   link.href = url
-    link.download = `vylo-diagnostics-${new Date().toISOString().split('T')[0]}.json`
+    link.download = `doogoo-diagnostics-${new Date().toISOString().split('T')[0]}.json`
   link.click()
   URL.revokeObjectURL(url)
 }

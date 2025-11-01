@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <h1 class="text-2xl font-bold text-primary-600">Vylo</h1>
+              <h1 class="text-2xl font-bold text-primary-600">Doogoo</h1>
             </div>
           </div>
           <div class="hidden md:flex items-center space-x-8">
@@ -188,7 +188,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-4 gap-8">
           <div>
-            <h4 class="text-white text-xl font-bold mb-4">Vylo</h4>
+            <h4 class="text-white text-xl font-bold mb-4">Doogoo</h4>
             <p class="text-sm">
               La solution complète pour le monitoring de vos biens immobiliers.
             </p>
@@ -212,13 +212,13 @@
           <div>
             <h5 class="text-white font-semibold mb-4">Contact</h5>
             <ul class="space-y-2 text-sm">
-              <li><a href="mailto:contact@vylo.fr" class="hover:text-white transition-colors">contact@vylo.fr</a></li>
+              <li><a href="mailto:contact@doogoo.app" class="hover:text-white transition-colors">contact@doogoo.app</a></li>
               <li><a href="tel:+33123456789" class="hover:text-white transition-colors">+33 1 23 45 67 89</a></li>
             </ul>
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p>&copy; 2024 Vylo. Tous droits réservés. | <a href="#" class="hover:text-white transition-colors">Mentions légales</a></p>
+          <p>&copy; 2024 Doogoo. Tous droits réservés. | <a href="#" class="hover:text-white transition-colors">Mentions légales</a></p>
         </div>
       </div>
     </footer>

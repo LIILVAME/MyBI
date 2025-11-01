@@ -264,7 +264,7 @@
     "themeDarkDescription": "Dark interface for visual comfort",
     "themeAutoDescription": "Follows system preferences",
     "integrationsComingSoon": "Integrations coming soon",
-    "integrationsDescription": "Connect Vylo to your favorite tools"
+    "integrationsDescription": "Connect Doogoo to your favorite tools"
   },
   "auth": {
     "tagline": "Smart property management",
@@ -282,7 +282,7 @@
     },
     "signup": {
       "title": "Create an account",
-      "subtitle": "Join Vylo in seconds",
+      "subtitle": "Join Doogoo in seconds",
       "fullName": "Full name",
       "email": "Email",
       "emailPlaceholder": "your@email.com",
@@ -330,7 +330,7 @@
     "login": "Sign in",
     "logging": "Signing in...",
     "signup": "Create an account",
-    "signupSubtitle": "Join Vylo today",
+    "signupSubtitle": "Join Doogoo today",
     "creating": "Creating...",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
@@ -481,7 +481,7 @@
     "featurePaymentsDesc": "Track your rents and rental payments in real time",
     "testimonialsTitle": "What our clients say",
     "ctaTitle": "Ready to optimize your property management?",
-    "ctaDescription": "Join hundreds of property owners who trust Vylo"
+    "ctaDescription": "Join hundreds of property owners who trust Doogoo"
   }
 }
 

@@ -1,6 +1,6 @@
-# 📧 Templates Email Vylo
+# 📧 Templates Email Doogoo
 
-Ce dossier contient les templates d'email personnalisés pour Supabase Auth, alignés sur l'identité visuelle Vylo.
+Ce dossier contient les templates d'email personnalisés pour Supabase Auth, alignés sur l'identité visuelle Doogoo.
 
 ## 📁 Structure
 
@@ -39,7 +39,7 @@ emails/
 
 ## 🎨 Charte Graphique
 
-- **Couleur principale** : `#2ECC71` (vert Vylo)
+- **Couleur principale** : `#2ECC71` (vert Doogoo)
 - **Police** : Inter, system fonts
 - **Style** : Minimaliste, moderne, responsive
 

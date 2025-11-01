@@ -1,4 +1,4 @@
-# Production Readiness - Vylo v1.0.0
+# Production Readiness - Doogoo v1.0.0
 
 ## ✅ Checklist Production
 
@@ -53,7 +53,7 @@ Dans *Settings → Secrets and variables → Actions*, ajouter :
 ```
 VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
-VITE_BASE_PATH=/Vylo
+VITE_BASE_PATH=/Doogoo
 VITE_ADMIN_EMAIL (pour /diagnostics)
 VITE_SENTRY_DSN (optionnel)
 ```

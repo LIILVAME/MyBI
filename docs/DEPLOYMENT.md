@@ -1,6 +1,6 @@
 # 🚀 Guide de déploiement
 
-Ce guide explique comment déployer Vylo sur GitHub Pages et d'autres plateformes.
+Ce guide explique comment déployer Doogoo sur GitHub Pages et d'autres plateformes.
 
 ## 📋 Prérequis
 
@@ -233,7 +233,7 @@ Configuration `firebase.json` :
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Vylo</title>
+    <title>Doogoo</title>
     <script>
       sessionStorage.redirect = location.href;
       location.replace(location.href.replace(/\/vylo\/.*/, '/vylo/'));

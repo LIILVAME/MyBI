@@ -32,7 +32,7 @@
     ]"
   >
     <div class="p-6">
-      <h1 class="text-2xl font-bold text-primary-600 mb-8">Vylo</h1>
+      <h1 class="text-2xl font-bold text-primary-600 mb-8">Doogoo</h1>
       <nav class="space-y-2">
         <router-link
           v-for="item in menuItems"

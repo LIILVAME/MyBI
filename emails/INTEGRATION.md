@@ -12,7 +12,7 @@
     </g>
   </svg>
   
-  <h3 style="color: #2ECC71; margin: 0;">Vylo Email System</h3>
+  <h3 style="color: #2ECC71; margin: 0;">Doogoo Email System</h3>
   <p style="color: #666; margin: 8px 0 0;"><em>Designed for simplicity and trust</em></p>
 </div>
 
@@ -40,7 +40,7 @@ Guide rapide pour intégrer les templates email dans votre projet Supabase.
 
 **Compatibilité PWA** : Les liens de confirmation fonctionnent aussi depuis les apps installées (PWA). Les utilisateurs peuvent confirmer leur compte ou réinitialiser leur mot de passe directement depuis l'application installée sur leur appareil.
 
-**Charte Vylo** :
+**Charte Doogoo** :
 - 🎨 Couleur principale : `#2ECC71` (vert digital)
 - 📱 Design : Responsive et moderne
 - ✨ Style : Minimaliste et professionnel
@@ -60,7 +60,7 @@ Guide rapide pour intégrer les templates email dans votre projet Supabase.
 ### Étape 1 : Accéder aux Templates
 
 1. Ouvrir le [Dashboard Supabase](https://app.supabase.com)
-2. Sélectionner votre projet **Vylo**
+2. Sélectionner votre projet **Doogoo**
 3. Aller dans **Authentication** (menu gauche)
 4. Cliquer sur **Email Templates** (sous-menu)
 
@@ -75,7 +75,7 @@ Pour chaque template, répéter les étapes suivantes :
 3. **Copier tout le contenu** du fichier HTML
 4. **Coller** dans le champ **HTML** du template Supabase
 5. **Optionnel** : Modifier le **Subject** si nécessaire
-   - Exemple : `Confirmer votre compte Vylo`
+   - Exemple : `Confirmer votre compte Doogoo`
 6. Cliquer sur **Save**
 
 #### Template 2 : Magic Link
@@ -84,7 +84,7 @@ Pour chaque template, répéter les étapes suivantes :
 2. Ouvrir `emails/templates/magic_link.html`
 3. Copier tout le contenu
 4. Coller dans le champ HTML
-5. **Subject** : `Connexion à Vylo`
+5. **Subject** : `Connexion à Doogoo`
 6. **Save**
 
 #### Template 3 : Reset Password
@@ -93,7 +93,7 @@ Pour chaque template, répéter les étapes suivantes :
 2. Ouvrir `emails/templates/reset_password.html`
 3. Copier tout le contenu
 4. Coller dans le champ HTML
-5. **Subject** : `Réinitialiser votre mot de passe Vylo`
+5. **Subject** : `Réinitialiser votre mot de passe Doogoo`
 6. **Save**
 
 #### Template 4 : Invite User
@@ -102,7 +102,7 @@ Pour chaque template, répéter les étapes suivantes :
 2. Ouvrir `emails/templates/invite_user.html`
 3. Copier tout le contenu
 4. Coller dans le champ HTML
-5. **Subject** : `Invitation à rejoindre Vylo`
+5. **Subject** : `Invitation à rejoindre Doogoo`
 6. **Save**
 
 #### Template 5 : Change Email
@@ -111,7 +111,7 @@ Pour chaque template, répéter les étapes suivantes :
 2. Ouvrir `emails/templates/change_email.html`
 3. Copier tout le contenu
 4. Coller dans le champ HTML
-5. **Subject** : `Confirmer votre nouvelle adresse email Vylo`
+5. **Subject** : `Confirmer votre nouvelle adresse email Doogoo`
 6. **Save**
 
 ---
@@ -147,7 +147,7 @@ Pour chaque template, répéter les étapes suivantes :
 
 Pour chaque email reçu, vérifier :
 
-- ✅ Logo Vylo affiché correctement
+- ✅ Logo Doogoo affiché correctement
 - ✅ Couleur verte (#2ECC71) appliquée
 - ✅ Boutons cliquables et centrés
 - ✅ Footer avec liens Support/Privacy
@@ -255,9 +255,9 @@ Avant de considérer l'intégration comme complète :
 Copiez ce prompt dans Cursor pour automatiser la validation et l'audit des templates :
 
 ```markdown
-💯 **Audit Automatique des Templates Email Vylo**
+💯 **Audit Automatique des Templates Email Doogoo**
 
-Exécute un audit complet des templates email pour Vylo :
+Exécute un audit complet des templates email pour Doogoo :
 
 1. **Vérifier l'existence du dossier** `emails/templates/`
 2. **S'assurer que les fichiers suivants sont présents** :
@@ -271,7 +271,7 @@ Exécute un audit complet des templates email pour Vylo :
    - Présence de `{{ .ConfirmationURL }}` (ou variables requises selon le template)
    - Présence de `{{ .SiteURL }}` dans le footer
    - Structure HTML valide (`<!DOCTYPE html>`, `<html>`, etc.)
-   - Présence du logo Vylo (SVG ou référence)
+   - Présence du logo Doogoo (SVG ou référence)
    - Couleur principale `#2ECC71` dans les styles
    - Bouton(s) d'action avec classe "button"
    - Media queries pour le responsive
@@ -320,7 +320,7 @@ Le rapport sera généré dans `emails/EMAIL_AUDIT.md`.
 
 <div align="center">
 
-**✉️ Vylo Email System — Designed for simplicity and trust.**
+**✉️ Doogoo Email System — Designed for simplicity and trust.**
 
 *Dernière mise à jour : 2025-11-01*
 

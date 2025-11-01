@@ -263,7 +263,7 @@
     "themeDarkDescription": "Interface sombre pour un confort visuel",
     "themeAutoDescription": "Suit les préférences système",
     "integrationsComingSoon": "Intégrations disponibles prochainement",
-    "integrationsDescription": "Connectez Vylo à vos outils préférés"
+    "integrationsDescription": "Connectez Doogoo à vos outils préférés"
   },
   "auth": {
     "tagline": "Gestion immobilière intelligente",
@@ -281,7 +281,7 @@
     },
     "signup": {
       "title": "Créer un compte",
-      "subtitle": "Rejoignez Vylo en quelques secondes",
+      "subtitle": "Rejoignez Doogoo en quelques secondes",
       "fullName": "Nom complet",
       "email": "Email",
       "emailPlaceholder": "votre@email.com",
@@ -329,7 +329,7 @@
     "login": "Se connecter",
     "logging": "Connexion...",
     "signup": "Créer un compte",
-    "signupSubtitle": "Rejoignez Vylo dès aujourd'hui",
+    "signupSubtitle": "Rejoignez Doogoo dès aujourd'hui",
     "creating": "Création...",
     "forgotPassword": "Mot de passe oublié ?",
     "noAccount": "Pas encore de compte ?",
@@ -480,7 +480,7 @@
     "featurePaymentsDesc": "Suivez vos loyers et paiements locatifs en temps réel",
     "testimonialsTitle": "Ce que disent nos clients",
     "ctaTitle": "Prêt à optimiser la gestion de vos biens ?",
-    "ctaDescription": "Rejoignez des centaines de propriétaires qui font confiance à Vylo"
+    "ctaDescription": "Rejoignez des centaines de propriétaires qui font confiance à Doogoo"
   }
 }
 

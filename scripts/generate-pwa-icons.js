@@ -14,12 +14,12 @@ if (!fs.existsSync(iconsDir)) {
 // Tailles d'icônes requises pour PWA
 const sizes = [72, 96, 128, 144, 152, 192, 384, 512]
 
-// SVG de base avec logo Vylo (icône maison verte)
+// SVG de base avec logo Doogoo (icône maison verte)
 const generateIconSVG = (size) => `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
   <rect width="${size}" height="${size}" fill="#ffffff" rx="${size * 0.2}"/>
   <g transform="translate(${size * 0.25}, ${size * 0.25}) scale(${size * 0.5 / 100})">
-    <!-- Maison stylisée Vylo -->
+    <!-- Maison stylisée Doogoo -->
     <path d="M50 10 L90 40 L90 80 L70 80 L70 60 L50 60 L50 80 L10 80 L10 40 Z" 
           fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
     <!-- Porte -->

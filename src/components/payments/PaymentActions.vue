@@ -195,7 +195,7 @@ const generatePDF = async () => {
     
     doc.setFontSize(10)
     doc.setFont('helvetica', 'normal')
-    doc.text('Vylo - Gestion Locative', margin, 32)
+    doc.text('Doogoo - Gestion Locative', margin, 32)
 
     yPosition = 50
 
@@ -344,7 +344,7 @@ const generatePDF = async () => {
     doc.setTextColor(...grayColor)
     doc.text('Merci de votre confiance.', margin, yPosition)
     yPosition += 5
-    doc.text('Cette facture a été générée automatiquement par Vylo.', margin, yPosition)
+    doc.text('Cette facture a été générée automatiquement par Doogoo.', margin, yPosition)
 
     // Génère le nom de fichier
     const sanitizeName = (name) => name.replace(/[^a-z0-9]/gi, '_').toLowerCase()

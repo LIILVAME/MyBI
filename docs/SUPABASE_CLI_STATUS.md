@@ -1,10 +1,10 @@
-# ✅ Statut de la connexion Supabase CLI - Vylo
+# ✅ Statut de la connexion Supabase CLI - Doogoo
 
 ## 🎯 Résultat
 
 **✅ Projet lié avec succès !**
 
-Le projet local Vylo est maintenant connecté au projet Supabase distant :
+Le projet local Doogoo est maintenant connecté au projet Supabase distant :
 - **Project Ref** : `hvhcyraudbabctsrxpqr`
 - **API URL** : `https://hvhcyraudbabctsrxpqr.supabase.co`
 
@@ -120,7 +120,7 @@ npx supabase start
 
 ## 🎯 Conclusion
 
-Le projet Vylo est **correctement lié** à Supabase. La connexion backend ↔ Supabase fonctionne via :
+Le projet Doogoo est **correctement lié** à Supabase. La connexion backend ↔ Supabase fonctionne via :
 
 1. ✅ **CLI Supabase** : Projet lié et authentifié
 2. ✅ **MCP Supabase** : Connexion directe via API (déjà configuré)

@@ -1,8 +1,8 @@
-# 📊 Vue d'ensemble du projet Vylo
+# 📊 Vue d'ensemble du projet Doogoo
 
 ## 🎯 Vision du produit
 
-Vylo est une plateforme web moderne conçue pour permettre aux propriétaires et gestionnaires de biens immobiliers de superviser à distance l'état de leurs appartements en location.
+Doogoo est une plateforme web moderne conçue pour permettre aux propriétaires et gestionnaires de biens immobiliers de superviser à distance l'état de leurs appartements en location.
 
 ### Objectifs principaux
 

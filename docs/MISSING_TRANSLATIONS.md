@@ -68,7 +68,7 @@
 - ❌ `Mot de passe` → `login.password` (déjà présent)
 - ❌ `Créer un compte` → `login.signup` (déjà présent)
 - ❌ `Création...` → `login.creating`
-- ❌ `Rejoignez Vylo dès aujourd'hui` → `login.signupSubtitle`
+- ❌ `Rejoignez Doogoo dès aujourd'hui` → `login.signupSubtitle`
 
 ## Composants
 

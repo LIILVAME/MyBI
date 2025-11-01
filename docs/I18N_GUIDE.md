@@ -1,8 +1,8 @@
-# Guide i18n - Système de traduction Vylo
+# Guide i18n - Système de traduction Doogoo
 
 ## 📋 Vue d'ensemble
 
-Vylo utilise **vue-i18n** pour la gestion multilingue (FR 🇫🇷 / EN 🇺🇸).
+Doogoo utilise **vue-i18n** pour la gestion multilingue (FR 🇫🇷 / EN 🇺🇸).
 
 Le système est centralisé dans :
 - **Configuration** : `src/i18n.js`

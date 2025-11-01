@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // Base path pour GitHub Pages vs Vercel
 // Par défaut, utiliser '/' pour Vercel/Netlify
-// Pour GitHub Pages, définir VITE_BASE_PATH=/Vylo/ dans les variables d'environnement
+// Pour GitHub Pages, définir VITE_BASE_PATH=/Doogoo/ dans les variables d'environnement
 const base = process.env.VITE_BASE_PATH || '/'
 
 export default defineConfig({
@@ -16,9 +16,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
-        name: 'Vylo - Suivi Intelligent de Biens Immobiliers',
-        short_name: 'Vylo',
-        description: 'Plateforme de gestion et de suivi intelligent de biens immobiliers avec monitoring en temps réel',
+        name: 'Doogoo - Smart Property Monitoring & Analytics',
+        short_name: 'Doogoo',
+        description: 'Smart Property Monitoring & Analytics Platform with real-time tracking',
         theme_color: '#22c55e',
         background_color: '#ffffff',
         display: 'standalone',

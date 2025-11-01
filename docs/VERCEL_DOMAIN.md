@@ -19,7 +19,7 @@ Vercel génère plusieurs domaines pour chaque projet :
 ### Étape 1 : Accéder aux Domaines
 
 1. Ouvrir [Vercel Dashboard](https://vercel.com/dashboard)
-2. Sélectionner le projet **Vylo**
+2. Sélectionner le projet **Doogoo**
 3. Aller dans **Settings → Domains**
 
 ### Étape 2 : Voir les Domaines Actifs

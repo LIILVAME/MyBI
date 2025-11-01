@@ -1,6 +1,6 @@
 # 📸 Screenshots
 
-Ce dossier contient les captures d'écran du projet Vylo.
+Ce dossier contient les captures d'écran du projet Doogoo.
 
 ## 📁 Structure
 

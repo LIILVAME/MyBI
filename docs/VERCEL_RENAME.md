@@ -21,7 +21,7 @@ Le nom du projet dans Vercel est indépendant du code source. Vous devez le chan
 4. **Renommez le projet** :
    - Allez dans la section **"General"** (Général)
    - Trouvez le champ **"Project Name"** (Nom du projet)
-   - Changez l'ancien nom en **"Vylo"**
+   - Changez l'ancien nom en **"Doogoo"**
    - Cliquez sur **"Save"** (Enregistrer)
 
 5. **Vérifiez le déploiement** :

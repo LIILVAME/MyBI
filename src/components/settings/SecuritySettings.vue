@@ -137,7 +137,7 @@ const handleBackup = async () => {
   //   tenants: tenantsStore.tenants,
   //   settings: settingsStore.preferences
   // }
-  // downloadJSON(data, `vylo-backup-${Date.now()}.json`)
+  // downloadJSON(data, `doogoo-backup-${Date.now()}.json`)
   
   // TODO v0.2.0 : Remplacer par notification toast
   // showToast('Sauvegarde effectuée avec succès !', { type: 'success' })

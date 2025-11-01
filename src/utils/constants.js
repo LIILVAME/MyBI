@@ -1,5 +1,5 @@
 /**
- * Constantes partagées pour l'application Vylo
+ * Constantes partagées pour l'application Doogoo
  * Centralise les valeurs utilisées dans plusieurs composants
  */
 

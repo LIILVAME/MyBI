@@ -216,7 +216,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateMobileStatus)
 })
 
-// Options du graphique de taux d'occupation avec couleur verte Vylo
+// Options du graphique de taux d'occupation avec couleur verte Doogoo
 const occupancyChartOptions = computed(() => ({
   plotOptions: {
     radialBar: {

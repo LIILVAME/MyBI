@@ -1,8 +1,8 @@
-# 🏠 Vylo - Monitoring Immobilier
+# 🏠 Doogoo - Smart Property Monitoring & Analytics
 
-> Plateforme web temps réel pour la gestion locative et le suivi des paiements
+> Smart Property Monitoring & Analytics Platform with real-time tracking
 
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/LIILVAME/Vylo/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/LIILVAME/doogoo/releases)
 [![Vue 3](https://img.shields.io/badge/Vue-3.4.21-4FC08D?logo=vue.js)](https://vuejs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase)](https://supabase.com/)
 [![Vite](https://img.shields.io/badge/Vite-5.2.0-646CFF?logo=vite)](https://vitejs.dev/)
@@ -11,9 +11,9 @@
 
 <div align="center">
 
-**Supervisez vos biens immobiliers depuis une seule plateforme en temps réel**
+**Smart Property Monitoring & Analytics Platform**
 
-[🚀 Démo Live](https://liilvame.github.io/Vylo/) • [📖 Documentation](docs/project_overview.md) • [🤝 Contribuer](CONTRIBUTING.md) • [📝 Changelog](CHANGELOG.md)
+[🚀 Démo Live](https://doogoo.app/) • [📖 Documentation](docs/project_overview.md) • [🤝 Contribuer](CONTRIBUTING.md) • [📝 Changelog](CHANGELOG.md)
 
 </div>
 
@@ -42,7 +42,7 @@
 
 ## 🎯 À propos
 
-**Vylo** est une application web moderne permettant aux propriétaires et gestionnaires de biens immobiliers de suivre à distance leurs appartements en location, gérer leurs locataires et suivre les paiements en temps réel.
+**Doogoo** est une plateforme moderne de monitoring et d'analyse intelligente permettant aux propriétaires et gestionnaires de biens immobiliers de suivre à distance leurs appartements en location, gérer leurs locataires et suivre les paiements en temps réel.
 
 ### ✨ Principales capacités
 
@@ -131,7 +131,7 @@
 | **Routing** | Vue Router | ^4.3.0 | Navigation SPA avec guards d'authentification |
 | **Styling** | Tailwind CSS | ^3.4.3 | Framework CSS utility-first |
 | **Exports** | jsPDF + xlsx | ^3.0.3 | Génération de rapports PDF/Excel |
-| **Hébergement** | GitHub Pages / Netlify | - | Config base `/Vylo/` prête |
+| **Hébergement** | GitHub Pages / Netlify | - | Config base `/Doogoo/` prête |
 
 ### Architecture
 
@@ -165,8 +165,8 @@ npm --version   # 9.0.0 ou supérieur
 ### 1. Cloner le repository
 
 ```bash
-git clone https://github.com/LIILVAME/Vylo.git
-cd Vylo
+git clone https://github.com/LIILVAME/Doogoo.git
+cd Doogoo
 ```
 
 ### 2. Installer les dépendances
@@ -275,7 +275,7 @@ Les **Row Level Security (RLS)** sont activées sur toutes les tables :
 ## 📁 Structure du Projet
 
 ```
-Vylo/
+Doogoo/
 ├── src/
 │   ├── components/              # Composants réutilisables
 │   │   ├── common/             # Composants communs (Toast, Loaders, Skeletons)
@@ -431,15 +431,15 @@ npm run preview  # Prévisualiser le build de production
 
 2. **Workflow automatique** :
    - Le workflow `deploy.yml` build et déploie automatiquement
-   - Base path : `/Vylo/` (configuré dans `vite.config.js`)
+   - Base path : `/Doogoo/` (configuré dans `vite.config.js`)
 
 3. **URL de déploiement** :
-   - [https://liilvame.github.io/Vylo/](https://liilvame.github.io/Vylo/)
+   - [https://liilvame.github.io/Doogoo/](https://liilvame.github.io/Doogoo/)
 
 ### Netlify (optionnel)
 
 1. **Connecter le repository** :
-   - Connectez `LIILVAME/Vylo` sur Netlify
+   - Connectez `LIILVAME/Doogoo` sur Netlify
 
 2. **Configuration** :
    - Build command : `npm run build`
@@ -541,8 +541,8 @@ Les contributions sont les bienvenues ! Pour contribuer au projet :
 ### 1. Fork le projet
 
 ```bash
-git clone https://github.com/LIILVAME/Vylo.git
-cd Vylo
+git clone https://github.com/LIILVAME/Doogoo.git
+cd Doogoo
 ```
 
 ### 2. Créer une branche
@@ -603,7 +603,7 @@ Ce projet est sous licence **MIT**.
 ```
 MIT License
 
-Copyright (c) 2024 Vylo
+Copyright (c) 2024 Doogoo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -629,7 +629,7 @@ SOFTWARE.
 ## 📞 Contact & Support
 
 - **Email** : contact@vylo.fr
-- **Issues** : [GitHub Issues](https://github.com/LIILVAME/Vylo/issues)
+- **Issues** : [GitHub Issues](https://github.com/LIILVAME/Doogoo/issues)
 - **Documentation** : Voir la section [Documentation](#-documentation)
 
 ---

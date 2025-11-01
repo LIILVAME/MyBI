@@ -1,6 +1,6 @@
-# 🧪 Guide de Test PWA - Vylo
+# 🧪 Guide de Test PWA - Doogoo
 
-Ce guide détaille comment tester manuellement toutes les fonctionnalités PWA de Vylo.
+Ce guide détaille comment tester manuellement toutes les fonctionnalités PWA de Doogoo.
 
 ---
 
@@ -20,7 +20,7 @@ Ce guide détaille comment tester manuellement toutes les fonctionnalités PWA d
 2. Attendre le chargement complet
 3. Vérifier dans la barre d'adresse :
    - Icône d'installation (➕) ou "Installer" visible
-4. Cliquer sur "Installer Vylo"
+4. Cliquer sur "Installer Doogoo"
 5. Confirmer l'installation
 6. **Résultat attendu** : L'application s'ouvre en mode standalone (sans barre d'adresse)
 
@@ -29,7 +29,7 @@ Ce guide détaille comment tester manuellement toutes les fonctionnalités PWA d
 1. Ouvrir l'URL dans Chrome
 2. Menu (⋮) > "Ajouter à l'écran d'accueil"
 3. Confirmer
-4. **Résultat attendu** : L'icône Vylo apparaît sur l'écran d'accueil
+4. **Résultat attendu** : L'icône Doogoo apparaît sur l'écran d'accueil
 
 ---
 
@@ -95,7 +95,7 @@ Ce guide détaille comment tester manuellement toutes les fonctionnalités PWA d
 - ✅ `short_name` : Présent (max 12 caractères recommandé)
 - ✅ `start_url` : `/` (point d'entrée)
 - ✅ `display` : `standalone` ou `fullscreen`
-- ✅ `theme_color` : `#22c55e` (vert Vylo)
+- ✅ `theme_color` : `#22c55e` (vert Doogoo)
 - ✅ `background_color` : `#ffffff`
 - ✅ `icons` : Au moins une icône 192x192 et 512x512
 

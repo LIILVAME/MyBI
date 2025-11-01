@@ -1,4 +1,4 @@
-# 📊 Rapport d'Audit - Templates Email Vylo
+# 📊 Rapport d'Audit - Templates Email Doogoo
 
 **Date** : 2025-11-01  
 **Statut global** : ✅
@@ -8,7 +8,7 @@
 ## ✅ Validations
 
 - ✅ Dossier templates trouvé : /Users/vametoure/Downloads/MyBI/emails/templates
-- ✅ Configuration chargée : Vylo
+- ✅ Configuration chargée : Doogoo
 - ✅ Template trouvé : confirmation.html
 -    ✅ Toutes les variables requises présentes
 - ✅ Template trouvé : magic_link.html

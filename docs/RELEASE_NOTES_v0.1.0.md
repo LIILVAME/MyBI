@@ -2,13 +2,13 @@
 
 **Date de release** : 4 décembre 2024  
 **Statut** : ✅ Stable  
-**Démo live** : [https://liilvame.github.io/Vylo/](https://liilvame.github.io/Vylo/)
+**Démo live** : [https://liilvame.github.io/Doogoo/](https://liilvame.github.io/Doogoo/)
 
 ---
 
 ## 📋 Résumé
 
-Première version stable de **Vylo**, une plateforme web moderne pour le monitoring de biens immobiliers en temps réel. Cette release inclut toutes les fonctionnalités de base nécessaires pour une démonstration complète du produit.
+Première version stable de **Doogoo**, une plateforme web moderne pour le monitoring de biens immobiliers en temps réel. Cette release inclut toutes les fonctionnalités de base nécessaires pour une démonstration complète du produit.
 
 ---
 
@@ -104,8 +104,8 @@ Interface complète de monitoring avec :
 ### Installation locale
 
 ```bash
-git clone https://github.com/LIILVAME/Vylo.git
-cd Vylo
+git clone https://github.com/LIILVAME/Doogoo.git
+cd Doogoo
 npm install
 npm run dev
 ```
@@ -135,10 +135,10 @@ Le projet est configuré pour un déploiement automatique sur GitHub Pages via G
 
 ### Liens utiles
 
-- 📖 [Documentation complète](https://github.com/LIILVAME/Vylo/blob/main/README.md)
-- 🚀 [Démo live](https://liilvame.github.io/Vylo/)
-- 📝 [Changelog](https://github.com/LIILVAME/Vylo/blob/main/CHANGELOG.md)
-- 🤝 [Contribuer](https://github.com/LIILVAME/Vylo/blob/main/CONTRIBUTING.md)
+- 📖 [Documentation complète](https://github.com/LIILVAME/Doogoo/blob/main/README.md)
+- 🚀 [Démo live](https://liilvame.github.io/Doogoo/)
+- 📝 [Changelog](https://github.com/LIILVAME/Doogoo/blob/main/CHANGELOG.md)
+- 🤝 [Contribuer](https://github.com/LIILVAME/Doogoo/blob/main/CONTRIBUTING.md)
 
 ---
 
@@ -209,25 +209,25 @@ Aucun problème critique identifié pour cette version.
 
 ## 🙏 Remerciements
 
-Merci à tous ceux qui ont contribué à cette première version de Vylo !
+Merci à tous ceux qui ont contribué à cette première version de Doogoo !
 
 ---
 
 ## 📞 Support
 
-- **Issues** : [GitHub Issues](https://github.com/LIILVAME/Vylo/issues)
+- **Issues** : [GitHub Issues](https://github.com/LIILVAME/Doogoo/issues)
 - **Email** : contact@vylo.fr
-- **Documentation** : [README.md](https://github.com/LIILVAME/Vylo/blob/main/README.md)
+- **Documentation** : [README.md](https://github.com/LIILVAME/Doogoo/blob/main/README.md)
 
 ---
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](https://github.com/LIILVAME/Vylo/blob/main/LICENSE) pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](https://github.com/LIILVAME/Doogoo/blob/main/LICENSE) pour plus de détails.
 
 ---
 
-**Télécharger** : [Source code (zip)](https://github.com/LIILVAME/Vylo/archive/refs/tags/v0.1.0.zip) | [Source code (tar.gz)](https://github.com/LIILVAME/Vylo/archive/refs/tags/v0.1.0.tar.gz)
+**Télécharger** : [Source code (zip)](https://github.com/LIILVAME/Doogoo/archive/refs/tags/v0.1.0.zip) | [Source code (tar.gz)](https://github.com/LIILVAME/Doogoo/archive/refs/tags/v0.1.0.tar.gz)
 
-**Voir sur GitHub** : [https://github.com/LIILVAME/Vylo/releases/tag/v0.1.0](https://github.com/LIILVAME/Vylo/releases/tag/v0.1.0)
+**Voir sur GitHub** : [https://github.com/LIILVAME/Doogoo/releases/tag/v0.1.0](https://github.com/LIILVAME/Doogoo/releases/tag/v0.1.0)
 
