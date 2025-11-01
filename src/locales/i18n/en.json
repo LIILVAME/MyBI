@@ -312,7 +312,22 @@
       "ctaLoading": "Sending...",
       "successTitle": "Email sent!",
       "successMessage": "A reset link has been sent to {email}",
-      "backToLogin": "Back to login"
+      "backToLogin": "Back to login",
+      "newPasswordTitle": "Set a new password",
+      "newPasswordSubtitle": "Enter your new password below",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "••••••••",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "passwordHint": "At least 6 characters",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "passwordTooWeak": "Password is too weak. Use letters and numbers",
+      "updateButton": "Validate",
+      "updateSuccess": "Password reset successfully!",
+      "updateError": "Error resetting password",
+      "tokenError": "Error verifying the link. Please request a new reset link",
+      "noSession": "Session expired. Please request a new reset link"
     },
     "confirm": {
       "title": "Email confirmed",

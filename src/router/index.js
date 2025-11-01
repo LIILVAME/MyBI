@@ -156,7 +156,19 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // Si l'utilisateur est connecté et essaie d'accéder à une page d'auth, redirige vers le dashboard
-    if ((to.path === '/login' || to.path === '/signup' || to.path === '/reset-password') && authStore.user) {
+    // Exception : /reset-password si c'est une session temporaire de réinitialisation (détectée via hash)
+    if (to.path === '/reset-password' && authStore.user) {
+      // Vérifie si c'est une session de réinitialisation (hash avec type=recovery)
+      const hash = window.location.hash
+      const isPasswordRecovery = hash && hash.includes('type=recovery')
+      
+      // Si ce n'est pas une réinitialisation, redirige vers dashboard
+      if (!isPasswordRecovery) {
+        next('/dashboard')
+        return
+      }
+      // Sinon, laisse passer (la page ResetPasswordPage gérera le formulaire)
+    } else if ((to.path === '/login' || to.path === '/signup') && authStore.user) {
       next('/dashboard')
       return
     }

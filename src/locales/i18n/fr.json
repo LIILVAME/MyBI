@@ -311,7 +311,22 @@
       "ctaLoading": "Envoi...",
       "successTitle": "Email envoyé !",
       "successMessage": "Un lien de réinitialisation a été envoyé à {email}",
-      "backToLogin": "Retour à la connexion"
+      "backToLogin": "Retour à la connexion",
+      "newPasswordTitle": "Définir un nouveau mot de passe",
+      "newPasswordSubtitle": "Entrez votre nouveau mot de passe ci-dessous",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "••••••••",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "••••••••",
+      "passwordHint": "Au moins 6 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+      "passwordTooWeak": "Le mot de passe est trop faible. Utilisez des lettres et des chiffres",
+      "updateButton": "Valider",
+      "updateSuccess": "Mot de passe réinitialisé avec succès !",
+      "updateError": "Erreur lors de la réinitialisation du mot de passe",
+      "tokenError": "Erreur lors de la vérification du lien. Veuillez demander un nouveau lien de réinitialisation",
+      "noSession": "Session expirée. Veuillez demander un nouveau lien de réinitialisation"
     },
     "confirm": {
       "title": "Email confirmé",

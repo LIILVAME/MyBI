@@ -102,8 +102,14 @@ const handleAuthHash = async () => {
         if (type === 'signup') {
           // Inscription : redirige vers la page de confirmation
           router.push('/confirm-email')
+        } else if (type === 'recovery') {
+          // Réinitialisation de mot de passe : reste sur /reset-password
+          // La page ResetPasswordPage.vue gérera l'affichage du formulaire
+          if (router.currentRoute.value.path !== '/reset-password') {
+            router.push('/reset-password')
+          }
         } else {
-          // Autres cas (reset password, etc.) : redirige vers login
+          // Autres cas : redirige vers login
           router.push('/login?confirmed=true')
         }
         return true

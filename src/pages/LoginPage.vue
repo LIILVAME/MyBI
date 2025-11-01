@@ -35,6 +35,18 @@
           </router-link>
         </div>
 
+        <!-- Message de succès réinitialisation -->
+        <transition name="slide-fade">
+          <div v-if="route.query.passwordReset === 'true'" class="p-4 bg-green-50 border-l-4 border-green-500 rounded-lg shadow-sm mb-4">
+            <div class="flex items-start">
+              <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              <p class="text-sm text-green-700 flex-1">{{ $t('auth.reset.updateSuccess') }} Vous pouvez maintenant vous connecter.</p>
+            </div>
+          </div>
+        </transition>
+
         <!-- Message d'erreur global -->
         <transition name="slide-fade">
           <div v-if="authStore.error && !emailError && !passwordError" class="p-4 bg-red-50 border-l-4 border-red-500 rounded-lg shadow-sm">
@@ -81,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onErrorCaptured } from 'vue'
+import { ref, computed, onMounted, onErrorCaptured, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from '@/composables/useLingui'
 import { useAuthStore } from '@/stores/authStore'
@@ -123,6 +135,16 @@ const emailError = computed(() => {
 const passwordError = computed(() => {
   if (!form.value.password && authStore.error) return null
   return ''
+})
+
+// Nettoie le query param passwordReset après affichage
+watch(() => route.query.passwordReset, (value) => {
+  if (value === 'true') {
+    // Nettoie l'URL après un court délai
+    setTimeout(() => {
+      router.replace({ query: {} })
+    }, 5000) // 5 secondes pour laisser voir le message
+  }
 })
 
 /**
