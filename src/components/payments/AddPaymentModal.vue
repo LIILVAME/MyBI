@@ -163,6 +163,9 @@
 import { ref, computed, watch } from 'vue'
 import { TRANSACTION_STATUS } from '@/utils/constants'
 import { usePropertiesStore } from '@/stores/propertiesStore'
+import { usePaymentsStore } from '@/stores/paymentsStore'
+import { useToastStore } from '@/stores/toastStore'
+import { paymentSchema, validate } from '@/utils/validators'
 
 const props = defineProps({
   isOpen: {
@@ -174,6 +177,8 @@ const props = defineProps({
 const emit = defineEmits(['close', 'submit'])
 
 const propertiesStore = usePropertiesStore()
+const paymentsStore = usePaymentsStore()
+const toastStore = useToastStore()
 
 const form = ref({
   propertyId: '',
@@ -183,6 +188,8 @@ const form = ref({
   dueDate: '',
   status: TRANSACTION_STATUS.PENDING
 })
+
+const validationErrors = ref({})
 
 /**
  * Liste des biens occupés (pour la sélection)

@@ -219,7 +219,7 @@ const resetForm = () => {
     entryDate: '',
     exitDate: '',
     rent: null,
-    status: PAYMENT_STATUS.ON_TIME
+    status: 'on_time'
   }
 }
 
