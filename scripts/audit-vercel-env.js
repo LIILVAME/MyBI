@@ -5,7 +5,7 @@
  * Vérifie que les variables requises sont présentes et correctement configurées
  */
 
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, existsSync, writeFileSync, mkdirSync, statSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import { execSync } from 'child_process'
@@ -143,7 +143,7 @@ function checkLocalBuild() {
       hasBuild: true,
       hasIndex: indexExists,
       hasAssets,
-      buildDate: distExists ? require('fs').statSync(join(rootDir, 'dist')).mtime.toISOString() : null
+      buildDate: distExists ? statSync(join(rootDir, 'dist')).mtime.toISOString() : null
     }
   } catch (error) {
     return {
@@ -371,12 +371,12 @@ try {
     markdown += `- [ ] \`${key}\` (optionnel)\n`
   })
   
-  fs.writeFileSync(reportPath, markdown, 'utf-8')
+  writeFileSync(reportPath, markdown, 'utf-8')
   console.log(`\n✅ Rapport sauvegardé: ${reportPath}\n`)
   
   // Sauvegarde aussi le JSON pour traitement ultérieur
   const jsonPath = join(rootDir, 'docs', 'VERCEL_ENV_AUDIT_REPORT.json')
-  fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2), 'utf-8')
+  writeFileSync(jsonPath, JSON.stringify(report, null, 2), 'utf-8')
   
   process.exit(envVars.missing.length > 0 ? 1 : 0)
 } catch (error) {

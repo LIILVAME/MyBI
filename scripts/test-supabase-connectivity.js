@@ -6,7 +6,7 @@
  */
 
 import fetch from 'node-fetch'
-import { writeFileSync, mkdirSync, existsSync } from 'fs'
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -184,8 +184,7 @@ async function generateConnectivityReport() {
   // (Ce test nécessite les variables d'environnement)
   const envPath = join(rootDir, '.env')
   if (existsSync(envPath)) {
-    const fs = require('fs')
-    const envContent = fs.readFileSync(envPath, 'utf-8')
+    const envContent = readFileSync(envPath, 'utf-8')
     const supabaseUrlMatch = envContent.match(/VITE_SUPABASE_URL=(.+)/)
     const supabaseKeyMatch = envContent.match(/VITE_SUPABASE_ANON_KEY=(.+)/)
     
