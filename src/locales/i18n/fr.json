@@ -190,8 +190,8 @@
       "text": "Sur la période du {startDate} au {endDate}, vous avez perçu {revenue}, avec un taux d'occupation moyen de {occupancy}%."
     },
     "actions": {
-      "exportPDF": "📄 Exporter en PDF",
-      "sendEmail": "📧 Envoyer par mail",
+      "exportPDF": "Exporter en PDF",
+      "sendEmail": "Envoyer par mail",
       "comingSoon": "Bientôt disponible",
       "exportSuccess": "Export réussi"
     },

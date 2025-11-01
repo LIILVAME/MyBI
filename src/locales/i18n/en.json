@@ -191,8 +191,8 @@
       "text": "For the period from {startDate} to {endDate}, you received {revenue}, with an average occupancy rate of {occupancy}%."
     },
     "actions": {
-      "exportPDF": "📄 Export to PDF",
-      "sendEmail": "📧 Send by email",
+      "exportPDF": "Export to PDF",
+      "sendEmail": "Send by email",
       "comingSoon": "Coming soon",
       "exportSuccess": "Export successful"
     },
