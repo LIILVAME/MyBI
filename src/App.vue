@@ -144,6 +144,12 @@ onMounted(async () => {
 
           // Réinitialise le profil
           authStore.profile = null
+
+          // Redirige vers /login si on n'y est pas déjà
+          const currentRoute = router.currentRoute.value
+          if (currentRoute.path !== '/login' && currentRoute.path !== '/') {
+            router.push('/login')
+          }
         } catch (err) {
           console.warn('Erreur lors du nettoyage après SIGNED_OUT (non bloquant):', err)
         }

@@ -51,8 +51,17 @@ const logout = async () => {
   await supabase.auth.signOut()
   // Redirection gérée par onAuthStateChange dans App.vue
 }
+
+// src/App.vue (ligne ~115)
+} else if (event === 'SIGNED_OUT') {
+  // ... nettoyage stores ...
+  // Redirige vers /login si on n'y est pas déjà
+  if (currentRoute.path !== '/login' && currentRoute.path !== '/') {
+    router.push('/login')
+  }
+}
 ```
-**Statut** : ✅ Logout déclenche `SIGNED_OUT` qui nettoie les stores
+**Statut** : ✅ Logout déclenche `SIGNED_OUT` qui nettoie les stores ET redirige vers `/login`
 
 ---
 
