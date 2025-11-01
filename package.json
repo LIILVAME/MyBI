@@ -39,6 +39,7 @@
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.19",
     "jsdom": "^27.1.0",
+    "node-fetch": "^2.7.0",
     "postcss": "^8.4.38",
     "sharp": "^0.34.4",
     "supabase": "^2.54.11",
