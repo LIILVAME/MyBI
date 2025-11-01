@@ -61,7 +61,66 @@ const storeForCache = {
 setSettingsStoreCache(storeForCache)
 
 /**
+ * Gère les tokens de confirmation d'email dans le hash de l'URL
+ * Supabase redirige vers l'URL avec les tokens dans le hash (#access_token=...)
+ */
+const handleAuthHash = async () => {
+  try {
+    const hash = window.location.hash
+    if (!hash || !hash.includes('access_token')) {
+      return false
+    }
+
+    // Extrait les paramètres du hash
+    const hashParams = new URLSearchParams(hash.substring(1))
+    const accessToken = hashParams.get('access_token')
+    const refreshToken = hashParams.get('refresh_token')
+    const type = hashParams.get('type')
+
+    if (accessToken && refreshToken) {
+      // Nettoie l'URL en supprimant le hash
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+
+      // Échange les tokens avec Supabase pour créer une session
+      const { data, error } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      })
+
+      if (error) {
+        console.error('Erreur lors de l\'échange des tokens:', error)
+        router.push('/login?error=token_exchange_failed')
+        return true
+      }
+
+      if (data.session) {
+        // Met à jour le store auth
+        authStore.user = data.user
+        authStore.session = data.session
+
+        // Redirige selon le type
+        if (type === 'signup') {
+          // Inscription : redirige vers la page de confirmation
+          router.push('/confirm-email')
+        } else {
+          // Autres cas (reset password, etc.) : redirige vers login
+          router.push('/login?confirmed=true')
+        }
+        return true
+      }
+    }
+
+    return false
+  } catch (error) {
+    console.error('Erreur lors du traitement du hash auth:', error)
+    router.push('/login?error=hash_processing_failed')
+    return true
+  }
+}
+
+/**
  * Initialise l'application de manière centralisée
+ * - Étape 0 : Gère les tokens de confirmation dans le hash
  * - Étape 1 : Restaure la session Supabase
  * - Étape 2 : Charge les données si utilisateur connecté
  * - Étape 3 : Configure l'écouteur d'événements auth
@@ -70,6 +129,14 @@ onMounted(async () => {
   try {
     // Initialise le watcher de connexion en premier
     connectionStore.initConnectionWatcher()
+
+    // Étape 0 — Gère les tokens de confirmation d'email dans le hash
+    const hashHandled = await handleAuthHash()
+    if (hashHandled) {
+      // Si le hash a été traité, on attend un peu pour laisser la redirection se faire
+      // puis on initialise la session normalement
+      await new Promise(resolve => setTimeout(resolve, 100))
+    }
 
     // Étape 1 — Restaurer la session Supabase
     await authStore.initSession()
@@ -115,6 +182,21 @@ onMounted(async () => {
           // Réactive le realtime
           propertiesStore.initRealtime()
           paymentsStore.initRealtime()
+        }
+      } else if (event === 'USER_UPDATED') {
+        // Mise à jour du profil utilisateur (ex: changement de mot de passe)
+        // Le toast est déjà géré dans ChangePasswordModal, donc pas besoin de re-notifier ici
+        // On met juste à jour la session si nécessaire
+        if (session?.user) {
+          authStore.user = session.user
+          authStore.session = session
+          
+          // Rafraîchit le profil si nécessaire
+          try {
+            await authStore.fetchProfile()
+          } catch (err) {
+            console.warn('Impossible de rafraîchir le profil après mise à jour (non bloquant):', err)
+          }
         }
       } else if (event === 'SIGNED_OUT') {
         // Déconnexion : nettoie tous les stores

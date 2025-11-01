@@ -74,7 +74,8 @@ export const useAuthStore = defineStore('auth', () => {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/login`,
+          // Redirige vers la racine, App.vue gérera la redirection vers /confirm-email
+          emailRedirectTo: `${window.location.origin}`,
           data: {
             full_name: metadata.fullName || '',
             phone: metadata.phone || null

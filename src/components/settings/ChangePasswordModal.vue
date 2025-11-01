@@ -98,12 +98,23 @@
                 </div>
               </div>
 
+              <!-- Message d'erreur visible (si nécessaire) -->
+              <div v-if="errorMessage" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div class="flex items-start">
+                  <svg class="w-5 h-5 text-red-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p class="text-sm text-red-700">{{ errorMessage }}</p>
+                </div>
+              </div>
+
               <!-- Actions -->
               <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
                 <button
                   type="button"
                   @click="handleClose"
-                  class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  :disabled="isSubmitting"
+                  class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {{ $t('common.cancel') }}
                 </button>
@@ -148,6 +159,7 @@ defineProps({
 const emit = defineEmits(['close', 'success'])
 
 const isSubmitting = ref(false)
+const errorMessage = ref('')
 const form = ref({
   currentPassword: '',
   newPassword: '',
@@ -155,79 +167,111 @@ const form = ref({
 })
 
 const handleClose = () => {
-  // Réinitialise le formulaire
+  // Réinitialise le formulaire et les erreurs
   form.value = {
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   }
+  errorMessage.value = ''
   emit('close')
 }
 
 const handleSubmit = async () => {
+  // Réinitialise le message d'erreur
+  errorMessage.value = ''
+
   // Vérifie que les mots de passe correspondent
   if (form.value.newPassword !== form.value.confirmPassword) {
-    if (toastStore) {
-      toastStore.error(t('security.password.passwordMismatch'))
-    }
+    const message = t('security.password.passwordMismatch')
+    errorMessage.value = message
+    toastStore.error(message)
     return
   }
 
   // Vérifie la longueur minimale
   if (form.value.newPassword.length < 6) {
-    if (toastStore) {
-      toastStore.error(t('security.password.passwordTooShort'))
-    }
+    const message = t('security.password.passwordTooShort')
+    errorMessage.value = message
+    toastStore.error(message)
+    return
+  }
+
+  // Vérifie que le nouveau mot de passe est différent de l'ancien
+  if (form.value.newPassword === form.value.currentPassword) {
+    const message = t('security.password.samePassword')
+    errorMessage.value = message
+    toastStore.error(message)
     return
   }
 
   isSubmitting.value = true
+  errorMessage.value = ''
 
   try {
-    // Met à jour le mot de passe via Supabase
-    const { error } = await supabase.auth.updateUser({
+    // Vérifie d'abord que l'ancien mot de passe est correct
+    // en tentant une reconnexion
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: authStore.user?.email || '',
+      password: form.value.currentPassword
+    })
+
+    if (signInError) {
+      // L'ancien mot de passe est incorrect
+      throw new Error(t('security.password.currentPasswordIncorrect'))
+    }
+
+    // Si la vérification réussit, met à jour le mot de passe
+    // Note: Supabase updateUser ne nécessite pas l'ancien mot de passe
+    // si l'utilisateur est déjà authentifié, mais on le vérifie quand même
+    const { error: updateError } = await supabase.auth.updateUser({
       password: form.value.newPassword
     })
 
-    if (error) {
-      // Si erreur d'authentification, essaie de se reconnecter avec l'ancien mot de passe
-      if (error.message.includes('password') || error.message.includes('credentials')) {
-        // Supabase Auth ne nécessite pas l'ancien mot de passe pour updateUser
-        // Mais on peut vérifier en se reconnectant d'abord
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: authStore.user?.email || '',
-          password: form.value.currentPassword
-        })
-
-        if (signInError) {
-          throw new Error(t('security.password.currentPasswordIncorrect'))
-        }
-
-        // Si la reconnexion réussit, on peut mettre à jour le mot de passe
-        const { error: updateError } = await supabase.auth.updateUser({
-          password: form.value.newPassword
-        })
-
-        if (updateError) {
-          throw updateError
-        }
+    if (updateError) {
+      // Gestion des erreurs spécifiques
+      let errorMessage = t('security.password.changeError')
+      
+      if (updateError.message.includes('same')) {
+        errorMessage = t('security.password.samePassword')
+      } else if (updateError.message.includes('weak') || updateError.message.includes('strength')) {
+        errorMessage = t('security.password.passwordTooWeak')
       } else {
-        throw error
+        errorMessage = updateError.message || errorMessage
       }
+      
+      throw new Error(errorMessage)
     }
 
-    // Succès
-    handleClose()
-    emit('success')
-    
-    if (toastStore) {
-      toastStore.success(t('security.password.changedSuccess'))
+    // Succès : réinitialise le formulaire et ferme le modal
+    form.value = {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
     }
+
+    // Émet l'événement success avant de fermer
+    emit('success')
+
+    // Affiche le toast de succès
+    toastStore.success(t('security.password.changedSuccess'), {
+      timeout: 5000 // 5 secondes pour que l'utilisateur le voie bien
+    })
+
+    // Ferme le modal après un court délai pour laisser voir le toast
+    setTimeout(() => {
+      handleClose()
+    }, 100)
+
   } catch (error) {
     console.error('Erreur lors du changement de mot de passe:', error)
-    if (toastStore) {
-      toastStore.error(error.message || t('security.password.changeError'))
-    }
+    
+    // Affiche le message d'erreur dans le formulaire et dans un toast
+    const message = error.message || t('security.password.changeError')
+    errorMessage.value = message
+    toastStore.error(message, {
+      timeout: 6000 // 6 secondes pour les erreurs
+    })
   } finally {
     isSubmitting.value = false
   }

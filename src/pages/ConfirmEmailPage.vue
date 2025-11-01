@@ -16,20 +16,43 @@
         {{ $t('auth.confirm.message') }}
       </p>
 
-      <!-- Bouton vers la connexion -->
+      <!-- Bouton vers la connexion ou le dashboard -->
       <AuthButton
-        :label="$t('auth.confirm.cta')"
-        @click="$router.push('/login')"
+        :label="authStore.user ? $t('common.goToDashboard') : $t('auth.confirm.cta')"
+        @click="authStore.user ? $router.push('/dashboard') : $router.push('/login')"
       />
     </div>
   </AuthLayout>
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
 import AuthLayout from '@/layouts/AuthLayout.vue'
 import AuthButton from '@/components/auth/AuthButton.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
+
+// Charge le profil si l'utilisateur est connecté
+onMounted(async () => {
+  if (authStore.user && !authStore.profile) {
+    try {
+      await authStore.fetchProfile()
+    } catch (err) {
+      console.warn('Impossible de charger le profil:', err)
+    }
+  }
+
+  // Si l'utilisateur est connecté et a un profil, on peut le rediriger vers le dashboard
+  // après quelques secondes (ou lui laisser cliquer sur le bouton)
+  if (authStore.user && authStore.profile) {
+    // Optionnel : auto-redirection après 3 secondes
+    // setTimeout(() => {
+    //   router.push('/dashboard')
+    // }, 3000)
+  }
+})
 </script>
 

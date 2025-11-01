@@ -4,6 +4,7 @@
 
 export default {
   "common": {
+    "goToDashboard": "Go to dashboard",
     "loading": "Loading...",
     "error": "Error",
     "errorWithColon": "Error:",
@@ -437,8 +438,10 @@ export default {
       "currentPasswordIncorrect": "Current password is incorrect",
       "updateButton": "Update",
       "updating": "Updating...",
-      "changedSuccess": "Password changed successfully",
-      "changeError": "Error changing password"
+      "changedSuccess": "✅ Password changed successfully! Your account remains logged in.",
+      "changeError": "Error changing password",
+      "samePassword": "The new password must be different from the current one",
+      "passwordTooWeak": "Password is too weak. Use at least 8 characters with letters, numbers and special characters"
     },
     "twoFactor": {
       "title": "Two-factor authentication",

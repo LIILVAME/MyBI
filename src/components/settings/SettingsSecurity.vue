@@ -132,10 +132,9 @@ const toggleTwoFactor = () => {
 }
 
 const handlePasswordChanged = () => {
-  isPasswordModalOpen.value = false
-  if (toastStore) {
-    toastStore.success(t('security.password.changedSuccess'))
-  }
+  // Le toast est déjà affiché dans ChangePasswordModal
+  // On ne fait que fermer le modal si nécessaire
+  // (il est déjà fermé dans ChangePasswordModal)
 }
 
 const handleSignOutAllDevices = async () => {
