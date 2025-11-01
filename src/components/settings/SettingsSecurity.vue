@@ -67,7 +67,12 @@
       </div>
     </div>
 
-    <!-- Carte 3: Sessions actives -->
+    <!-- Carte 3: Test de changement de mot de passe -->
+    <div class="card hover:shadow-md transition-shadow">
+      <PasswordChangeTest />
+    </div>
+
+    <!-- Carte 4: Sessions actives -->
     <div class="card hover:shadow-md transition-shadow">
       <div class="flex items-start">
         <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
@@ -111,6 +116,7 @@ import { useI18n } from '@/composables/useLingui'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import ChangePasswordModal from './ChangePasswordModal.vue'
+import PasswordChangeTest from './PasswordChangeTest.vue'
 
 const { t } = useI18n()
 const authStore = useAuthStore()
