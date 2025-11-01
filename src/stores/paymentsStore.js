@@ -259,23 +259,32 @@ export const usePaymentsStore = defineStore('payments', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
 
+      // Optimistic UI : Supprime temporairement de la liste
+      const paymentIndex = payments.value.findIndex(p => p.id === id)
+      if (paymentIndex === -1) {
+        throw new Error('Payment not found')
+      }
+      const oldPayments = [...payments.value]
+      payments.value = payments.value.filter(p => p.id !== id)
+
       const result = await paymentsApi.deletePayment(id, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        payments.value = oldPayments
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
       }
-
-      // Supprime de la liste locale
-      payments.value = payments.value.filter(p => p.id !== id)
       
-      const toast = useToastStore()
-      toast.success('Paiement supprimé')
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
+      }
       
       loading.value = false
     } catch (err) {
