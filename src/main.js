@@ -59,12 +59,16 @@ app.config.errorHandler = (err, instance, info) => {
   const isExtensionError = 
     errMessage.includes('Invalid linked format') ||
     errMessage.includes('RestoreOriginal') ||
+    errMessage.includes('Can not RestoreOriginal') ||
     errStack.includes('content.bundle.js') ||
     errStack.includes('extension') ||
+    errStack.includes('chrome-extension://') ||
+    errStack.includes('moz-extension://') ||
     (err instanceof SyntaxError && errMessage.includes('linked'))
   
   if (isExtensionError) {
-    // Ne pas logger ces erreurs non critiques
+    // Ne pas logger ces erreurs non critiques causées par les extensions
+    // (Google Translate, AdBlock, etc.)
     return // Ignorer silencieusement cette erreur
   }
   
