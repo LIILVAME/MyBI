@@ -210,12 +210,18 @@ export const usePaymentsStore = defineStore('payments', () => {
     error.value = null
 
     try {
-      const { error: deleteError } = await supabase
-        .from('payments')
-        .delete()
-        .eq('id', id)
+      const authStore = useAuthStore()
+      if (!authStore.user) {
+        throw new Error('User not authenticated')
+      }
 
-      if (deleteError) throw deleteError
+      const result = await paymentsApi.deletePayment(id, authStore.user.id)
+
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
 
       // Supprime de la liste locale
       payments.value = payments.value.filter(p => p.id !== id)
@@ -227,11 +233,6 @@ export const usePaymentsStore = defineStore('payments', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error deleting payment:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de la suppression : ${err.message}`)
-      
       throw err
     }
   }
