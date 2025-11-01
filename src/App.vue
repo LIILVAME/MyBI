@@ -14,11 +14,11 @@
   </div>
 
   <!-- Application normale une fois la session initialisée -->
-  <template v-else>
+  <div v-else>
     <transition name="fade" mode="out-in">
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </transition>
-  </template>
+  </div>
   <Toast />
 </template>
 
