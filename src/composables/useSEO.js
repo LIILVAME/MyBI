@@ -84,19 +84,38 @@ export function useSEO() {
     updateHreflang('x-default', `${siteUrl}${route.path}`)
   }
 
+  // Garde pour éviter plusieurs watchers
+  let seoWatcherInitialized = false
+
   /**
    * Initialise le watcher pour mettre à jour automatiquement les meta tags
    */
   const initSEO = () => {
+    // Évite de créer plusieurs watchers
+    if (seoWatcherInitialized) {
+      // Mise à jour immédiate si déjà initialisé
+      if (route.meta?.seo) {
+        updateMetaTags(route.meta.seo)
+      } else {
+        updateMetaTags()
+      }
+      return
+    }
+
     // Mise à jour initiale
     if (route.meta?.seo) {
       updateMetaTags(route.meta.seo)
     }
 
-    // Watcher pour les changements de route
+    // Watcher pour les changements de route (créé une seule fois)
     watch(
       () => [route.path, route.meta?.seo],
-      ([path, seo]) => {
+      ([path, seo], [oldPath, oldSeo]) => {
+        // Évite les mises à jour inutiles si rien n'a changé
+        if (path === oldPath && seo === oldSeo) {
+          return
+        }
+        
         if (seo) {
           updateMetaTags(seo)
         } else {
@@ -104,8 +123,10 @@ export function useSEO() {
           updateMetaTags()
         }
       },
-      { immediate: true }
+      { immediate: false } // Ne pas déclencher immédiatement, déjà fait au-dessus
     )
+    
+    seoWatcherInitialized = true
   }
 
   return {

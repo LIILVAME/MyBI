@@ -222,19 +222,30 @@ const router = createRouter({
   routes
 })
 
+// Garde pour éviter les imports répétés
+let analyticsImported = false
+let trackPageViewFn = null
+
 // Initialise le SEO après la création du router
 router.afterEach(async (to) => {
   // Le composable useSEO sera appelé dans App.vue après le montage
   // pour mettre à jour les meta tags dynamiquement
   
-  // Track page view pour analytics (dynamique pour éviter erreur si analytics non disponible)
+  // Track page view pour analytics (import une seule fois)
   if (typeof window !== 'undefined' && window.gtag) {
     try {
-      const { trackPageView } = await import('@/utils/analytics')
-      trackPageView(to.path, to.meta?.seo?.title || document.title)
+      if (!analyticsImported) {
+        const analytics = await import('@/utils/analytics')
+        trackPageViewFn = analytics.trackPageView
+        analyticsImported = true
+      }
+      if (trackPageViewFn) {
+        trackPageViewFn(to.path, to.meta?.seo?.title || document.title)
+      }
     } catch (error) {
       // Analytics non disponible, on continue sans
       console.warn('Analytics non disponible pour tracking:', error)
+      analyticsImported = true // Marque comme importé pour éviter de réessayer
     }
   }
 })
