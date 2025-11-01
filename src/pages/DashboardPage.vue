@@ -65,7 +65,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import DashboardHeader from '../components/dashboard/DashboardHeader.vue'
 import PropertiesList from '../components/dashboard/PropertiesList.vue'

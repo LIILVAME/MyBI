@@ -165,7 +165,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { useToastStore } from '@/stores/toastStore'
 import { formatCurrency } from '@/utils/formatters'

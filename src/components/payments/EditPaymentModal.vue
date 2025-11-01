@@ -137,7 +137,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { TRANSACTION_STATUS } from '@/utils/constants'
 import { paymentSchema, validate } from '@/utils/validators'
 import { useToastStore } from '@/stores/toastStore'

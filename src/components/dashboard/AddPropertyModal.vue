@@ -194,7 +194,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { useToastStore } from '@/stores/toastStore'
 import { PROPERTY_STATUS } from '@/utils/constants'

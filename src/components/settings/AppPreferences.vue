@@ -128,7 +128,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { useToastStore } from '@/stores/toastStore'
 import SettingsSection from './SettingsSection.vue'

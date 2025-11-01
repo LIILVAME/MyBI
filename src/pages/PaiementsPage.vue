@@ -121,7 +121,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import PaymentsSection from '../components/dashboard/PaymentsSection.vue'
 import AddPaymentModal from '../components/payments/AddPaymentModal.vue'

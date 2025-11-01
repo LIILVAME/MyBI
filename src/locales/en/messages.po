@@ -1,0 +1,1132 @@
+# Translations for EN
+# Generated from JSON migration
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "common.loading"
+msgstr "Loading..."
+
+msgid "common.error"
+msgstr "Error"
+
+msgid "common.errorWithColon"
+msgstr "Error:"
+
+msgid "common.success"
+msgstr "Success"
+
+msgid "common.cancel"
+msgstr "Cancel"
+
+msgid "common.save"
+msgstr "Save"
+
+msgid "common.delete"
+msgstr "Delete"
+
+msgid "common.edit"
+msgstr "Edit"
+
+msgid "common.add"
+msgstr "Add"
+
+msgid "common.addProperty"
+msgstr "Add property"
+
+msgid "common.close"
+msgstr "Close"
+
+msgid "common.search"
+msgstr "Search"
+
+msgid "common.filter"
+msgstr "Filter"
+
+msgid "common.reset"
+msgstr "Reset"
+
+msgid "common.viewAll"
+msgstr "View all"
+
+msgid "common.view"
+msgstr "View"
+
+msgid "common.noData"
+msgstr "No data"
+
+msgid "common.actions"
+msgstr "Actions"
+
+msgid "common.all"
+msgstr "All"
+
+msgid "common.date"
+msgstr "Date"
+
+msgid "common.days"
+msgstr "day(s)"
+
+msgid "common.optional"
+msgstr "optional"
+
+msgid "common.selectStatus"
+msgstr "Select a status"
+
+msgid "common.selectProperty"
+msgstr "Select a property"
+
+msgid "common.unknown"
+msgstr "Unknown"
+
+msgid "sidebar.dashboard"
+msgstr "Dashboard"
+
+msgid "sidebar.properties"
+msgstr "Properties"
+
+msgid "sidebar.payments"
+msgstr "Payments"
+
+msgid "sidebar.tenants"
+msgstr "Tenants"
+
+msgid "sidebar.stats"
+msgstr "Statistics"
+
+msgid "sidebar.reports"
+msgstr "Reports"
+
+msgid "sidebar.alerts"
+msgstr "Alerts"
+
+msgid "sidebar.settings"
+msgstr "Settings"
+
+msgid "sidebar.logout"
+msgstr "Logout"
+
+msgid "sidebar.loggingOut"
+msgstr "Logging out..."
+
+msgid "sidebar.language"
+msgstr "Language"
+
+msgid "dashboard.title"
+msgstr "Dashboard"
+
+msgid "dashboard.subtitle"
+msgstr "Overview of your real estate properties"
+
+msgid "dashboard.totalProperties"
+msgstr "Total properties"
+
+msgid "dashboard.occupied"
+msgstr "Occupied"
+
+msgid "dashboard.vacant"
+msgstr "Vacant"
+
+msgid "dashboard.monthlyRent"
+msgstr "Monthly rent"
+
+msgid "dashboard.properties"
+msgstr "Properties"
+
+msgid "dashboard.payments"
+msgstr "Payments"
+
+msgid "dashboard.recentPayments"
+msgstr "Recent payments"
+
+msgid "properties.title"
+msgstr "Properties management"
+
+msgid "properties.subtitle"
+msgstr "Manage all your real estate properties"
+
+msgid "properties.addProperty"
+msgstr "Add property"
+
+msgid "properties.editProperty"
+msgstr "Edit property"
+
+msgid "properties.noProperties"
+msgstr "No properties registered"
+
+msgid "properties.noPropertiesDescription"
+msgstr "Start by adding your first real estate property"
+
+msgid "properties.myProperties"
+msgstr "My apartments"
+
+msgid "properties.name"
+msgstr "Property name"
+
+msgid "properties.address"
+msgstr "Address"
+
+msgid "properties.city"
+msgstr "City"
+
+msgid "properties.type"
+msgstr "Type"
+
+msgid "properties.rent"
+msgstr "Rent"
+
+msgid "properties.monthlyRent"
+msgstr "Monthly rent (€)"
+
+msgid "properties.status"
+msgstr "Status"
+
+msgid "properties.occupied"
+msgstr "Occupied"
+
+msgid "properties.vacant"
+msgstr "Vacant"
+
+msgid "properties.free"
+msgstr "Free"
+
+msgid "properties.underMaintenance"
+msgstr "Under maintenance"
+
+msgid "properties.selectStatus"
+msgstr "Select a status"
+
+msgid "properties.selectProperty"
+msgstr "Select a property"
+
+msgid "properties.tenantInfo"
+msgstr "Tenant information"
+
+msgid "properties.tenantName"
+msgstr "Tenant name"
+
+msgid "properties.propertyRent"
+msgstr "Property rent"
+
+msgid "properties.placeholders.name"
+msgstr "Ex: 2BR Apartment - Paris 15th"
+
+msgid "properties.placeholders.address"
+msgstr "Ex: 45 Rue de Vaugirard, 75015 Paris"
+
+msgid "properties.placeholders.city"
+msgstr "Ex: Paris"
+
+msgid "payments.title"
+msgstr "Payment tracking"
+
+msgid "payments.subtitle"
+msgstr "Manage all your rental payments in one place"
+
+msgid "payments.addPayment"
+msgstr "Add payment"
+
+msgid "payments.editPayment"
+msgstr "Edit payment"
+
+msgid "payments.deletePayment"
+msgstr "Delete payment"
+
+msgid "payments.noPayments"
+msgstr "No payments registered"
+
+msgid "payments.pending"
+msgstr "Pending"
+
+msgid "payments.late"
+msgstr "Late"
+
+msgid "payments.paidThisMonth"
+msgstr "Paid this month"
+
+msgid "payments.amount"
+msgstr "Amount"
+
+msgid "payments.amountEuro"
+msgstr "Amount (€)"
+
+msgid "payments.dueDate"
+msgstr "Due date"
+
+msgid "payments.paymentDate"
+msgstr "Payment date"
+
+msgid "payments.tenant"
+msgstr "Tenant"
+
+msgid "payments.property"
+msgstr "Property"
+
+msgid "payments.relatedProperty"
+msgstr "Related property"
+
+msgid "payments.status"
+msgstr "Status"
+
+msgid "payments.selectStatus"
+msgstr "Select a status"
+
+msgid "payments.downloadInvoice"
+msgstr "Download invoice (PDF)"
+
+msgid "payments.otherProperty"
+msgstr "Other (manual entry)"
+
+msgid "payments.propertyName"
+msgstr "Property name"
+
+msgid "payments.confirmDelete"
+msgstr "Are you sure you want to delete this payment of {amount}?"
+
+msgid "payments.invoiceDownloaded"
+msgstr "Invoice PDF downloaded successfully"
+
+msgid "payments.invoiceError"
+msgstr "Error generating invoice"
+
+msgid "payments.noPaymentSelected"
+msgstr "No payment selected"
+
+msgid "payments.placeholders.tenant"
+msgstr "Ex: John Doe"
+
+msgid "payments.placeholders.amount"
+msgstr "950"
+
+msgid "tenants.title"
+msgstr "Tenants management"
+
+msgid "tenants.subtitle"
+msgstr "Manage your tenants and their information"
+
+msgid "tenants.loading"
+msgstr "Loading tenants..."
+
+msgid "tenants.addTenant"
+msgstr "Add tenant"
+
+msgid "tenants.editTenant"
+msgstr "Edit tenant"
+
+msgid "tenants.deleteTenant"
+msgstr "Delete tenant"
+
+msgid "tenants.noTenants"
+msgstr "No tenants registered"
+
+msgid "tenants.name"
+msgstr "Name"
+
+msgid "tenants.tenantName"
+msgstr "Tenant name"
+
+msgid "tenants.entryDate"
+msgstr "Entry date"
+
+msgid "tenants.exitDate"
+msgstr "Exit date"
+
+msgid "tenants.exitDateOptional"
+msgstr "Exit date (optional)"
+
+msgid "tenants.inProgress"
+msgstr "In progress"
+
+msgid "tenants.rent"
+msgstr "Rent"
+
+msgid "tenants.monthlyRent"
+msgstr "Monthly rent (€)"
+
+msgid "tenants.paymentStatus"
+msgstr "Payment status"
+
+msgid "tenants.associatedProperty"
+msgstr "Associated property"
+
+msgid "tenants.selectStatus"
+msgstr "Select a status"
+
+msgid "tenants.placeholders.name"
+msgstr "Ex: John Doe"
+
+msgid "tenants.placeholders.rent"
+msgstr "950"
+
+msgid "stats.title"
+msgstr "Statistics & Analytics"
+
+msgid "stats.subtitle"
+msgstr "Visualize your revenue, occupancy rate and rental trends."
+
+msgid "stats.loading"
+msgstr "Loading statistics..."
+
+msgid "stats.error"
+msgstr "Error"
+
+msgid "stats.kpi.totalRevenue"
+msgstr "Total Revenue"
+
+msgid "stats.kpi.totalRevenueTooltip"
+msgstr "Sum of payments received over the last 12 months"
+
+msgid "stats.kpi.occupancyRate"
+msgstr "Occupancy Rate"
+
+msgid "stats.kpi.occupancyRateTooltip"
+msgstr "Percentage of currently occupied properties"
+
+msgid "stats.kpi.latePayments"
+msgstr "Late Payments"
+
+msgid "stats.kpi.latePaymentsTooltip"
+msgstr "Number of overdue payments"
+
+msgid "stats.kpi.averageRent"
+msgstr "Average Rent"
+
+msgid "stats.kpi.averageRentTooltip"
+msgstr "Average monthly rent of your properties"
+
+msgid "stats.charts.monthlyRevenue.title"
+msgstr "Monthly Revenue"
+
+msgid "stats.charts.monthlyRevenue.description"
+msgstr "Trend over the last 12 months"
+
+msgid "stats.charts.paymentStatus.title"
+msgstr "Payment Status Breakdown"
+
+msgid "stats.charts.paymentStatus.description"
+msgstr "Overview of payments"
+
+msgid "stats.charts.revenueByProperty.title"
+msgstr "Revenue by Property"
+
+msgid "stats.charts.revenueByProperty.description"
+msgstr "Breakdown by property"
+
+msgid "stats.charts.occupancyRate.title"
+msgstr "Occupancy Rate"
+
+msgid "stats.charts.occupancyRate.description"
+msgstr "Percentage of occupied properties"
+
+msgid "stats.charts.occupancyRate.label"
+msgstr "Occupancy Rate"
+
+msgid "stats.alerts.latePayments.title"
+msgstr "Warning: Late Payments"
+
+msgid "stats.alerts.latePayments.message"
+msgstr "You have {count} overdue payment(s)."
+
+msgid "stats.alerts.latePayments.link"
+msgstr "View details"
+
+msgid "reports.title"
+msgstr "Reports & Summaries"
+
+msgid "reports.subtitle"
+msgstr "Generate and export your property management reports."
+
+msgid "reports.loading"
+msgstr "Loading report..."
+
+msgid "reports.filters.period"
+msgstr "Period"
+
+msgid "reports.filters.type"
+msgstr "Report type"
+
+msgid "reports.filters.property"
+msgstr "Filter by property"
+
+msgid "reports.filters.allProperties"
+msgstr "All properties"
+
+msgid "reports.filters.refresh"
+msgstr "Refresh"
+
+msgid "reports.types.global"
+msgstr "Global summary"
+
+msgid "reports.types.monthly"
+msgstr "Monthly revenue"
+
+msgid "reports.types.rentalStatus"
+msgstr "Rental status"
+
+msgid "reports.kpi.totalRevenue"
+msgstr "Total Revenue"
+
+msgid "reports.kpi.totalRevenueTooltip"
+msgstr "Total revenue received for the period"
+
+msgid "reports.kpi.rentCollected"
+msgstr "Rent Collected"
+
+msgid "reports.kpi.rentCollectedTooltip"
+msgstr "Total amount of rent collected"
+
+msgid "reports.kpi.occupancyRate"
+msgstr "Occupancy Rate"
+
+msgid "reports.kpi.occupancyRateTooltip"
+msgstr "Percentage of occupied properties"
+
+msgid "reports.kpi.delayedPayments"
+msgstr "Delayed"
+
+msgid "reports.kpi.delayedPaymentsTooltip"
+msgstr "Number of late payments"
+
+msgid "reports.chart.revenue.title"
+msgstr "Revenue for the period"
+
+msgid "reports.chart.revenue.description"
+msgstr "Revenue evolution"
+
+msgid "reports.chart.revenue.label"
+msgstr "Revenue"
+
+msgid "reports.table.title"
+msgstr "Summary by property"
+
+msgid "reports.table.noData"
+msgstr "No data available"
+
+msgid "reports.table.days"
+msgstr "days"
+
+msgid "reports.table.columns.property"
+msgstr "Property"
+
+msgid "reports.table.columns.city"
+msgstr "City"
+
+msgid "reports.table.columns.rent"
+msgstr "Rent"
+
+msgid "reports.table.columns.status"
+msgstr "Status"
+
+msgid "reports.table.columns.totalPaid"
+msgstr "Total Paid"
+
+msgid "reports.table.columns.delayed"
+msgstr "Delay"
+
+msgid "reports.table.columns.occupancy"
+msgstr "Occupancy Rate"
+
+msgid "reports.summary.text"
+msgstr "For the period from {startDate} to {endDate}, you received {revenue}, with an average occupancy rate of {occupancy}%."
+
+msgid "reports.actions.exportPDF"
+msgstr "Export to PDF"
+
+msgid "reports.actions.sendEmail"
+msgstr "Send by email"
+
+msgid "reports.actions.comingSoon"
+msgstr "Coming soon"
+
+msgid "reports.actions.exportSuccess"
+msgstr "Export successful"
+
+msgid "reports.export.success"
+msgstr "Report exported successfully"
+
+msgid "reports.noData.title"
+msgstr "No report available"
+
+msgid "reports.noData.message"
+msgstr "Select a period and click Refresh to generate a report"
+
+msgid "alerts.title"
+msgstr "Alerts"
+
+msgid "alerts.subtitle"
+msgstr "Monitor late payments, lease ends and important events"
+
+msgid "alerts.loading"
+msgstr "Loading alerts..."
+
+msgid "alerts.noAlerts"
+msgstr "No alerts"
+
+msgid "alerts.allGood"
+msgstr "Everything is fine! No action required at this time."
+
+msgid "alerts.criticalAlerts"
+msgstr "Critical alerts"
+
+msgid "alerts.mediumAlerts"
+msgstr "Medium alerts"
+
+msgid "alerts.information"
+msgstr "Information"
+
+msgid "alerts.latePayments"
+msgstr "Late payments"
+
+msgid "alerts.upcomingPayments"
+msgstr "Upcoming payments"
+
+msgid "alerts.severity.critical"
+msgstr "Critical"
+
+msgid "alerts.severity.important"
+msgstr "Important"
+
+msgid "alerts.severity.info"
+msgstr "Info"
+
+msgid "alerts.daysLate"
+msgstr "Late"
+
+msgid "alerts.daysOverdue"
+msgstr "Overdue for"
+
+msgid "alerts.daysUntil"
+msgstr "In"
+
+msgid "alerts.markAsResolved"
+msgstr "Mark as resolved"
+
+msgid "alerts.view"
+msgstr "View"
+
+msgid "settings.title"
+msgstr "Settings"
+
+msgid "settings.subtitle"
+msgstr "Manage your preferences and personal information"
+
+msgid "settings.profile"
+msgstr "Profile"
+
+msgid "settings.appPreferences"
+msgstr "Application preferences"
+
+msgid "settings.security"
+msgstr "Security"
+
+msgid "settings.theme"
+msgstr "Theme"
+
+msgid "settings.light"
+msgstr "Light"
+
+msgid "settings.dark"
+msgstr "Dark"
+
+msgid "settings.auto"
+msgstr "Automatic (system)"
+
+msgid "settings.currency"
+msgstr "Main currency"
+
+msgid "settings.language"
+msgstr "Interface language"
+
+msgid "settings.languageDescription"
+msgstr "Choose the interface language"
+
+msgid "settings.currencyDescription"
+msgstr "All amounts will be displayed in this currency"
+
+msgid "settings.alertThreshold"
+msgstr "Late payment alert threshold (days)"
+
+msgid "settings.alertThresholdDescription"
+msgstr "Number of days after due date before sending an alert"
+
+msgid "settings.notifications"
+msgstr "Notifications"
+
+msgid "settings.emailNotifications"
+msgstr "Receive email notifications"
+
+msgid "settings.paymentAlerts"
+msgstr "Late payment alerts"
+
+msgid "settings.paymentReminders"
+msgstr "Upcoming payment reminders"
+
+msgid "settings.maintenanceNotifications"
+msgstr "Property maintenance notifications"
+
+msgid "settings.savePreferences"
+msgstr "Save preferences"
+
+msgid "settings.saving"
+msgstr "Saving..."
+
+msgid "settings.preferencesSaved"
+msgstr "Preferences saved successfully"
+
+msgid "settings.sections.general"
+msgstr "General"
+
+msgid "settings.sections.notifications"
+msgstr "Notifications"
+
+msgid "settings.sections.security"
+msgstr "Security"
+
+msgid "settings.sections.languageCurrency"
+msgstr "Language & Currency"
+
+msgid "settings.sections.theme"
+msgstr "Theme"
+
+msgid "settings.sections.integrations"
+msgstr "Integrations"
+
+msgid "settings.preview"
+msgstr "Live preview"
+
+msgid "settings.previewExample"
+msgstr "Formatting example"
+
+msgid "settings.themeLightDescription"
+msgstr "Bright and light interface"
+
+msgid "settings.themeDarkDescription"
+msgstr "Dark interface for visual comfort"
+
+msgid "settings.themeAutoDescription"
+msgstr "Follows system preferences"
+
+msgid "settings.integrationsComingSoon"
+msgstr "Integrations coming soon"
+
+msgid "settings.integrationsDescription"
+msgstr "Connect Doogoo to your favorite tools"
+
+msgid "auth.tagline"
+msgstr "Smart property management"
+
+msgid "auth.login.title"
+msgstr "Login"
+
+msgid "auth.login.subtitle"
+msgstr "Sign in to your account"
+
+msgid "auth.login.email"
+msgstr "Email"
+
+msgid "auth.login.emailPlaceholder"
+msgstr "your@email.com"
+
+msgid "auth.login.password"
+msgstr "Password"
+
+msgid "auth.login.passwordPlaceholder"
+msgstr "••••••••"
+
+msgid "auth.login.forgotPassword"
+msgstr "Forgot password?"
+
+msgid "auth.login.noAccount"
+msgstr "Don't have an account?"
+
+msgid "auth.login.cta"
+msgstr "Sign in"
+
+msgid "auth.login.ctaLoading"
+msgstr "Signing in..."
+
+msgid "auth.signup.title"
+msgstr "Create an account"
+
+msgid "auth.signup.subtitle"
+msgstr "Join Doogoo in seconds"
+
+msgid "auth.signup.fullName"
+msgstr "Full name"
+
+msgid "auth.signup.email"
+msgstr "Email"
+
+msgid "auth.signup.emailPlaceholder"
+msgstr "your@email.com"
+
+msgid "auth.signup.phone"
+msgstr "Phone"
+
+msgid "auth.signup.phonePlaceholder"
+msgstr "+1 234 567 8900"
+
+msgid "auth.signup.password"
+msgstr "Password"
+
+msgid "auth.signup.passwordPlaceholder"
+msgstr "••••••••"
+
+msgid "auth.signup.confirmPassword"
+msgstr "Confirm password"
+
+msgid "auth.signup.passwordHint"
+msgstr "At least 6 characters"
+
+msgid "auth.signup.hasAccount"
+msgstr "Already have an account?"
+
+msgid "auth.signup.cta"
+msgstr "Create my account"
+
+msgid "auth.signup.ctaLoading"
+msgstr "Creating..."
+
+msgid "auth.reset.title"
+msgstr "Reset password"
+
+msgid "auth.reset.subtitle"
+msgstr "Enter your email address to receive a reset link"
+
+msgid "auth.reset.email"
+msgstr "Email"
+
+msgid "auth.reset.emailPlaceholder"
+msgstr "your@email.com"
+
+msgid "auth.reset.cta"
+msgstr "Send link"
+
+msgid "auth.reset.ctaLoading"
+msgstr "Sending..."
+
+msgid "auth.reset.successTitle"
+msgstr "Email sent!"
+
+msgid "auth.reset.successMessage"
+msgstr "A reset link has been sent to {email}"
+
+msgid "auth.reset.backToLogin"
+msgstr "Back to login"
+
+msgid "auth.confirm.title"
+msgstr "Email confirmed"
+
+msgid "auth.confirm.message"
+msgstr "Your account has been successfully confirmed. You can now sign in."
+
+msgid "auth.confirm.cta"
+msgstr "Go to login"
+
+msgid "auth.oauth.separator"
+msgstr "OR"
+
+msgid "auth.oauth.label"
+msgstr "Quick login with"
+
+msgid "auth.oauth.google"
+msgstr "Google"
+
+msgid "auth.oauth.apple"
+msgstr "Apple"
+
+msgid "login.title"
+msgstr "Login"
+
+msgid "login.subtitle"
+msgstr "Sign in to your account"
+
+msgid "login.tagline"
+msgstr "Smart property management"
+
+msgid "login.email"
+msgstr "Email"
+
+msgid "login.emailPlaceholder"
+msgstr "your@email.com"
+
+msgid "login.password"
+msgstr "Password"
+
+msgid "login.passwordPlaceholder"
+msgstr "••••••••"
+
+msgid "login.login"
+msgstr "Sign in"
+
+msgid "login.logging"
+msgstr "Signing in..."
+
+msgid "login.signup"
+msgstr "Create an account"
+
+msgid "login.signupSubtitle"
+msgstr "Join Doogoo today"
+
+msgid "login.creating"
+msgstr "Creating..."
+
+msgid "login.forgotPassword"
+msgstr "Forgot password?"
+
+msgid "login.noAccount"
+msgstr "Don't have an account?"
+
+msgid "login.hasAccount"
+msgstr "Already have an account?"
+
+msgid "login.fullName"
+msgstr "Full name"
+
+msgid "login.phone"
+msgstr "Phone"
+
+msgid "login.or"
+msgstr "OR"
+
+msgid "login.loginWithGoogle"
+msgstr "Sign in with Google"
+
+msgid "login.loginWithApple"
+msgstr "Sign in with Apple"
+
+msgid "login.oauthLoading"
+msgstr "Connecting..."
+
+msgid "login.oauthSuccess"
+msgstr "Login successful"
+
+msgid "login.oauthError"
+msgstr "{provider} login failed"
+
+msgid "currency.EUR"
+msgstr "Euro (€)"
+
+msgid "currency.USD"
+msgstr "US Dollar ($)"
+
+msgid "currency.GBP"
+msgstr "British Pound (£)"
+
+msgid "currency.XOF"
+msgstr "CFA Franc (CFA)"
+
+msgid "language.fr"
+msgstr "Français"
+
+msgid "language.en"
+msgstr "English"
+
+msgid "toasts.invoiceDownloaded"
+msgstr "Invoice PDF downloaded successfully"
+
+msgid "toasts.errorGeneratingInvoice"
+msgstr "Error generating invoice"
+
+msgid "toasts.propertyAdded"
+msgstr "Property added successfully"
+
+msgid "toasts.propertyUpdated"
+msgstr "Property updated successfully"
+
+msgid "toasts.propertyDeleted"
+msgstr "Property deleted successfully"
+
+msgid "toasts.paymentAdded"
+msgstr "Payment added successfully"
+
+msgid "toasts.paymentUpdated"
+msgstr "Payment updated successfully"
+
+msgid "toasts.tenantAdded"
+msgstr "Tenant added successfully"
+
+msgid "toasts.profileUpdated"
+msgstr "Profile updated successfully"
+
+msgid "status.paid"
+msgstr "Paid"
+
+msgid "status.pending"
+msgstr "Pending"
+
+msgid "status.late"
+msgstr "Late"
+
+msgid "status.onTime"
+msgstr "On time"
+
+msgid "security.title"
+msgstr "Security & Login"
+
+msgid "security.subtitle"
+msgstr "Manage your password, two-factor authentication and active sessions."
+
+msgid "security.password.title"
+msgstr "Password"
+
+msgid "security.password.description"
+msgstr "Change your password regularly to secure your account."
+
+msgid "security.password.changeButton"
+msgstr "Change password"
+
+msgid "security.password.modalTitle"
+msgstr "Change password"
+
+msgid "security.password.currentPassword"
+msgstr "Current password"
+
+msgid "security.password.currentPasswordPlaceholder"
+msgstr "Enter your current password"
+
+msgid "security.password.newPassword"
+msgstr "New password"
+
+msgid "security.password.newPasswordPlaceholder"
+msgstr "Enter your new password"
+
+msgid "security.password.confirmPassword"
+msgstr "Confirm password"
+
+msgid "security.password.confirmPasswordPlaceholder"
+msgstr "Confirm your new password"
+
+msgid "security.password.passwordHint"
+msgstr "Minimum 6 characters"
+
+msgid "security.password.passwordMismatch"
+msgstr "Passwords do not match"
+
+msgid "security.password.passwordTooShort"
+msgstr "Password must be at least 6 characters"
+
+msgid "security.password.currentPasswordIncorrect"
+msgstr "Current password is incorrect"
+
+msgid "security.password.updateButton"
+msgstr "Update"
+
+msgid "security.password.updating"
+msgstr "Updating..."
+
+msgid "security.password.changedSuccess"
+msgstr "Password changed successfully"
+
+msgid "security.password.changeError"
+msgstr "Error changing password"
+
+msgid "security.twoFactor.title"
+msgstr "Two-factor authentication"
+
+msgid "security.twoFactor.description"
+msgstr "Add an extra layer of security with two-factor authentication."
+
+msgid "security.twoFactor.enabled"
+msgstr "Enabled"
+
+msgid "security.twoFactor.disabled"
+msgstr "Disabled"
+
+msgid "security.twoFactor.enable"
+msgstr "Enable"
+
+msgid "security.twoFactor.disable"
+msgstr "Disable"
+
+msgid "security.twoFactor.enabledMessage"
+msgstr "Two-factor authentication enabled"
+
+msgid "security.twoFactor.disabledMessage"
+msgstr "Two-factor authentication disabled"
+
+msgid "security.sessions.title"
+msgstr "Active sessions"
+
+msgid "security.sessions.description"
+msgstr "Manage devices connected to your account."
+
+msgid "security.sessions.signOutAll"
+msgstr "Sign out all devices"
+
+msgid "security.sessions.signingOut"
+msgstr "Signing out..."
+
+msgid "security.sessions.confirmSignOut"
+msgstr "Are you sure you want to sign out all devices? You will need to log in again."
+
+msgid "security.sessions.signedOutSuccess"
+msgstr "Successfully signed out all devices"
+
+msgid "security.sessions.signOutError"
+msgstr "Error signing out"
+
+msgid "connection.online"
+msgstr "Connected — Data synchronized"
+
+msgid "connection.offline"
+msgstr "Offline — Read only"
+
+msgid "degradedMode.message"
+msgstr "Degraded mode — some data may be incomplete"
+
+msgid "landing.features"
+msgstr "Features"
+
+msgid "landing.testimonials"
+msgstr "Testimonials"
+
+msgid "landing.getStarted"
+msgstr "Get started"
+
+msgid "landing.tryIt"
+msgstr "Try it"
+
+msgid "landing.tryFree"
+msgstr "Try for free"
+
+msgid "landing.heroTitle"
+msgstr "Supervise your real estate properties from a single platform"
+
+msgid "landing.heroDescription"
+msgstr "Real-time monitoring, smart alerts, payment management. Everything you need to manage your properties remotely."
+
+msgid "landing.featuresTitle"
+msgstr "Everything you need"
+
+msgid "landing.featuresDescription"
+msgstr "A complete solution for managing and monitoring your real estate properties"
+
+msgid "landing.featureMonitoring"
+msgstr "Real-time monitoring"
+
+msgid "landing.featureMonitoringDesc"
+msgstr "Track temperature, humidity and air quality in real time from your dashboard"
+
+msgid "landing.featureAlerts"
+msgstr "Smart alerts"
+
+msgid "landing.featureAlertsDesc"
+msgstr "Receive instant notifications in case of anomalies or incidents"
+
+msgid "landing.featurePayments"
+msgstr "Payment management"
+
+msgid "landing.featurePaymentsDesc"
+msgstr "Track your rents and rental payments in real time"
+
+msgid "landing.testimonialsTitle"
+msgstr "What our clients say"
+
+msgid "landing.ctaTitle"
+msgstr "Ready to optimize your property management?"
+
+msgid "landing.ctaDescription"
+msgstr "Join hundreds of property owners who trust Doogoo"
+

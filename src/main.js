@@ -4,6 +4,7 @@ import { nextTick } from 'vue'
 import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
+import { i18nPlugin } from './composables/useLingui'
 import { useSettingsStore } from '@/stores/settingsStore'
 import persistedState from '@/plugins/piniaPersistedState'
 import './style.css'
@@ -16,7 +17,7 @@ pinia.use(persistedState)
 
 app.use(pinia)
 app.use(router)
-app.use(i18n)
+app.use(i18nPlugin)
 
 // Initialise Sentry si DSN configuré (optionnel)
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN
@@ -157,8 +158,8 @@ nextTick(() => {
     const settingsStore = useSettingsStore()
     
     // Initialise la langue
-    if (i18n.global.locale.value !== settingsStore.language) {
-      i18n.global.locale.value = settingsStore.language
+    if (i18n.locale.value !== settingsStore.language) {
+      i18n.locale.value = settingsStore.language
     }
     
     // Initialise le thème (le store le fait déjà dans loadSettings, mais on s'assure ici)

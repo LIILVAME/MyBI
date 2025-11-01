@@ -76,9 +76,9 @@ export const useSettingsStore = defineStore('settings', () => {
       try {
         // Utilise un import dynamique pour charger i18n
         import('@/i18n').then((module) => {
-          const i18n = module.default
-          if (i18n && i18n.global) {
-            i18n.global.locale.value = lang
+          const i18nInstance = module.default
+          if (i18nInstance && i18nInstance.locale) {
+            i18nInstance.locale.value = lang
           }
         }).catch((error) => {
           console.warn('Impossible de mettre à jour i18n:', error)

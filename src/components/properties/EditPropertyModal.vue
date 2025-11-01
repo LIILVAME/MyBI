@@ -194,7 +194,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { PROPERTY_STATUS } from '@/utils/constants'
 
 const { t } = useI18n()

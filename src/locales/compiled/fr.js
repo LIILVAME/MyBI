@@ -1,4 +1,8 @@
-{
+// Auto-generated translation file for FR
+// DO NOT EDIT - This file is generated from src/locales/i18n/fr.json
+// Regenerate with: npm run i18n:compile
+
+export default {
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",
@@ -141,8 +145,46 @@
     }
   },
   "stats": {
-    "title": "Statistiques",
-    "subtitle": "Analysez les performances de votre portefeuille"
+    "title": "Statistiques & Analyses",
+    "subtitle": "Visualisez vos revenus, taux d'occupation et tendances locatives.",
+    "loading": "Chargement des statistiques...",
+    "error": "Erreur",
+    "kpi": {
+      "totalRevenue": "Revenu total",
+      "totalRevenueTooltip": "Somme des paiements reçus sur les 12 derniers mois",
+      "occupancyRate": "Taux d'occupation",
+      "occupancyRateTooltip": "Pourcentage de biens actuellement occupés",
+      "latePayments": "Retards de paiement",
+      "latePaymentsTooltip": "Nombre de paiements en retard",
+      "averageRent": "Loyer moyen",
+      "averageRentTooltip": "Loyer moyen mensuel de vos propriétés"
+    },
+    "charts": {
+      "monthlyRevenue": {
+        "title": "Revenus mensuels",
+        "description": "Évolution sur les 12 derniers mois"
+      },
+      "paymentStatus": {
+        "title": "Répartition des statuts",
+        "description": "Vue d'ensemble des paiements"
+      },
+      "revenueByProperty": {
+        "title": "Revenus par bien",
+        "description": "Répartition par propriété"
+      },
+      "occupancyRate": {
+        "title": "Taux d'occupation",
+        "description": "Pourcentage de biens occupés",
+        "label": "Taux d'occupation"
+      }
+    },
+    "alerts": {
+      "latePayments": {
+        "title": "Attention : Paiements en retard",
+        "message": "Vous avez {count} paiement(s) en retard.",
+        "link": "Voir les détails"
+      }
+    }
   },
   "reports": {
     "title": "Rapports & Synthèses",
@@ -375,48 +417,6 @@
     "late": "En retard",
     "onTime": "À jour"
   },
-  "stats": {
-    "title": "Statistiques & Analyses",
-    "subtitle": "Visualisez vos revenus, taux d'occupation et tendances locatives.",
-    "loading": "Chargement des statistiques...",
-    "error": "Erreur",
-    "kpi": {
-      "totalRevenue": "Revenu total",
-      "totalRevenueTooltip": "Somme des paiements reçus sur les 12 derniers mois",
-      "occupancyRate": "Taux d'occupation",
-      "occupancyRateTooltip": "Pourcentage de biens actuellement occupés",
-      "latePayments": "Retards de paiement",
-      "latePaymentsTooltip": "Nombre de paiements en retard",
-      "averageRent": "Loyer moyen",
-      "averageRentTooltip": "Loyer moyen mensuel de vos propriétés"
-    },
-    "charts": {
-      "monthlyRevenue": {
-        "title": "Revenus mensuels",
-        "description": "Évolution sur les 12 derniers mois"
-      },
-      "paymentStatus": {
-        "title": "Répartition des statuts",
-        "description": "Vue d'ensemble des paiements"
-      },
-      "revenueByProperty": {
-        "title": "Revenus par bien",
-        "description": "Répartition par propriété"
-      },
-      "occupancyRate": {
-        "title": "Taux d'occupation",
-        "description": "Pourcentage de biens occupés",
-        "label": "Taux d'occupation"
-      }
-    },
-    "alerts": {
-      "latePayments": {
-        "title": "Attention : Paiements en retard",
-        "message": "Vous avez {count} paiement(s) en retard.",
-        "link": "Voir les détails"
-      }
-    }
-  },
   "security": {
     "title": "Sécurité & Connexion",
     "subtitle": "Gérez votre mot de passe, la vérification en deux étapes et vos sessions actives.",
@@ -488,4 +488,3 @@
     "ctaDescription": "Rejoignez des centaines de propriétaires qui font confiance à Doogoo"
   }
 }
-

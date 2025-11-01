@@ -6,7 +6,7 @@
         <input
           v-model="localSearchTerm"
           type="text"
-          placeholder="Rechercher un bien par nom, ville ou adresse..."
+          :placeholder="$t('properties.searchPlaceholder')"
           class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
           @input="$emit('search', localSearchTerm)"
         />
@@ -49,7 +49,10 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { useI18n } from '@/composables/useLingui'
 import { PROPERTY_STATUS } from '@/utils/constants'
+
+const { t } = useI18n()
 
 const props = defineProps({
   searchTerm: {
@@ -78,9 +81,9 @@ const localSearchTerm = ref(props.searchTerm)
  * Filtres avec compteurs dynamiques
  */
 const filters = computed(() => [
-  { label: 'Tous', value: 'all', count: props.filterCounts.all },
-  { label: 'Occupés', value: PROPERTY_STATUS.OCCUPIED, count: props.filterCounts.occupied },
-  { label: 'Libres', value: PROPERTY_STATUS.VACANT, count: props.filterCounts.vacant }
+  { label: t('common.all'), value: 'all', count: props.filterCounts.all },
+  { label: t('properties.occupied'), value: PROPERTY_STATUS.OCCUPIED, count: props.filterCounts.occupied },
+  { label: t('properties.free'), value: PROPERTY_STATUS.VACANT, count: props.filterCounts.vacant }
 ])
 
 /**

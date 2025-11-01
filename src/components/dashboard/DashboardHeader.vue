@@ -1,34 +1,34 @@
 <template>
   <div class="mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 mb-2">Dashboard</h2>
-    <p class="text-gray-600">Vue d'ensemble de votre activité locative</p>
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('dashboard.title') }}</h2>
+    <p class="text-gray-600">{{ $t('dashboard.subtitle') }}</p>
     
     <!-- Statistiques globales -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
       <StatCard
         :value="stats.totalProperties.toString()"
-        label="Total appartements"
+        :label="$t('dashboard.totalProperties')"
         :icon="PropertiesIcon"
         icon-bg-class="bg-blue-100"
         icon-color-class="text-blue-600"
       />
       <StatCard
         :value="stats.occupiedProperties.toString()"
-        label="Biens occupés"
+        :label="$t('dashboard.occupied')"
         :icon="OccupiedIcon"
         icon-bg-class="bg-green-100"
         icon-color-class="text-green-600"
       />
       <StatCard
         :value="stats.vacantProperties.toString()"
-        label="Biens libres"
+        :label="$t('dashboard.vacant')"
         :icon="VacantIcon"
         icon-bg-class="bg-gray-100"
         icon-color-class="text-gray-600"
       />
       <StatCard
         :value="formatCurrency(stats.totalRent || 0)"
-        label="Loyers mensuels"
+        :label="$t('dashboard.monthlyRent')"
         :icon="RentIcon"
         icon-bg-class="bg-yellow-100"
         icon-color-class="text-yellow-600"
@@ -41,8 +41,8 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
       </svg>
       <div>
-        <p class="font-semibold text-red-900">{{ stats.latePayments }} paiement(s) en retard</p>
-        <p class="text-sm text-red-700">Vérifiez la section Paiements pour plus de détails</p>
+        <p class="font-semibold text-red-900">{{ $t('stats.alerts.latePayments.message', { count: stats.latePayments }) }}</p>
+        <p class="text-sm text-red-700">{{ $t('stats.alerts.latePayments.link') }}</p>
       </div>
     </div>
   </div>
@@ -120,4 +120,3 @@ const RentIcon = () => h('svg', {
   })
 ])
 </script>
-

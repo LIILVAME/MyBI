@@ -45,7 +45,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useConnectionStore } from '@/stores/connectionStore'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 
 const { t } = useI18n()
 const connectionStore = useConnectionStore()

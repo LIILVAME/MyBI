@@ -32,6 +32,9 @@ export const TRANSACTION_STATUS = {
 
 /**
  * Labels des statuts (pour affichage)
+ * NOTE: Ces labels sont maintenant gérés par i18n dans les composants
+ * Conservés ici pour référence/compatibilité
+ * @deprecated Utiliser les traductions i18n dans les composants
  */
 export const STATUS_LABELS = {
   // Occupation

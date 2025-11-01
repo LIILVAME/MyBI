@@ -83,7 +83,7 @@
 <script setup>
 import { ref, computed, onMounted, onErrorCaptured } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import AuthLayout from '@/layouts/AuthLayout.vue'

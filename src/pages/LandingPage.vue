@@ -228,7 +228,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { mockTestimonials } from '../data/mockData'
 
 const { t } = useI18n()

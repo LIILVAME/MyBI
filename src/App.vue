@@ -16,15 +16,18 @@
 
   <!-- Application normale une fois la session initialisée -->
   <div v-else class="min-h-screen">
-    <transition name="fade" mode="out-in">
-      <router-view :key="$route.fullPath" />
-    </transition>
+    <router-view v-slot="{ Component, route }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" :key="route.fullPath" />
+      </transition>
+    </router-view>
   </div>
   <Toast />
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { supabase } from '@/lib/supabaseClient'
 import { useAuthStore } from '@/stores/authStore'
 import { usePropertiesStore } from '@/stores/propertiesStore'
@@ -37,6 +40,7 @@ import Toast from '@/components/common/Toast.vue'
 import ConnectionBanner from '@/components/common/ConnectionBanner.vue'
 import DegradedModeBanner from '@/components/common/DegradedModeBanner.vue'
 
+const router = useRouter()
 const authStore = useAuthStore()
 const propertiesStore = usePropertiesStore()
 const paymentsStore = usePaymentsStore()

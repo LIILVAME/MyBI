@@ -1,4 +1,8 @@
-{
+// Auto-generated translation file for EN
+// DO NOT EDIT - This file is generated from src/locales/i18n/en.json
+// Regenerate with: npm run i18n:compile
+
+export default {
   "common": {
     "loading": "Loading...",
     "error": "Error",
@@ -22,7 +26,6 @@
     "date": "Date",
     "days": "day(s)",
     "optional": "optional",
-    "close": "Close",
     "selectStatus": "Select a status",
     "selectProperty": "Select a property",
     "unknown": "Unknown"
@@ -142,8 +145,46 @@
     }
   },
   "stats": {
-    "title": "Statistics",
-    "subtitle": "Analyze your portfolio performance"
+    "title": "Statistics & Analytics",
+    "subtitle": "Visualize your revenue, occupancy rate and rental trends.",
+    "loading": "Loading statistics...",
+    "error": "Error",
+    "kpi": {
+      "totalRevenue": "Total Revenue",
+      "totalRevenueTooltip": "Sum of payments received over the last 12 months",
+      "occupancyRate": "Occupancy Rate",
+      "occupancyRateTooltip": "Percentage of currently occupied properties",
+      "latePayments": "Late Payments",
+      "latePaymentsTooltip": "Number of overdue payments",
+      "averageRent": "Average Rent",
+      "averageRentTooltip": "Average monthly rent of your properties"
+    },
+    "charts": {
+      "monthlyRevenue": {
+        "title": "Monthly Revenue",
+        "description": "Trend over the last 12 months"
+      },
+      "paymentStatus": {
+        "title": "Payment Status Breakdown",
+        "description": "Overview of payments"
+      },
+      "revenueByProperty": {
+        "title": "Revenue by Property",
+        "description": "Breakdown by property"
+      },
+      "occupancyRate": {
+        "title": "Occupancy Rate",
+        "description": "Percentage of occupied properties",
+        "label": "Occupancy Rate"
+      }
+    },
+    "alerts": {
+      "latePayments": {
+        "title": "Warning: Late Payments",
+        "message": "You have {count} overdue payment(s).",
+        "link": "View details"
+      }
+    }
   },
   "reports": {
     "title": "Reports & Summaries",
@@ -376,48 +417,6 @@
     "late": "Late",
     "onTime": "On time"
   },
-  "stats": {
-    "title": "Statistics & Analytics",
-    "subtitle": "Visualize your revenue, occupancy rate and rental trends.",
-    "loading": "Loading statistics...",
-    "error": "Error",
-    "kpi": {
-      "totalRevenue": "Total Revenue",
-      "totalRevenueTooltip": "Sum of payments received over the last 12 months",
-      "occupancyRate": "Occupancy Rate",
-      "occupancyRateTooltip": "Percentage of currently occupied properties",
-      "latePayments": "Late Payments",
-      "latePaymentsTooltip": "Number of overdue payments",
-      "averageRent": "Average Rent",
-      "averageRentTooltip": "Average monthly rent of your properties"
-    },
-    "charts": {
-      "monthlyRevenue": {
-        "title": "Monthly Revenue",
-        "description": "Trend over the last 12 months"
-      },
-      "paymentStatus": {
-        "title": "Payment Status Breakdown",
-        "description": "Overview of payments"
-      },
-      "revenueByProperty": {
-        "title": "Revenue by Property",
-        "description": "Breakdown by property"
-      },
-      "occupancyRate": {
-        "title": "Occupancy Rate",
-        "description": "Percentage of occupied properties",
-        "label": "Occupancy Rate"
-      }
-    },
-    "alerts": {
-      "latePayments": {
-        "title": "Warning: Late Payments",
-        "message": "You have {count} overdue payment(s).",
-        "link": "View details"
-      }
-    }
-  },
   "security": {
     "title": "Security & Login",
     "subtitle": "Manage your password, two-factor authentication and active sessions.",
@@ -489,4 +488,3 @@
     "ctaDescription": "Join hundreds of property owners who trust Doogoo"
   }
 }
-

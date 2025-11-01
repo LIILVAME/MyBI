@@ -55,7 +55,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { formatCurrency, formatDate } from '@/utils/formatters'
 import { TRANSACTION_STATUS, STATUS_LABELS, STATUS_CLASSES } from '@/utils/constants'
 import { useRoute } from 'vue-router'

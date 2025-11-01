@@ -63,7 +63,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import TenantsHeader from '../components/tenants/TenantsHeader.vue'
 import TenantsList from '../components/tenants/TenantsList.vue'

@@ -3,8 +3,8 @@
     <!-- Titre et bouton -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
       <div>
-        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">Mes biens immobiliers</h1>
-        <p class="text-gray-600">Liste complète de vos appartements et maisons</p>
+        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">{{ $t('properties.myProperties') }}</h1>
+        <p class="text-gray-600">{{ $t('properties.subtitle') }}</p>
       </div>
       <button 
         @click="$emit('add-property')"
@@ -13,7 +13,7 @@
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Ajouter un bien
+        {{ $t('properties.addProperty') }}
       </button>
     </div>
 
@@ -23,7 +23,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">Total</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('common.all') }}</p>
             <p class="text-2xl font-bold text-gray-900">{{ stats.totalProperties }}</p>
           </div>
           <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -38,7 +38,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">Occupés</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('properties.occupied') }}</p>
             <p class="text-2xl font-bold text-green-600">{{ stats.occupiedProperties }}</p>
           </div>
           <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
@@ -53,7 +53,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">Libres</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('properties.free') }}</p>
             <p class="text-2xl font-bold text-gray-600">{{ stats.vacantProperties }}</p>
           </div>
           <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -68,7 +68,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">Loyers totaux</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('dashboard.monthlyRent') }}</p>
             <p class="text-xl font-bold text-gray-900">{{ formatCurrency(stats.totalRent) }}</p>
           </div>
           <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">

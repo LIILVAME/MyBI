@@ -48,7 +48,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { useAuthStore } from '@/stores/authStore'
 
 const { t } = useI18n()

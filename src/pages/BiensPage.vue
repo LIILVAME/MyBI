@@ -78,7 +78,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import PropertiesHeader from '../components/properties/PropertiesHeader.vue'
 import PropertiesFilters from '../components/properties/PropertiesFilters.vue'
@@ -92,6 +92,7 @@ import { usePropertiesStore } from '@/stores/propertiesStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
 
 const propertiesStore = usePropertiesStore()
+const { t } = useI18n()
 
 /**
  * Charge les propriétés depuis Supabase au montage
@@ -254,7 +255,7 @@ const handleEditProperty = (property) => {
  * TODO v0.2.0 : Utiliser un composant de confirmation (modal) au lieu de confirm()
  */
 const handleDeleteProperty = async (propertyId) => {
-  if (window.confirm('Êtes-vous sûr de vouloir supprimer ce bien ?')) {
+  if (window.confirm(t('properties.confirmDelete'))) {
     try {
       await propertiesStore.removeProperty(propertyId)
       // Le toast est géré dans le store

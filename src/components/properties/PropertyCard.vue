@@ -72,7 +72,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import TenantInfo from '../dashboard/TenantInfo.vue'
 import { formatCurrency } from '@/utils/formatters'
 import { PROPERTY_STATUS, STATUS_LABELS, STATUS_CLASSES } from '@/utils/constants'
@@ -96,10 +96,13 @@ const statusClass = computed(() => {
 })
 
 /**
- * Texte du statut d'occupation
+ * Texte du statut d'occupation (traduit)
  */
 const statusText = computed(() => {
-  return STATUS_LABELS[props.property.status] || STATUS_LABELS[PROPERTY_STATUS.VACANT]
+  const statusKey = props.property.status === PROPERTY_STATUS.OCCUPIED 
+    ? 'properties.occupied' 
+    : 'properties.free'
+  return t(statusKey)
 })
 </script>
 

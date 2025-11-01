@@ -126,7 +126,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import Sidebar from '../components/Sidebar.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
 import KpiCard from '../components/stats/KpiCard.vue'

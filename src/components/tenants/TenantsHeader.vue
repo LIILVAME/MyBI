@@ -3,8 +3,8 @@
     <!-- Titre et bouton -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
       <div>
-        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">Gestion des locataires</h1>
-        <p class="text-gray-600">Vue d'ensemble de tous les locataires actifs</p>
+        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">{{ $t('tenants.title') }}</h1>
+        <p class="text-gray-600">{{ $t('tenants.subtitle') }}</p>
       </div>
       <button 
         @click="$emit('add-tenant')"
@@ -13,7 +13,7 @@
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Ajouter un locataire
+        {{ $t('tenants.addTenant') }}
       </button>
     </div>
 
@@ -38,7 +38,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">À jour</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('status.onTime') }}</p>
             <p class="text-2xl font-bold text-green-600">{{ stats.onTimeTenants }}</p>
           </div>
           <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
@@ -53,7 +53,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">En retard</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('status.late') }}</p>
             <p class="text-2xl font-bold text-red-600">{{ stats.lateTenants }}</p>
           </div>
           <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
@@ -68,7 +68,7 @@
       <div class="card">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs text-gray-500 mb-1">Loyers totaux</p>
+            <p class="text-xs text-gray-500 mb-1">{{ $t('tenants.totalRent') }}</p>
             <p class="text-xl font-bold text-gray-900">{{ formatCurrency(stats.totalRent) }}</p>
           </div>
           <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">

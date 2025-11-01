@@ -1,30 +1,139 @@
-import { createI18n } from 'vue-i18n'
-import fr from './locales/i18n/fr.json'
-import en from './locales/i18n/en.json'
+/**
+ * Système de traduction compilé à build-time
+ * Compatible avec vue-i18n mais sans parsing runtime
+ */
+
+// Import des traductions compilées à build-time
+import enMessages from './locales/compiled/en.js'
+import frMessages from './locales/compiled/fr.js'
+
+// Cache des traductions par locale
+const messages = {
+  en: enMessages,
+  fr: frMessages
+}
+
+// Locale active
+let currentLocale = 'fr'
 
 /**
- * Configuration i18n pour l'application Doogoo
- * Supporte FR et EN
+ * Récupère une traduction par clé
+ * Supporte les clés imbriquées: "auth.login.title"
  */
-const i18n = createI18n({
-  legacy: false, // Utilise l'API Composition (Vue 3)
-  locale: 'fr', // Langue par défaut
-  fallbackLocale: 'en', // Langue de secours
-  messages: {
-    fr,
-    en
+function getTranslation(key, locale = currentLocale, values = {}) {
+  const localeMessages = messages[locale] || messages.en
+  
+  // Résout la clé imbriquée (ex: "auth.login.title")
+  const keys = key.split('.')
+  let translation = localeMessages
+  
+  for (const k of keys) {
+    if (translation && typeof translation === 'object' && k in translation) {
+      translation = translation[k]
+    } else {
+      // Fallback sur EN si la clé n'existe pas
+      if (locale !== 'en') {
+        return getTranslation(key, 'en', values)
+      }
+      console.warn(`[i18n] Missing translation: ${key} in locale: ${locale}`)
+      return key
+    }
+  }
+  
+  // Si c'est une string, on fait l'interpolation
+  if (typeof translation === 'string') {
+    return interpolate(translation, values)
+  }
+  
+  return key
+}
+
+/**
+ * Interpole les valeurs dans une string
+ * Supporte {key} et {{key}} pour compatibilité vue-i18n
+ */
+function interpolate(text, values) {
+  if (!values || Object.keys(values).length === 0) {
+    return text
+  }
+  
+  return text.replace(/\{\{?(\w+)\}\}?/g, (match, key) => {
+    return values[key] !== undefined ? String(values[key]) : match
+  })
+}
+
+/**
+ * Change la locale active
+ */
+function setLocale(locale) {
+  if (messages[locale]) {
+    currentLocale = locale
+    // Déclenche un événement pour notifier les composants
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('locale-changed', { detail: { locale } }))
+    }
+  } else {
+    console.warn(`[i18n] Locale "${locale}" not found, falling back to "fr"`)
+    currentLocale = 'fr'
+  }
+}
+
+/**
+ * Obtient la locale active
+ */
+function getLocale() {
+  return currentLocale
+}
+
+// API compatible avec vue-i18n
+const i18n = {
+  // Fonction de traduction principale
+  t: (key, values = {}) => getTranslation(key, currentLocale, values),
+  
+  // Gestion de la locale
+  locale: {
+    get value() {
+      return currentLocale
+    },
+    set value(locale) {
+      setLocale(locale)
+    }
   },
-  // Mode global pour permettre l'utilisation dans les templates et composants
-  globalInjection: true,
-  // Désactive l'échappement HTML par défaut pour éviter les problèmes de parsing
-  escapeParameter: false,
-  // Mode silencieux pour les clés manquantes (évite les erreurs de console)
-  missingWarn: false,
-  fallbackWarn: false,
-  // Désactive les warnings de traduction silencieux (production)
-  silentTranslationWarn: true,
-  silentFallbackWarn: true
-})
+  
+  // Méthodes utilitaires
+  te: (key, locale = currentLocale) => {
+    const localeMessages = messages[locale] || messages.en
+    const keys = key.split('.')
+    let translation = localeMessages
+    
+    for (const k of keys) {
+      if (translation && typeof translation === 'object' && k in translation) {
+        translation = translation[k]
+      } else {
+        return false
+      }
+    }
+    
+    return typeof translation === 'string'
+  },
+  
+  // Messages pour compatibilité
+  get messages() {
+    return messages
+  },
+  
+  // Compatibilité avec l'API globale
+  global: {
+    locale: {
+      get value() {
+        return currentLocale
+      },
+      set value(locale) {
+        setLocale(locale)
+      }
+    },
+    t: (key, values = {}) => getTranslation(key, currentLocale, values)
+  }
+}
 
 export default i18n
-

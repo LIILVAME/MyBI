@@ -36,7 +36,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/composables/useLingui'
 import { formatDate } from '@/utils/formatters'
 import { PAYMENT_STATUS, STATUS_LABELS, STATUS_CLASSES } from '@/utils/constants'
 
@@ -58,11 +58,20 @@ const statusClass = computed(() => {
 })
 
 /**
- * Texte du statut de paiement
+ * Texte du statut de paiement (traduit)
  */
 const statusText = computed(() => {
-  if (!props.tenant) return STATUS_LABELS[PAYMENT_STATUS.PENDING]
-  return STATUS_LABELS[props.tenant.status] || STATUS_LABELS[PAYMENT_STATUS.PENDING]
+  if (!props.tenant) return t('status.pending')
+  
+  const status = props.tenant.status
+  const statusMap = {
+    [PAYMENT_STATUS.ON_TIME]: 'status.onTime',
+    [PAYMENT_STATUS.LATE]: 'status.late',
+    [PAYMENT_STATUS.PENDING]: 'status.pending',
+    [PAYMENT_STATUS.PAID]: 'status.paid'
+  }
+  
+  return t(statusMap[status] || 'status.pending')
 })
 </script>
 
