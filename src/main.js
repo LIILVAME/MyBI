@@ -52,11 +52,20 @@ if (sentryDsn) {
 // Gestion d'erreur globale pour éviter l'écran blanc
 app.config.errorHandler = (err, instance, info) => {
   // Ignorer les erreurs provenant d'extensions de navigateur (comme Google Translate)
-  if (err?.message?.includes('Invalid linked format') || 
-      err?.stack?.includes('content.bundle.js') ||
-      err?.message?.includes('RestoreOriginal')) {
-    console.warn('Erreur ignorée (probablement causée par une extension de navigateur):', err.message)
-    return // Ignorer cette erreur
+  const errMessage = err?.message || err?.toString() || ''
+  const errStack = err?.stack || ''
+  
+  // Détecter les erreurs causées par des extensions de navigateur
+  const isExtensionError = 
+    errMessage.includes('Invalid linked format') ||
+    errMessage.includes('RestoreOriginal') ||
+    errStack.includes('content.bundle.js') ||
+    errStack.includes('extension') ||
+    (err instanceof SyntaxError && errMessage.includes('linked'))
+  
+  if (isExtensionError) {
+    // Ne pas logger ces erreurs non critiques
+    return // Ignorer silencieusement cette erreur
   }
   
   console.error('Erreur Vue globale:', err, info)
