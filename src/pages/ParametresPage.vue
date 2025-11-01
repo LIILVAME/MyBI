@@ -10,7 +10,7 @@
         <aside class="hidden md:block w-64 shrink-0">
           <SettingsSidebar 
             :active-section="activeSection" 
-            @change-section="activeSection = $event"
+            @change-section="handleSectionChange"
           />
         </aside>
 
@@ -19,7 +19,7 @@
           <div class="bg-white border-b border-gray-200 px-6 py-4">
             <select
               :value="activeSection"
-              @change="activeSection = $event.target.value"
+              @change="handleSectionChange($event.target.value)"
               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
             >
               <option value="general">{{ $t('settings.sections.general') }}</option>
@@ -42,16 +42,18 @@
             </div>
 
             <!-- Contenu dynamique selon la section active -->
-            <Transition
-              name="fade"
-              mode="out-in"
-            >
-              <component
-                :is="activeComponent"
-                :key="activeSection"
-                class="transition-all duration-200"
-              />
-            </Transition>
+            <div class="min-h-[400px]">
+              <Transition
+                name="fade"
+                mode="out-in"
+              >
+                <component
+                  :is="activeComponent"
+                  :key="activeSection"
+                  class="transition-all duration-200"
+                />
+              </Transition>
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +62,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onErrorCaptured } from 'vue'
+import { ref, computed, onErrorCaptured, onMounted, watch } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import SettingsSidebar from '../components/settings/SettingsSidebar.vue'
 import SettingsGeneral from '../components/settings/SettingsGeneral.vue'
@@ -73,10 +75,15 @@ import SettingsIntegrations from '../components/settings/SettingsIntegrations.vu
 // Capture les erreurs pour éviter que la page ne crash complètement
 onErrorCaptured((err, instance, info) => {
   console.error('Erreur dans ParametresPage:', err, info)
-  return false
+  // Retourne true pour permettre à Vue de gérer l'erreur normalement
+  // mais empêche le crash de l'application
+  return true
 })
 
 const activeSection = ref('general')
+
+// Garde pour éviter les changements de section pendant les transitions
+const isTransitioning = ref(false)
 
 const activeComponent = computed(() => {
   const components = {
@@ -88,6 +95,39 @@ const activeComponent = computed(() => {
     'integrations': SettingsIntegrations
   }
   return components[activeSection.value] || SettingsGeneral
+})
+
+// Gère le changement de section avec protection contre les transitions multiples
+const handleSectionChange = (newSection) => {
+  if (isTransitioning.value || newSection === activeSection.value) {
+    return
+  }
+  
+  isTransitioning.value = true
+  activeSection.value = newSection
+  
+  // Réinitialise le flag après la transition
+  setTimeout(() => {
+    isTransitioning.value = false
+  }, 300)
+}
+
+// Persiste la section active dans sessionStorage
+onMounted(() => {
+  const savedSection = sessionStorage.getItem('settings-active-section')
+  if (savedSection && ['general', 'notifications', 'security', 'language-currency', 'theme', 'integrations'].includes(savedSection)) {
+    activeSection.value = savedSection
+  }
+  
+  // Sauvegarde la section quand elle change
+  const stopWatcher = watch(() => activeSection.value, (newSection) => {
+    sessionStorage.setItem('settings-active-section', newSection)
+  })
+  
+  // Cleanup au démontage
+  return () => {
+    stopWatcher()
+  }
 })
 </script>
 

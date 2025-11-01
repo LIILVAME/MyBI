@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { formatCurrency } from '@/utils/formatters'
@@ -59,22 +59,38 @@ import { formatCurrency } from '@/utils/formatters'
 const { t } = useI18n()
 const settingsStore = useSettingsStore()
 
-const localCurrency = ref(settingsStore.currency)
+// Utilise directement la valeur du store avec une ref locale pour le v-model
+const localCurrency = ref(settingsStore.currency || 'EUR')
 
-watch(() => settingsStore.currency, (newVal) => {
-  localCurrency.value = newVal
-})
-
+// Synchronise avec le store au montage
 onMounted(() => {
-  localCurrency.value = settingsStore.currency
+  localCurrency.value = settingsStore.currency || 'EUR'
 })
 
-const handleLanguageChange = (event) => {
-  settingsStore.setLanguage(event.target.value)
+// Watch pour synchroniser si le store change (mais ne devrait pas changer de l'extérieur)
+watch(() => settingsStore.currency, (newVal) => {
+  if (newVal && newVal !== localCurrency.value) {
+    localCurrency.value = newVal
+  }
+}, { immediate: true })
+
+const handleLanguageChange = async (event) => {
+  const newLanguage = event.target.value
+  if (newLanguage === settingsStore.language) return
+  
+  try {
+    settingsStore.setLanguage(newLanguage)
+    // setLanguage peut déclencher un reload, donc on attend un peu
+    await nextTick()
+  } catch (error) {
+    console.error('Erreur lors du changement de langue:', error)
+  }
 }
 
 const handleCurrencyChange = () => {
-  settingsStore.setCurrency(localCurrency.value)
+  if (localCurrency.value && localCurrency.value !== settingsStore.currency) {
+    settingsStore.setCurrency(localCurrency.value)
+  }
 }
 </script>
 

@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { useToastStore } from '@/stores/toastStore'
@@ -53,6 +53,7 @@ const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const toastStore = useToastStore()
 
+// Cache les options pour éviter les re-calculs constants
 const themeOptions = computed(() => [
   {
     value: 'light',
@@ -71,11 +72,32 @@ const themeOptions = computed(() => [
   }
 ])
 
-const selectTheme = (theme) => {
+// État local pour éviter les re-rendus pendant la transition
+const isUpdating = ref(false)
+
+onMounted(() => {
+  // Assure que le thème est bien initialisé
+  if (!settingsStore.theme) {
+    settingsStore.loadSettings()
+  }
+})
+
+const selectTheme = async (theme) => {
+  // Évite les clics multiples rapides
+  if (isUpdating.value) return
+  
+  // Ne fait rien si le thème est déjà sélectionné
+  const normalizedTheme = theme === 'auto' ? 'system' : theme
+  if (settingsStore.theme === normalizedTheme) return
+  
   try {
+    isUpdating.value = true
+    
     // Normalise 'auto' en 'system' pour la cohérence
-    const normalizedTheme = theme === 'auto' ? 'system' : theme
     settingsStore.setTheme(normalizedTheme)
+    
+    // Petit délai pour laisser le store se mettre à jour
+    await new Promise(resolve => setTimeout(resolve, 100))
     
     if (toastStore) {
       toastStore.success(t('settings.preferencesSaved'))
@@ -85,6 +107,8 @@ const selectTheme = (theme) => {
     if (toastStore) {
       toastStore.error('Erreur lors du changement de thème')
     }
+  } finally {
+    isUpdating.value = false
   }
 }
 </script>
