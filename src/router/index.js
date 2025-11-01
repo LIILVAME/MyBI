@@ -226,6 +226,12 @@ const router = createRouter({
 router.afterEach((to) => {
   // Le composable useSEO sera appelé dans App.vue après le montage
   // pour mettre à jour les meta tags dynamiquement
+  
+  // Track page view pour analytics
+  if (typeof window !== 'undefined' && window.gtag) {
+    const { trackPageView } = require('@/utils/analytics')
+    trackPageView(to.path, to.meta?.seo?.title || document.title)
+  }
 })
 
 /**

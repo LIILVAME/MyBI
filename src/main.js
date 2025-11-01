@@ -7,6 +7,7 @@ import i18n from './i18n'
 import { i18nPlugin } from './composables/useLingui'
 import { useSettingsStore } from '@/stores/settingsStore'
 import persistedState from '@/plugins/piniaPersistedState'
+import { initGoogleAnalytics, initPlausible } from '@/utils/analytics'
 import './style.css'
 
 const app = createApp(App)
