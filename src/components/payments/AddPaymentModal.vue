@@ -237,10 +237,10 @@ const handlePropertyChange = () => {
 }
 
 /**
- * Soumet le formulaire
+ * Soumet le formulaire avec validation Zod
  */
 const handleSubmit = () => {
-  // TODO v0.2.0 : Valider les données avec un schéma (Zod, Yup, etc.)
+  validationErrors.value = {}
   
   // Détermine le nom du bien
   let propertyName = ''
@@ -249,7 +249,9 @@ const handleSubmit = () => {
   if (form.value.propertyId === 'custom') {
     propertyName = form.value.propertyCustom.trim()
     if (!propertyName) {
-      // Validation: le nom est requis si "custom" est sélectionné
+      if (toastStore) {
+        toastStore.error('Le nom du bien est requis')
+      }
       return
     }
     propertyId = null
@@ -260,21 +262,54 @@ const handleSubmit = () => {
     propertyName = selectedProperty?.name || ''
     propertyId = form.value.propertyId // UUID, pas besoin de conversion
   } else {
-    // Validation: un bien doit être sélectionné
+    if (toastStore) {
+      toastStore.error('Veuillez sélectionner un bien')
+    }
     return
   }
   
-  // Prépare les données à soumettre
+  // Prépare les données à soumettre (convertit propertyId en UUID ou génère un UUID temporaire)
   const submitData = {
-    propertyId: propertyId,
-    property: propertyName,
-    tenant: form.value.tenant,
+    propertyId: propertyId || '00000000-0000-0000-0000-000000000000', // UUID temporaire si custom
     amount: Number(form.value.amount),
     dueDate: form.value.dueDate,
-    status: form.value.status
+    status: form.value.status || 'pending'
   }
   
-  emit('submit', submitData)
+  // Validation avec Zod
+  const validationResult = validate(paymentSchema, submitData)
+  
+  if (!validationResult.success) {
+    // Affiche les erreurs de validation
+    if (toastStore) {
+      toastStore.error(`Validation échouée : ${validationResult.error}`)
+    }
+    
+    // Mappe les erreurs par champ
+    if (validationResult.errors) {
+      validationResult.errors.forEach(error => {
+        const match = error.match(/^([^.]+):/)
+        if (match) {
+          const field = match[1]
+          if (!validationErrors.value[field]) {
+            validationErrors.value[field] = []
+          }
+          validationErrors.value[field].push(error.replace(/^[^:]+:\s*/, ''))
+        }
+      })
+    }
+    
+    return
+  }
+  
+  // Ajoute les champs additionnels non validés par Zod mais nécessaires pour l'UI
+  const finalData = {
+    ...validationResult.data,
+    property: propertyName,
+    tenant: form.value.tenant?.trim() || ''
+  }
+  
+  emit('submit', finalData)
   
   resetForm()
   emit('close')

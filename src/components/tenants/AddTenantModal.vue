@@ -180,6 +180,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'submit'])
 
 const propertiesStore = usePropertiesStore()
+const toastStore = useToastStore()
 
 const form = ref({
   name: '',
@@ -189,6 +190,8 @@ const form = ref({
   rent: null,
   status: PAYMENT_STATUS.ON_TIME
 })
+
+const validationErrors = ref({})
 
 /**
  * Liste des biens disponibles (libres ou occupés - on peut remplacer le locataire)
@@ -240,23 +243,54 @@ const handlePropertyChange = () => {
 }
 
 /**
- * Soumet le formulaire
+ * Soumet le formulaire avec validation Zod
  */
 const handleSubmit = () => {
-  // TODO v0.2.0 : Valider les données avec un schéma (Zod, Yup, etc.)
+  validationErrors.value = {}
   
   // Prépare les données à soumettre
   const submitData = {
-    name: form.value.name,
-    propertyId: form.value.propertyId || null,
-    property: selectedProperty.value?.name || '',
+    name: form.value.name.trim(),
+    propertyId: form.value.propertyId,
     entryDate: form.value.entryDate,
     exitDate: form.value.exitDate || null,
     rent: Number(form.value.rent),
-    status: form.value.status
+    status: form.value.status || 'on_time'
   }
   
-  emit('submit', submitData)
+  // Validation avec Zod
+  const validationResult = validate(tenantSchema, submitData)
+  
+  if (!validationResult.success) {
+    // Affiche les erreurs de validation
+    if (toastStore) {
+      toastStore.error(`Validation échouée : ${validationResult.error}`)
+    }
+    
+    // Mappe les erreurs par champ
+    if (validationResult.errors) {
+      validationResult.errors.forEach(error => {
+        const match = error.match(/^([^.]+):/)
+        if (match) {
+          const field = match[1]
+          if (!validationErrors.value[field]) {
+            validationErrors.value[field] = []
+          }
+          validationErrors.value[field].push(error.replace(/^[^:]+:\s*/, ''))
+        }
+      })
+    }
+    
+    return
+  }
+  
+  // Ajoute les champs additionnels non validés par Zod mais nécessaires pour l'UI
+  const finalData = {
+    ...validationResult.data,
+    property: selectedProperty.value?.name || ''
+  }
+  
+  emit('submit', finalData)
   
   resetForm()
   emit('close')

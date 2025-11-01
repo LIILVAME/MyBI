@@ -205,6 +205,9 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'submit'])
 
+const propertiesStore = usePropertiesStore()
+const toastStore = useToastStore()
+
 const form = ref({
   name: '',
   address: '',
@@ -217,6 +220,8 @@ const form = ref({
     status: 'on_time'
   }
 })
+
+const validationErrors = ref({})
 
 /**
  * Réinitialise le formulaire
@@ -245,29 +250,56 @@ const handleClose = () => {
 }
 
 /**
- * Soumet le formulaire
+ * Soumet le formulaire avec validation Zod
  */
 const handleSubmit = () => {
-  // TODO v0.2.0 : Valider les données avec un schéma (Zod, Yup, etc.)
+  validationErrors.value = {}
   
   // Prépare les données à soumettre
   const submitData = {
-    name: form.value.name,
-    address: form.value.address,
-    city: form.value.city,
+    name: form.value.name.trim(),
+    address: form.value.address.trim() || null,
+    city: form.value.city.trim(),
     rent: Number(form.value.rent),
     status: form.value.status,
     // Ajoute les informations du locataire seulement si le bien est occupé
     tenant: form.value.status === PROPERTY_STATUS.OCCUPIED
       ? {
-          name: form.value.tenant.name,
+          name: form.value.tenant.name.trim(),
           entryDate: form.value.tenant.entryDate,
-          status: form.value.tenant.status
+          status: form.value.tenant.status || 'on_time',
+          rent: Number(form.value.rent)
         }
       : null
   }
   
-  emit('submit', submitData)
+  // Validation avec Zod
+  const validationResult = validate(propertySchema, submitData)
+  
+  if (!validationResult.success) {
+    // Affiche les erreurs de validation
+    if (toastStore) {
+      toastStore.error(`Validation échouée : ${validationResult.error}`)
+    }
+    
+    // Mappe les erreurs par champ pour l'affichage inline (optionnel)
+    if (validationResult.errors) {
+      validationResult.errors.forEach(error => {
+        const match = error.match(/^([^.]+):/)
+        if (match) {
+          const field = match[1]
+          if (!validationErrors.value[field]) {
+            validationErrors.value[field] = []
+          }
+          validationErrors.value[field].push(error.replace(/^[^:]+:\s*/, ''))
+        }
+      })
+    }
+    
+    return
+  }
+  
+  emit('submit', validationResult.data)
   
   resetForm()
   emit('close')
