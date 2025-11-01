@@ -165,10 +165,11 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { PAYMENT_STATUS } from '@/utils/constants'
 import { usePropertiesStore } from '@/stores/propertiesStore'
+import { useToastStore } from '@/stores/toastStore'
 import { formatCurrency } from '@/utils/formatters'
 import { PROPERTY_STATUS } from '@/utils/constants'
+import { tenantSchema, validate } from '@/utils/validators'
 
 const props = defineProps({
   isOpen: {
@@ -188,7 +189,7 @@ const form = ref({
   entryDate: '',
   exitDate: '',
   rent: null,
-  status: PAYMENT_STATUS.ON_TIME
+  status: 'on_time'
 })
 
 const validationErrors = ref({})

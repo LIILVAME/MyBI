@@ -194,7 +194,10 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import { usePropertiesStore } from '@/stores/propertiesStore'
+import { useToastStore } from '@/stores/toastStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
+import { propertySchema, validate } from '@/utils/validators'
 
 const props = defineProps({
   isOpen: {

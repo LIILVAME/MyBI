@@ -129,10 +129,10 @@ export function validate(schema, data) {
       data: validated
     }
   } catch (error) {
-    if (error instanceof z.ZodError) {
+    if (error instanceof z.ZodError && error.errors && Array.isArray(error.errors)) {
       const errors = error.errors.map(err => {
-        const path = err.path.join('.')
-        return `${path ? `${path}: ` : ''}${err.message}`
+        const path = Array.isArray(err.path) ? err.path.join('.') : String(err.path || '')
+        return `${path ? `${path}: ` : ''}${err.message || 'Erreur de validation'}`
       })
       
       return {
@@ -144,8 +144,8 @@ export function validate(schema, data) {
     
     return {
       success: false,
-      errors: [error.message || 'Erreur de validation'],
-      error: error.message || 'Erreur de validation'
+      errors: [error?.message || 'Erreur de validation'],
+      error: error?.message || 'Erreur de validation'
     }
   }
 }
