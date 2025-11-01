@@ -87,6 +87,15 @@ export const useSettingsStore = defineStore('settings', () => {
         console.warn('Impossible de mettre à jour i18n:', error)
       }
       
+      // Track language changed event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.LANGUAGE_CHANGED, {
+            language: lang
+          })
+        }).catch(() => {})
+      }
+      
       // Recharger la page pour appliquer la nouvelle langue partout
       // (nécessaire car certains composants sont déjà rendus)
       if (typeof window !== 'undefined') {
@@ -103,6 +112,15 @@ export const useSettingsStore = defineStore('settings', () => {
     if (['EUR', 'USD', 'GBP', 'XOF'].includes(curr)) {
       currency.value = curr
       saveSettings()
+
+      // Track currency changed event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.CURRENCY_CHANGED, {
+            currency: curr
+          })
+        }).catch(() => {})
+      }
     }
   }
 
