@@ -1,8 +1,8 @@
-# 📊 Vue d'ensemble du projet MyBI
+# 📊 Vue d'ensemble du projet Vylo
 
 ## 🎯 Vision du produit
 
-MyBI est une plateforme web moderne conçue pour permettre aux propriétaires et gestionnaires de biens immobiliers de superviser à distance l'état de leurs appartements en location.
+Vylo est une plateforme web moderne conçue pour permettre aux propriétaires et gestionnaires de biens immobiliers de superviser à distance l'état de leurs appartements en location.
 
 ### Objectifs principaux
 

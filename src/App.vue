@@ -14,7 +14,11 @@
   </div>
 
   <!-- Application normale une fois la session initialisée -->
-  <router-view v-else />
+  <template v-else>
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
+  </template>
   <Toast />
 </template>
 
@@ -154,4 +158,17 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style>
+/* Transitions fade pour la navigation entre pages */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
 

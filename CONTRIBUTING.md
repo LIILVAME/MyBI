@@ -1,6 +1,6 @@
 # 🤝 Guide de contribution
 
-Merci de votre intérêt pour contribuer à MyBI ! Ce document fournit les guidelines pour contribuer au projet.
+Merci de votre intérêt pour contribuer à Vylo ! Ce document fournit les guidelines pour contribuer au projet.
 
 ## 📋 Table des matières
 
@@ -48,8 +48,8 @@ Nous acceptons différents types de contributions :
 ```bash
 # Fork le repository sur GitHub
 # Puis clonez votre fork
-git clone https://github.com/votre-username/mybi.git
-cd mybi
+git clone https://github.com/votre-username/vylo.git
+cd vylo
 ```
 
 ### 2. Créer une branche
@@ -324,7 +324,7 @@ Mockups, exemples, etc.
 ## ❓ Questions
 
 Si vous avez des questions :
-- 📧 Email : contact@mybi.fr
+- 📧 Email : contact@vylo.fr
 - 💬 Issues : Créez une issue avec le label `question`
 - 📖 Documentation : Consultez le README et `docs/`
 
@@ -332,7 +332,7 @@ Si vous avez des questions :
 
 ## 🙏 Remerciements
 
-Merci de contribuer à MyBI ! Votre aide est précieuse pour améliorer le projet.
+Merci de contribuer à Vylo ! Votre aide est précieuse pour améliorer le projet.
 
 ---
 

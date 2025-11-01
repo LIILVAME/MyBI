@@ -1,15 +1,15 @@
 <template>
   <div 
-    class="card cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 flex flex-col justify-between min-h-[400px]"
+    class="card cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 flex flex-col justify-between min-h-[350px] sm:min-h-[400px]"
   >
     <!-- Contenu principal (flex-1 pour occuper l'espace disponible) -->
     <div class="flex-1 flex flex-col">
       <!-- En-tête avec nom, adresse, statut -->
-      <div class="flex items-start justify-between mb-4">
+      <div class="flex items-start justify-between mb-3 sm:mb-4">
         <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ property.name }}</h3>
-          <p class="text-sm text-gray-500 mb-1">{{ property.city }}</p>
-          <p class="text-xs text-gray-400 mb-3">{{ property.address }}</p>
+          <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-1">{{ property.name }}</h3>
+          <p class="text-xs sm:text-sm text-gray-500 mb-1">{{ property.city }}</p>
+          <p class="text-xs text-gray-400 mb-2 sm:mb-3">{{ property.address }}</p>
           <span 
             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
             :class="statusClass"
@@ -29,9 +29,9 @@
       
       <!-- Informations locatives -->
       <div class="mt-4 mb-4 flex-1 flex flex-col">
-        <div class="flex items-center justify-between mb-3">
-          <p class="text-xs text-gray-500">Loyer mensuel</p>
-          <p class="text-xl font-bold text-gray-900">{{ formatCurrency(property.rent) }}</p>
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <p class="text-xs text-gray-500">{{ $t('properties.monthlyRent') }}</p>
+          <p class="text-lg sm:text-xl font-bold text-gray-900">{{ formatCurrency(property.rent) }}</p>
         </div>
         
         <!-- Informations locataire ou placeholder -->
@@ -40,7 +40,7 @@
           
           <!-- Placeholder pour les biens sans locataire (hauteur fixe pour alignement) -->
           <div v-else class="border-t border-gray-100 pt-4 mt-4 min-h-[100px] flex items-center justify-center">
-            <p class="text-gray-400 text-sm italic">Aucun locataire</p>
+            <p class="text-gray-400 text-sm italic">{{ $t('tenants.noTenants') }}</p>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
         <svg class="w-4 h-4 inline mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
-        Modifier
+        {{ $t('common.edit') }}
       </button>
       <button
         @click.stop="$emit('delete', property.id)"
@@ -64,7 +64,7 @@
         <svg class="w-4 h-4 inline mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
         </svg>
-        Supprimer
+        {{ $t('common.delete') }}
       </button>
     </div>
   </div>
@@ -72,9 +72,12 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import TenantInfo from '../dashboard/TenantInfo.vue'
 import { formatCurrency } from '@/utils/formatters'
 import { PROPERTY_STATUS, STATUS_LABELS, STATUS_CLASSES } from '@/utils/constants'
+
+const { t } = useI18n()
 
 const props = defineProps({
   property: {

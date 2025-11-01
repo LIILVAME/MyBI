@@ -21,7 +21,7 @@ export const useSettingsStore = defineStore('settings', () => {
   })
 
   // Clés localStorage
-  const STORAGE_KEY = 'mybi-settings'
+  const STORAGE_KEY = 'vylo-settings'
 
   /**
    * Charge les paramètres depuis localStorage

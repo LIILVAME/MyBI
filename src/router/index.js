@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import LandingPage from '../pages/LandingPage.vue'
 import LoginPage from '../pages/LoginPage.vue'
+import SignupPage from '../pages/SignupPage.vue'
+import ResetPasswordPage from '../pages/ResetPasswordPage.vue'
+import ConfirmEmailPage from '../pages/ConfirmEmailPage.vue'
 import DashboardPage from '../pages/DashboardPage.vue'
 import BiensPage from '../pages/BiensPage.vue'
 import PaiementsPage from '../pages/PaiementsPage.vue'
@@ -22,6 +25,24 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginPage,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: SignupPage,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPasswordPage,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/confirm-email',
+    name: 'ConfirmEmail',
+    component: ConfirmEmailPage,
     meta: { requiresAuth: false }
   },
   {
@@ -122,8 +143,8 @@ router.beforeEach(async (to, from, next) => {
       }
     }
 
-    // Si l'utilisateur est connecté et essaie d'accéder à /login, redirige vers le dashboard
-    if (to.path === '/login' && authStore.user) {
+    // Si l'utilisateur est connecté et essaie d'accéder à une page d'auth, redirige vers le dashboard
+    if ((to.path === '/login' || to.path === '/signup' || to.path === '/reset-password') && authStore.user) {
       next('/dashboard')
       return
     }

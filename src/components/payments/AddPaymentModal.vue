@@ -18,11 +18,11 @@
           >
             <!-- Header -->
             <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-              <h2 class="text-xl font-semibold text-gray-900">Ajouter un paiement</h2>
+              <h2 class="text-xl font-semibold text-gray-900">{{ $t('payments.addPayment') }}</h2>
               <button
                 @click="handleClose"
                 class="text-gray-400 hover:text-gray-600 transition-colors"
-                aria-label="Fermer"
+                :aria-label="$t('common.close')"
               >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -36,7 +36,7 @@
                 <!-- Bien concerné -->
                 <div>
                   <label for="payment-property" class="block text-sm font-medium text-gray-700 mb-2">
-                    Bien concerné <span class="text-red-500">*</span>
+                    {{ $t('payments.relatedProperty') }} <span class="text-red-500">*</span>
                   </label>
                   <select
                     id="payment-property"
@@ -45,7 +45,7 @@
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                     @change="handlePropertyChange"
                   >
-                    <option value="">Sélectionner un bien</option>
+                    <option value="">{{ $t('payments.selectProperty') }}</option>
                     <option
                       v-for="property in propertiesWithTenants"
                       :key="property.id"
@@ -53,14 +53,14 @@
                     >
                       {{ property.name }} - {{ property.city }}
                     </option>
-                    <option value="custom">Autre (saisie manuelle)</option>
+                    <option value="custom">{{ $t('payments.otherProperty') }}</option>
                   </select>
                   <!-- Champ texte libre si "Autre" sélectionné -->
                   <div v-if="form.propertyId === 'custom'" class="mt-2">
                     <input
                       v-model="form.propertyCustom"
                       type="text"
-                      placeholder="Nom du bien"
+                      :placeholder="$t('payments.propertyName')"
                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                       required
                     />
@@ -70,7 +70,7 @@
                 <!-- Locataire (pré-rempli si bien sélectionné) -->
                 <div>
                   <label for="payment-tenant" class="block text-sm font-medium text-gray-700 mb-2">
-                    Locataire <span class="text-red-500">*</span>
+                    {{ $t('payments.tenant') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="payment-tenant"
@@ -78,14 +78,14 @@
                     type="text"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Ex: Jean Dupont"
+                    :placeholder="$t('payments.placeholders.tenant')"
                   />
                 </div>
 
                 <!-- Montant -->
                 <div>
                   <label for="payment-amount" class="block text-sm font-medium text-gray-700 mb-2">
-                    Montant (€) <span class="text-red-500">*</span>
+                    {{ $t('payments.amountEuro') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="payment-amount"
@@ -95,14 +95,14 @@
                     min="0"
                     step="10"
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="950"
+                    :placeholder="$t('payments.placeholders.amount')"
                   />
                 </div>
 
                 <!-- Date d'échéance -->
                 <div>
                   <label for="payment-due-date" class="block text-sm font-medium text-gray-700 mb-2">
-                    Date d'échéance <span class="text-red-500">*</span>
+                    {{ $t('payments.dueDate') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="payment-due-date"
@@ -116,7 +116,7 @@
                 <!-- Statut -->
                 <div>
                   <label for="payment-status" class="block text-sm font-medium text-gray-700 mb-2">
-                    Statut <span class="text-red-500">*</span>
+                    {{ $t('payments.status') }} <span class="text-red-500">*</span>
                   </label>
                   <select
                     id="payment-status"
@@ -124,10 +124,10 @@
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                   >
-                    <option value="">Sélectionner un statut</option>
-                    <option :value="TRANSACTION_STATUS.PAID">Payé</option>
-                    <option :value="TRANSACTION_STATUS.PENDING">En attente</option>
-                    <option :value="TRANSACTION_STATUS.LATE">En retard</option>
+                    <option value="">{{ $t('payments.selectStatus') }}</option>
+                    <option :value="TRANSACTION_STATUS.PAID">{{ $t('status.paid') }}</option>
+                    <option :value="TRANSACTION_STATUS.PENDING">{{ $t('status.pending') }}</option>
+                    <option :value="TRANSACTION_STATUS.LATE">{{ $t('status.late') }}</option>
                   </select>
                 </div>
               </div>
@@ -139,7 +139,7 @@
                   @click="handleClose"
                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
                 >
-                  Annuler
+                  {{ $t('common.cancel') }}
                 </button>
                 <button
                   type="submit"
@@ -148,7 +148,7 @@
                   <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                   </svg>
-                  Ajouter
+                  {{ $t('common.add') }}
                 </button>
               </div>
             </form>
@@ -161,11 +161,14 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { TRANSACTION_STATUS } from '@/utils/constants'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { usePaymentsStore } from '@/stores/paymentsStore'
 import { useToastStore } from '@/stores/toastStore'
 import { paymentSchema, validate } from '@/utils/validators'
+
+const { t } = useI18n()
 
 const props = defineProps({
   isOpen: {

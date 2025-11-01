@@ -2,7 +2,7 @@
 
 ## Configuration des variables d'environnement
 
-Pour activer l'authentification Supabase dans le projet MyBI, vous devez créer un fichier `.env` à la racine du projet avec les variables suivantes :
+Pour activer l'authentification Supabase dans le projet Vylo, vous devez créer un fichier `.env` à la racine du projet avec les variables suivantes :
 
 ```env
 VITE_SUPABASE_URL=https://hvhcyraudbabctsrxpqr.supabase.co

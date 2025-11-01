@@ -83,6 +83,36 @@ app.config.errorHandler = (err, instance, info) => {
 
 app.mount('#app')
 
+// Enregistrement du Service Worker pour PWA (vite-plugin-pwa autoUpdate)
+// Avec registerType: 'autoUpdate', le plugin injecte automatiquement le code,
+// mais on l'importe explicitement ici pour plus de contrôle
+if (import.meta.env.PROD) {
+  import('virtual:pwa-register').then(({ registerSW }) => {
+    registerSW({
+      immediate: true,
+      onNeedRefresh() {
+        // Une nouvelle version est disponible
+        console.log('🔄 Nouvelle version disponible')
+      },
+      onOfflineReady() {
+        // L'application est prête à fonctionner hors ligne
+        console.log('✅ Application prête hors ligne')
+      },
+      onRegistered(registration) {
+        console.log('✅ Service Worker enregistré:', registration)
+      },
+      onRegisterError(error) {
+        console.error('❌ Erreur enregistrement Service Worker:', error)
+      }
+    })
+  }).catch(() => {
+    // PWA non disponible en développement ou erreur
+    if (import.meta.env.MODE === 'production') {
+      console.warn('⚠️  PWA registration non disponible')
+    }
+  })
+}
+
 // Initialise la langue et le thème depuis le store settings après le montage de Pinia
 // Utilise nextTick pour s'assurer que Pinia est complètement initialisé
 nextTick(() => {

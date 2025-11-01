@@ -7,8 +7,8 @@
     <main class="flex-1 overflow-y-auto">
       <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- En-tête avec barre verte -->
-        <div class="mb-8 animate-fade-in">
-          <h1 class="text-3xl font-bold text-gray-900 mb-3">{{ $t('stats.title') }}</h1>
+        <div class="mb-6 sm:mb-8 animate-fade-in">
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{{ $t('stats.title') }}</h1>
           <div class="flex items-center gap-4 mb-4">
             <div class="border-b-2 border-primary-500 w-20"></div>
             <p class="text-gray-600">{{ $t('stats.subtitle') }}</p>
@@ -42,7 +42,7 @@
         <!-- Contenu principal -->
         <div v-else class="space-y-6 animate-fade-in">
           <!-- KPIs (4 cartes) -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto">
             <KpiCard
               :label="$t('stats.kpi.totalRevenue')"
               :value="analyticsStore.totalRevenue"
@@ -85,7 +85,7 @@
           </div>
 
           <!-- Graphiques - Ligne 1 -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 overflow-x-auto">
             <!-- Revenus mensuels -->
             <ChartCard
               :title="$t('stats.charts.monthlyRevenue.title')"
@@ -95,9 +95,9 @@
               <BaseChart
                 :show-title="false"
                 type="bar"
-                :height="350"
+                :height="chartHeight"
                 :series="analyticsStore.revenueChartSeries"
-                :options="revenueChartOptionsWithColors"
+                :options="revenueChartOptionsWithColorsMobile"
                 :loading="analyticsStore.loading"
               />
             </ChartCard>
@@ -112,7 +112,7 @@
               <BaseChart
                 :show-title="false"
                 type="donut"
-                :height="350"
+                :height="chartHeight"
                 :series="analyticsStore.paymentStatusChartSeries"
                 :options="paymentStatusChartOptionsWithColors"
                 :loading="analyticsStore.loading"
@@ -121,7 +121,7 @@
           </div>
 
           <!-- Graphiques - Ligne 2 -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 overflow-x-auto">
             <!-- Revenus par bien -->
             <ChartCard
               v-if="analyticsStore.revenueByProperty.length > 0"
@@ -132,9 +132,9 @@
               <BaseChart
                 :show-title="false"
                 type="bar"
-                :height="350"
+                :height="chartHeight"
                 :series="analyticsStore.revenueByPropertyChartSeries"
-                :options="revenueByPropertyChartOptionsWithColors"
+                :options="revenueByPropertyChartOptionsWithColorsMobile"
                 :loading="analyticsStore.loading"
               />
             </ChartCard>
@@ -148,7 +148,7 @@
               <BaseChart
                 :show-title="false"
                 type="radialBar"
-                :height="350"
+                :height="chartHeight"
                 :series="[{ name: 'Occupation', data: [analyticsStore.occupancyRate] }]"
                 :options="occupancyChartOptions"
                 :loading="analyticsStore.loading"
@@ -185,7 +185,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import BaseChart from '../components/charts/BaseChart.vue'
@@ -199,7 +199,24 @@ const { t } = useI18n()
 const analyticsStore = useAnalyticsStore()
 const settingsStore = useSettingsStore()
 
-// Options du graphique de taux d'occupation avec couleur verte MyBI
+// Hauteur dynamique des graphiques selon la taille d'écran
+const isMobile = ref(typeof window !== 'undefined' ? window.innerWidth < 640 : false)
+const chartHeight = computed(() => isMobile.value ? 220 : 350)
+
+const updateMobileStatus = () => {
+  isMobile.value = window.innerWidth < 640
+}
+
+onMounted(() => {
+  updateMobileStatus()
+  window.addEventListener('resize', updateMobileStatus)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateMobileStatus)
+})
+
+// Options du graphique de taux d'occupation avec couleur verte Vylo
 const occupancyChartOptions = computed(() => ({
   plotOptions: {
     radialBar: {
@@ -229,7 +246,7 @@ const occupancyChartOptions = computed(() => ({
   }
 }))
 
-// Options du graphique de revenus mensuels améliorées
+// Options du graphique de revenus mensuels (desktop)
 const revenueChartOptionsWithColors = computed(() => ({
   ...analyticsStore.revenueChartOptions,
   colors: ['#22c55e'],
@@ -431,6 +448,18 @@ const revenueChartOptionsWithColors = computed(() => ({
   }
 }))
 
+// Options du graphique de revenus mensuels (mobile - labels cachés)
+const revenueChartOptionsWithColorsMobile = computed(() => ({
+  ...revenueChartOptionsWithColors.value,
+  xaxis: {
+    ...revenueChartOptionsWithColors.value.xaxis,
+    labels: {
+      ...revenueChartOptionsWithColors.value.xaxis?.labels,
+      show: !isMobile.value
+    }
+  }
+}))
+
 // Options du graphique de revenus par bien améliorées (horizontal)
 const revenueByPropertyChartOptionsWithColors = computed(() => ({
   ...analyticsStore.revenueByPropertyChartOptions,
@@ -604,6 +633,18 @@ const revenueByPropertyChartOptionsWithColors = computed(() => ({
     show: true,
     width: 2,
     colors: ['#16a34a']
+  }
+}))
+
+// Options du graphique de revenus par bien (mobile - labels cachés)
+const revenueByPropertyChartOptionsWithColorsMobile = computed(() => ({
+  ...revenueByPropertyChartOptionsWithColors.value,
+  yaxis: {
+    ...revenueByPropertyChartOptionsWithColors.value.yaxis,
+    labels: {
+      ...revenueByPropertyChartOptionsWithColors.value.yaxis?.labels,
+      show: !isMobile.value
+    }
   }
 }))
 

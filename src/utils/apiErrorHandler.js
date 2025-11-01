@@ -90,7 +90,7 @@ export function handleApiError(error, context = '') {
  * @param {string} context - Contexte pour les logs
  * @returns {Promise<Object>} { success: boolean, data?: any, error?: Error, retries?: number }
  */
-export async function withErrorHandling(apiCall, context = '') {
+export async function withErrorHandling(apiCall, context = '', options = {}) {
   const { retry } = await import('./retry')
   const { useConnectionStore } = await import('@/stores/connectionStore')
   const { useToastStore } = await import('@/stores/toastStore')
@@ -102,11 +102,19 @@ export async function withErrorHandling(apiCall, context = '') {
   // Démarre la mesure de latence
   const startTime = performance.now()
   const endpoint = context || 'unknown'
+  
+  // Timeout par défaut : 10 secondes pour éviter les blocages
+  const timeout = options.timeout || 10000
 
-  // Fonction wrapper pour le retry
+  // Fonction wrapper pour le retry avec timeout
   const wrappedApiCall = async () => {
     try {
-      const result = await apiCall()
+      // Ajoute un timeout pour éviter les blocages prolongés
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error(`Timeout: l'opération a pris plus de ${timeout}ms`)), timeout)
+      })
+      
+      const result = await Promise.race([apiCall(), timeoutPromise])
       
       if (result.error) {
         // Vérifie si l'erreur est réessayable
@@ -160,10 +168,11 @@ export async function withErrorHandling(apiCall, context = '') {
   }
 
   // Exécute avec retry pour les erreurs réseau
+  // Réduit les délais pour éviter les ralentissements (3 tentatives max : 300ms, 600ms, 1200ms = max 2.1s)
   const retryResult = await retry(wrappedApiCall, {
-    maxRetries: 3,
-    initialDelay: 500,
-    maxDelay: 2000,
+    maxRetries: 2, // Réduit à 2 tentatives (total 3 avec la première)
+    initialDelay: 300, // Réduit à 300ms
+    maxDelay: 1200, // Réduit à 1.2s max
     shouldRetry: (error) => {
       // Réessaye seulement pour les erreurs réseau
       if (isRetryableError(error)) {
@@ -185,6 +194,12 @@ export async function withErrorHandling(apiCall, context = '') {
   // Calcule et enregistre la latence
   const duration = performance.now() - startTime
   diagnosticStore.trackLatency(endpoint, duration)
+  
+  // Avertit si la latence est élevée (plus de 3 secondes)
+  if (duration > 3000) {
+    console.warn(`[API] Latence élevée pour ${endpoint}: ${Math.round(duration)}ms`)
+    diagnosticStore.logEvent('warning', `Latence élevée: ${endpoint} (${Math.round(duration)}ms)`, { endpoint, duration })
+  }
 
   // Si succès, met à jour la connexion et enregistre le succès
   if (retryResult.success) {

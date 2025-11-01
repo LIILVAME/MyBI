@@ -1,16 +1,16 @@
 <template>
   <div class="mb-8">
-    <div class="flex items-center justify-between mb-6">
-      <h3 class="text-2xl font-bold text-gray-900">Mes appartements</h3>
+    <div class="flex items-center justify-between mb-4 sm:mb-6">
+      <h3 class="text-xl sm:text-2xl font-bold text-gray-900">{{ $t('properties.myProperties') }}</h3>
       <!-- Bouton hybride : Modal en v0.1.0, redirection en v0.2.0 -->
       <button 
         @click="handleAddClick"
-        class="btn-primary flex items-center"
+        class="hidden lg:flex btn-primary items-center"
       >
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Ajouter un bien
+        {{ $t('properties.addProperty') }}
       </button>
       
       <!-- TODO v0.2.0 : Remplacer par redirection vers /biens?mode=add -->
@@ -27,7 +27,7 @@
       -->
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
       <PropertyCard
         v-for="property in properties"
         :key="property.id"
@@ -38,7 +38,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import PropertyCard from '../PropertyCard.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   properties: {

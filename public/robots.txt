@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://liilvame.github.io/MyBI/sitemap.xml
+Sitemap: https://liilvame.github.io/Vylo/sitemap.xml
 

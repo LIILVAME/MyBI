@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // Base path pour GitHub Pages vs Vercel
 // Par défaut, utiliser '/' pour Vercel/Netlify
-// Pour GitHub Pages, définir VITE_BASE_PATH=/MyBI/ dans les variables d'environnement
+// Pour GitHub Pages, définir VITE_BASE_PATH=/Vylo/ dans les variables d'environnement
 const base = process.env.VITE_BASE_PATH || '/'
 
 export default defineConfig({
@@ -16,8 +16,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
-        name: 'MyBI - Suivi Intelligent de Biens Immobiliers',
-        short_name: 'MyBI',
+        name: 'Vylo - Suivi Intelligent de Biens Immobiliers',
+        short_name: 'Vylo',
         description: 'Plateforme de gestion et de suivi intelligent de biens immobiliers avec monitoring en temps réel',
         theme_color: '#22c55e',
         background_color: '#ffffff',
@@ -78,7 +78,35 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Stratégie de cache par défaut pour les assets statiques
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/],
         runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-stylesheets',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 an
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-webfonts',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 an
+              }
+            }
+          },
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',

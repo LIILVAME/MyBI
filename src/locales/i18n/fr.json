@@ -2,19 +2,29 @@
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",
+    "errorWithColon": "Erreur :",
     "success": "Succès",
     "cancel": "Annuler",
     "save": "Enregistrer",
     "delete": "Supprimer",
     "edit": "Modifier",
     "add": "Ajouter",
+    "addProperty": "Ajouter un bien",
     "close": "Fermer",
     "search": "Rechercher",
     "filter": "Filtrer",
     "reset": "Réinitialiser",
     "viewAll": "Voir tout",
+    "view": "Voir",
     "noData": "Aucune donnée",
-    "actions": "Actions"
+    "actions": "Actions",
+    "all": "Tous",
+    "date": "Date",
+    "days": "jour(s)",
+    "optional": "optionnel",
+    "selectStatus": "Sélectionner un statut",
+    "selectProperty": "Sélectionner un bien",
+    "unknown": "Inconnu"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -44,43 +54,86 @@
     "title": "Gestion des biens",
     "subtitle": "Gérez tous vos biens immobiliers",
     "addProperty": "Ajouter un bien",
+    "editProperty": "Modifier un bien",
     "noProperties": "Aucun bien enregistré",
     "noPropertiesDescription": "Commencez par ajouter votre premier bien immobilier",
+    "myProperties": "Mes appartements",
     "name": "Nom du bien",
     "address": "Adresse",
     "city": "Ville",
     "type": "Type",
     "rent": "Loyer",
+    "monthlyRent": "Loyer mensuel (€)",
     "status": "Statut",
     "occupied": "Occupé",
     "vacant": "Vacant",
-    "underMaintenance": "En maintenance"
+    "free": "Libre",
+    "underMaintenance": "En maintenance",
+    "selectStatus": "Sélectionner un statut",
+    "selectProperty": "Sélectionner un bien",
+    "tenantInfo": "Informations du locataire",
+    "tenantName": "Nom du locataire",
+    "propertyRent": "Loyer du bien",
+    "placeholders": {
+      "name": "Ex: Appartement T2 - Paris 15e",
+      "address": "Ex: 45 Rue de Vaugirard, 75015 Paris",
+      "city": "Ex: Paris"
+    }
   },
   "payments": {
     "title": "Suivi des paiements",
     "subtitle": "Gérez tous vos paiements locatifs en un seul endroit",
     "addPayment": "Ajouter un paiement",
+    "editPayment": "Modifier le paiement",
+    "deletePayment": "Supprimer le paiement",
     "noPayments": "Aucun paiement enregistré",
     "pending": "À venir",
     "late": "En retard",
     "paidThisMonth": "Payés ce mois",
     "amount": "Montant",
+    "amountEuro": "Montant (€)",
     "dueDate": "Date d'échéance",
     "paymentDate": "Date de paiement",
     "tenant": "Locataire",
     "property": "Bien",
+    "relatedProperty": "Bien concerné",
     "status": "Statut",
-    "downloadInvoice": "Télécharger la facture (PDF)"
+    "selectStatus": "Sélectionner un statut",
+    "downloadInvoice": "Télécharger la facture (PDF)",
+    "otherProperty": "Autre (saisie manuelle)",
+    "propertyName": "Nom du bien",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce paiement de {amount} ?",
+    "invoiceDownloaded": "Facture PDF téléchargée avec succès",
+    "invoiceError": "Erreur lors de la génération de la facture",
+    "noPaymentSelected": "Aucun paiement sélectionné",
+    "placeholders": {
+      "tenant": "Ex: Jean Dupont",
+      "amount": "950"
+    }
   },
   "tenants": {
     "title": "Gestion des locataires",
     "subtitle": "Gérez vos locataires et leurs informations",
+    "loading": "Chargement des locataires...",
     "addTenant": "Ajouter un locataire",
+    "editTenant": "Modifier le locataire",
+    "deleteTenant": "Supprimer le locataire",
     "noTenants": "Aucun locataire enregistré",
     "name": "Nom",
+    "tenantName": "Nom du locataire",
     "entryDate": "Date d'entrée",
     "exitDate": "Date de sortie",
-    "rent": "Loyer"
+    "exitDateOptional": "Date de sortie (optionnelle)",
+    "inProgress": "En cours",
+    "rent": "Loyer",
+    "monthlyRent": "Loyer mensuel (€)",
+    "paymentStatus": "Statut de paiement",
+    "associatedProperty": "Bien associé",
+    "selectStatus": "Sélectionner un statut",
+    "placeholders": {
+      "name": "Ex: Jean Dupont",
+      "rent": "950"
+    }
   },
   "stats": {
     "title": "Statistiques",
@@ -152,10 +205,25 @@
   },
   "alerts": {
     "title": "Alertes",
-    "subtitle": "Restez informé des événements importants",
+    "subtitle": "Surveillez les paiements en retard, fins de bail et événements importants",
+    "loading": "Chargement des alertes...",
     "noAlerts": "Aucune alerte",
+    "allGood": "Tout est en ordre ! Aucune action requise pour le moment.",
+    "criticalAlerts": "Alertes critiques",
+    "mediumAlerts": "Alertes moyennes",
+    "information": "Informations",
     "latePayments": "Paiements en retard",
-    "upcomingPayments": "Paiements à venir"
+    "upcomingPayments": "Paiements à venir",
+    "severity": {
+      "critical": "Critique",
+      "important": "Important",
+      "info": "Info"
+    },
+    "daysLate": "Retard",
+    "daysOverdue": "Impayé depuis",
+    "daysUntil": "Dans",
+    "markAsResolved": "Marquer comme résolu",
+    "view": "Voir"
   },
   "settings": {
     "title": "Paramètres",
@@ -195,14 +263,74 @@
     "themeDarkDescription": "Interface sombre pour un confort visuel",
     "themeAutoDescription": "Suit les préférences système",
     "integrationsComingSoon": "Intégrations disponibles prochainement",
-    "integrationsDescription": "Connectez MyBI à vos outils préférés"
+    "integrationsDescription": "Connectez Vylo à vos outils préférés"
+  },
+  "auth": {
+    "tagline": "Gestion immobilière intelligente",
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "cta": "Se connecter",
+      "ctaLoading": "Connexion..."
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez Vylo en quelques secondes",
+      "fullName": "Nom complet",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+33 6 12 34 56 78",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Confirmer le mot de passe",
+      "passwordHint": "Au moins 6 caractères",
+      "hasAccount": "Déjà un compte ?",
+      "cta": "Créer mon compte",
+      "ctaLoading": "Création..."
+    },
+    "reset": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre adresse email pour recevoir un lien de réinitialisation",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "cta": "Envoyer le lien",
+      "ctaLoading": "Envoi...",
+      "successTitle": "Email envoyé !",
+      "successMessage": "Un lien de réinitialisation a été envoyé à {email}",
+      "backToLogin": "Retour à la connexion"
+    },
+    "confirm": {
+      "title": "Email confirmé",
+      "message": "Votre compte a été confirmé avec succès. Vous pouvez maintenant vous connecter.",
+      "cta": "Aller à la connexion"
+    },
+    "oauth": {
+      "separator": "OU",
+      "label": "Connexion rapide avec",
+      "google": "Google",
+      "apple": "Apple"
+    }
   },
   "login": {
     "title": "Connexion",
+    "subtitle": "Connectez-vous à votre compte",
+    "tagline": "Gestion immobilière intelligente",
     "email": "Email",
+    "emailPlaceholder": "votre@email.com",
     "password": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
     "login": "Se connecter",
-    "signup": "S'inscrire",
+    "logging": "Connexion...",
+    "signup": "Créer un compte",
+    "signupSubtitle": "Rejoignez Vylo dès aujourd'hui",
+    "creating": "Création...",
     "forgotPassword": "Mot de passe oublié ?",
     "noAccount": "Pas encore de compte ?",
     "hasAccount": "Déjà un compte ?",
@@ -333,6 +461,26 @@
   },
   "degradedMode": {
     "message": "⚠️ Mode dégradé — certaines données peuvent être incomplètes"
+  },
+  "landing": {
+    "features": "Fonctionnalités",
+    "testimonials": "Témoignages",
+    "getStarted": "Commencer maintenant",
+    "tryIt": "Essayer",
+    "tryFree": "Essayer gratuitement",
+    "heroTitle": "Supervisez vos biens immobiliers depuis une seule plateforme",
+    "heroDescription": "Monitoring en temps réel, alertes intelligentes, gestion des paiements. Tout ce dont vous avez besoin pour gérer vos biens à distance.",
+    "featuresTitle": "Tout ce dont vous avez besoin",
+    "featuresDescription": "Une solution complète pour la gestion et le monitoring de vos biens immobiliers",
+    "featureMonitoring": "Surveillance en temps réel",
+    "featureMonitoringDesc": "Suivez température, humidité et qualité de l'air en direct depuis votre dashboard",
+    "featureAlerts": "Alertes intelligentes",
+    "featureAlertsDesc": "Recevez des notifications instantanées en cas d'anomalie ou d'incident",
+    "featurePayments": "Gestion des paiements",
+    "featurePaymentsDesc": "Suivez vos loyers et paiements locatifs en temps réel",
+    "testimonialsTitle": "Ce que disent nos clients",
+    "ctaTitle": "Prêt à optimiser la gestion de vos biens ?",
+    "ctaDescription": "Rejoignez des centaines de propriétaires qui font confiance à Vylo"
   }
 }
 

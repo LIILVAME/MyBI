@@ -1,5 +1,5 @@
 /**
- * Constantes partagées pour l'application MyBI
+ * Constantes partagées pour l'application Vylo
  * Centralise les valeurs utilisées dans plusieurs composants
  */
 

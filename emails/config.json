@@ -1,0 +1,20 @@
+{
+  "logo_url": "https://liilvame.github.io/Vylo/icons/icon-192x192.png",
+  "logo_alt": "Vylo - Suivi Intelligent de Biens Immobiliers",
+  "primary_color": "#2ECC71",
+  "primary_color_hover": "#27AE60",
+  "text_color": "#1A1A1A",
+  "text_color_secondary": "#666666",
+  "background_color": "#FFFFFF",
+  "background_color_light": "#F5F7FA",
+  "border_color": "#E5E7EB",
+  "support_email": "support@vylo.app",
+  "support_url": "https://vylo.app/support",
+  "website_url": "https://vylo.app",
+  "company_name": "Vylo",
+  "company_tagline": "Suivi Intelligent de Biens Immobiliers",
+  "footer_text": "Vylo • © 2025 • Made with care",
+  "link_expiry_hours": 24,
+  "font_family": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+}
+

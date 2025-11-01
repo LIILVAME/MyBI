@@ -237,7 +237,7 @@ export const useDiagnosticStore = defineStore('diagnostic', () => {
 }, {
   // Configuration de persistance
   persist: {
-    key: 'mybi-diagnostics',
+    key: 'vylo-diagnostics',
     paths: ['logs', 'metrics', 'userSession', 'isDegradedMode'],
     storage: localStorage
   }

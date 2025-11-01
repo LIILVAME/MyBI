@@ -103,7 +103,7 @@ export const mockTestimonials = [
   {
     name: 'Sophie Laurent',
     role: 'Propriétaire',
-    text: 'MyBI m\'a permis de réduire mes visites de 80%. Je surveille tout depuis mon téléphone.',
+    text: 'Vylo m\'a permis de réduire mes visites de 80%. Je surveille tout depuis mon téléphone.',
     avatar: 'https://i.pravatar.cc/150?img=47'
   },
   {

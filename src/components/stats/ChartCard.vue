@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-    <div class="mb-4">
-      <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ title }}</h3>
-      <p v-if="description" class="text-sm text-gray-500">{{ description }}</p>
+  <div class="bg-white rounded-lg shadow-none sm:shadow-sm border border-gray-100 p-3 sm:p-5">
+    <div class="mb-3 sm:mb-4">
+      <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-1">{{ title }}</h3>
+      <p v-if="description" class="text-xs sm:text-sm text-gray-500">{{ description }}</p>
     </div>
     
-    <div class="bg-gray-50 rounded-lg p-3">
+    <div class="bg-gray-50 rounded-lg p-2 sm:p-3 overflow-x-auto">
       <div v-if="loading" class="flex items-center justify-center h-[300px]">
         <div class="animate-pulse space-y-3 w-full">
           <div class="h-4 bg-gray-200 rounded w-3/4"></div>

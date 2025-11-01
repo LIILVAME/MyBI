@@ -230,10 +230,17 @@ export const useAuthStore = defineStore('auth', () => {
       } else {
         user.value = null
         session.value = null
+        // Pas d'erreur si pas de session (normal si l'utilisateur n'est pas connecté)
+        error.value = null
       }
     } catch (err) {
       console.error('Erreur initSession:', err)
-      error.value = err.message
+      // Ne définit l'erreur que si c'est une vraie erreur (pas juste une session absente)
+      if (err.message && !err.message.toLowerCase().includes('session')) {
+        error.value = err.message
+      } else {
+        error.value = null
+      }
       user.value = null
       session.value = null
     } finally {
@@ -245,14 +252,17 @@ export const useAuthStore = defineStore('auth', () => {
    * Récupère l'utilisateur actuel depuis Supabase
    * Utilisé pour restaurer la session au chargement de l'app (legacy, utilise initSession de préférence)
    */
-  const fetchUser = async () => {
+  const fetchUser = async (silent = false) => {
     loading.value = true
 
     try {
       const { data: { user: currentUser }, error: authError } = await supabase.auth.getUser()
 
       if (authError) {
-        error.value = authError.message
+        // Ne définit l'erreur que si pas en mode silencieux
+        if (!silent) {
+          error.value = authError.message
+        }
         user.value = null
         session.value = null
         loading.value = false
@@ -277,7 +287,10 @@ export const useAuthStore = defineStore('auth', () => {
       loading.value = false
       return currentUser
     } catch (err) {
-      error.value = err.message
+      // Ne définit l'erreur que si pas en mode silencieux
+      if (!silent) {
+        error.value = err.message
+      }
       user.value = null
       session.value = null
       loading.value = false

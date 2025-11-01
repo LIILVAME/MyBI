@@ -1,5 +1,5 @@
 /**
- * Utilitaires de formatage pour l'application MyBI
+ * Utilitaires de formatage pour l'application Vylo
  * Évite la duplication de code entre les composants
  */
 
@@ -22,8 +22,8 @@ function getSettingsStore() {
     // Essaie de récupérer le store depuis un contexte Vue si disponible
     // Dans les composants Vue, on peut utiliser useSettingsStore() directement
     // Cette fonction est utilisée dans des contextes non-Vue (utils)
-    if (typeof window !== 'undefined' && window.__mybi_settingsStore) {
-      settingsStoreCache = window.__mybi_settingsStore
+    if (typeof window !== 'undefined' && window.__vylo_settingsStore) {
+      settingsStoreCache = window.__vylo_settingsStore
       return settingsStoreCache
     }
   } catch (error) {
@@ -40,7 +40,7 @@ function getSettingsStore() {
 export function setSettingsStoreCache(store) {
   settingsStoreCache = store
   if (typeof window !== 'undefined') {
-    window.__mybi_settingsStore = store
+    window.__vylo_settingsStore = store
   }
 }
 

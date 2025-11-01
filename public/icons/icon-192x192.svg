@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" fill="#ffffff" rx="38.400000000000006"/>
+  <g transform="translate(48, 48) scale(0.96)">
+    <!-- Maison stylisée Vylo -->
+    <path d="M50 10 L90 40 L90 80 L70 80 L70 60 L50 60 L50 80 L10 80 L10 40 Z" 
+          fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+    <!-- Porte -->
+    <rect x="42" y="60" width="16" height="20" fill="#16a34a"/>
+    <!-- Fenêtres -->
+    <rect x="20" y="45" width="12" height="12" fill="#86efac" stroke="#16a34a" stroke-width="1.5"/>
+    <rect x="68" y="45" width="12" height="12" fill="#86efac" stroke="#16a34a" stroke-width="1.5"/>
+  </g>
+</svg>

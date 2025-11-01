@@ -1,4 +1,4 @@
-# 📋 Audit du README - MyBI
+# 📋 Audit du README - Vylo
 
 ## ✅ Validation de cohérence
 
@@ -140,7 +140,7 @@
 
 ### Typos et formatage
 - ✅ Uniformisation des emojis
-- ✅ Correction de la casse (MyBI vs mybi)
+- ✅ Correction de la casse (Vylo vs vylo)
 - ✅ Espacement cohérent
 - ✅ Formatage des blocs de code
 
@@ -169,13 +169,13 @@
 
 ### 2. Badge de statut CI/CD
 ```markdown
-[![CI](https://github.com/user/mybi/workflows/CI/badge.svg)](https://github.com/user/mybi/actions)
+[![CI](https://github.com/user/vylo/workflows/CI/badge.svg)](https://github.com/user/vylo/actions)
 ```
 
 **Action** : Configurer GitHub Actions et ajouter le badge
 
 ### 3. Liens GitHub réels
-- Remplacer `votre-username/mybi` par le vrai repository
+- Remplacer `votre-username/vylo` par le vrai repository
 - Ajouter le lien vers les issues GitHub
 - Ajouter le lien vers la documentation en ligne (si disponible)
 

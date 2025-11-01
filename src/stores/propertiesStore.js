@@ -563,7 +563,7 @@ export const usePropertiesStore = defineStore('properties', () => {
 }, {
   // Configuration de persistance avec pinia-plugin-persistedstate
   persist: {
-    key: 'mybi-properties',
+    key: 'vylo-properties',
     paths: ['properties'], // Seulement persister les données, pas loading/error
     storage: localStorage
   }

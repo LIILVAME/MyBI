@@ -36,7 +36,7 @@ Ce Code de Conduite s'applique à la fois dans les espaces du projet et dans les
 
 ## 🚨 Application
 
-Les cas de comportement abusif, harcelant ou autrement inacceptable peuvent être signalés en contactant l'équipe du projet à **contact@mybi.fr**. Toutes les plaintes seront examinées et étudiées et donneront lieu à une réponse jugée nécessaire et appropriée aux circonstances. L'équipe du projet est tenue de maintenir la confidentialité vis-à-vis du rapporteur d'un incident. Des détails supplémentaires sur les politiques d'application spécifiques peuvent être publiés séparément.
+Les cas de comportement abusif, harcelant ou autrement inacceptable peuvent être signalés en contactant l'équipe du projet à **contact@vylo.fr**. Toutes les plaintes seront examinées et étudiées et donneront lieu à une réponse jugée nécessaire et appropriée aux circonstances. L'équipe du projet est tenue de maintenir la confidentialité vis-à-vis du rapporteur d'un incident. Des détails supplémentaires sur les politiques d'application spécifiques peuvent être publiés séparément.
 
 Les mainteneurs du projet qui ne suivent pas ou n'appliquent pas le Code de Conduite de bonne foi peuvent faire face à des répercussions temporaires ou permanentes déterminées par d'autres membres de la direction du projet.
 

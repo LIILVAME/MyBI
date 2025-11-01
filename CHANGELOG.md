@@ -98,5 +98,5 @@ et ce projet adhère à [Semantic Versioning](https://semver.org/lang/fr/).
 - `Corrigé` pour les corrections de bugs
 - `Sécurité` pour les vulnérabilités
 
-[0.1.0]: https://github.com/votre-username/mybi/releases/tag/v0.1.0
+[0.1.0]: https://github.com/votre-username/vylo/releases/tag/v0.1.0
 

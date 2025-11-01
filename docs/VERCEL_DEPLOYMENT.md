@@ -1,4 +1,4 @@
-# 🚀 Déploiement Vercel - MyBI v0.2.0
+# 🚀 Déploiement Vercel - Vylo v0.2.0
 
 **Date** : 31 janvier 2025  
 **Statut** : ✅ **Déployé en production**
@@ -8,11 +8,10 @@
 ## 📍 URLs de Production
 
 ### URL Principale
-- **Production** : https://my-bi.vercel.app
+- **Production** : https://vylo.vercel.app (ou le nom de votre projet dans Vercel)
 
 ### Autres Aliases
-- https://my-bi-startup-world.vercel.app
-- https://my-bi-liilvame-startup-world.vercel.app
+- Les alias dépendent du nom du projet configuré dans Vercel Dashboard
 
 ---
 
@@ -51,11 +50,11 @@ Variables configurées dans Vercel Dashboard :
 Le fichier `vite.config.js` détecte automatiquement Vercel :
 
 ```javascript
-const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ? '/MyBI/' : '/')
+const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ? '/Vylo/' : '/')
 ```
 
 - **Sur Vercel** : Base path = `/` (détection automatique)
-- **Sur GitHub Pages** : Base path = `/MyBI/`
+- **Sur GitHub Pages** : Base path = `/Vylo/`
 
 ---
 
@@ -64,11 +63,12 @@ const base = process.env.VERCEL ? '/' : (process.env.NODE_ENV === 'production' ?
 ### Configuration via Dashboard Vercel
 
 1. **Accéder aux paramètres Git** :
-   - Dashboard : https://vercel.com/startup-world/my-bi/settings/git
+   - Dashboard : https://vercel.com/[votre-team]/vylo/settings/git
+   - Remplacez `[votre-team]` par le nom de votre équipe Vercel
 
 2. **Connecter le repository GitHub** :
    - Cliquer sur "Connect Git Repository"
-   - Sélectionner `LIILVAME/MyBI`
+   - Sélectionner `LIILVAME/Vylo`
    - Autoriser Vercel à accéder au repository
 
 3. **Configuration automatique** :
@@ -136,9 +136,9 @@ vercel domains add votre-domaine.com
 ## 🔍 Monitoring & Logs
 
 ### Dashboard Vercel
-- **Analytics** : https://vercel.com/startup-world/my-bi/analytics
-- **Logs** : https://vercel.com/startup-world/my-bi/logs
-- **Deployments** : https://vercel.com/startup-world/my-bi/deployments
+- **Analytics** : https://vercel.com/[votre-team]/vylo/analytics
+- **Logs** : https://vercel.com/[votre-team]/vylo/logs
+- **Deployments** : https://vercel.com/[votre-team]/vylo/deployments
 
 ### CLI
 ```bash
@@ -173,7 +173,7 @@ vercel promote <deployment-url>
 
 2. **Base path** :
    - Sur Vercel, le base path est automatiquement `/`
-   - Pour GitHub Pages, il reste `/MyBI/`
+   - Pour GitHub Pages, il reste `/Vylo/`
 
 3. **Build optimisé** :
    - Vercel détecte automatiquement Vite
@@ -197,7 +197,7 @@ vercel promote <deployment-url>
 ## 🎯 Prochaines Étapes
 
 1. **Connecter GitHub** : Activer les déploiements automatiques via dashboard
-2. **Tester l'application** : Vérifier que https://my-bi.vercel.app fonctionne
+2. **Tester l'application** : Vérifier que https://vylo.vercel.app (ou votre URL personnalisée) fonctionne
 3. **Configurer un domaine** (optionnel) : Si tu as un domaine personnalisé
 
 ---

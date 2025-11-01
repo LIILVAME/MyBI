@@ -18,11 +18,11 @@
           >
             <!-- Header -->
             <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-              <h2 class="text-xl font-semibold text-gray-900">Ajouter un locataire</h2>
+              <h2 class="text-xl font-semibold text-gray-900">{{ $t('tenants.addTenant') }}</h2>
               <button
                 @click="handleClose"
                 class="text-gray-400 hover:text-gray-600 transition-colors"
-                aria-label="Fermer"
+                :aria-label="$t('common.close')"
               >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -36,7 +36,7 @@
                 <!-- Nom du locataire -->
                 <div>
                   <label for="tenant-name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Nom du locataire <span class="text-red-500">*</span>
+                    {{ $t('tenants.tenantName') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="tenant-name"
@@ -44,14 +44,14 @@
                     type="text"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Ex: Jean Dupont"
+                    :placeholder="$t('tenants.placeholders.name')"
                   />
                 </div>
 
                 <!-- Bien associé -->
                 <div>
                   <label for="tenant-property" class="block text-sm font-medium text-gray-700 mb-2">
-                    Bien associé <span class="text-red-500">*</span>
+                    {{ $t('tenants.associatedProperty') }} <span class="text-red-500">*</span>
                   </label>
                   <select
                     id="tenant-property"
@@ -60,7 +60,7 @@
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                     @change="handlePropertyChange"
                   >
-                    <option value="">Sélectionner un bien</option>
+                    <option value="">{{ $t('tenants.selectProperty') }}</option>
                     <option
                       v-for="property in availableProperties"
                       :key="property.id"
@@ -70,14 +70,14 @@
                     </option>
                   </select>
                   <p v-if="form.propertyId && selectedProperty" class="text-xs text-gray-500 mt-1">
-                    Loyer du bien : {{ formatCurrency(selectedProperty.rent) }}
+                    {{ $t('properties.propertyRent') }} : {{ formatCurrency(selectedProperty.rent) }}
                   </p>
                 </div>
 
                 <!-- Date d'entrée -->
                 <div>
                   <label for="tenant-entry-date" class="block text-sm font-medium text-gray-700 mb-2">
-                    Date d'entrée <span class="text-red-500">*</span>
+                    {{ $t('tenants.entryDate') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="tenant-entry-date"
@@ -91,7 +91,7 @@
                 <!-- Date de sortie (optionnelle) -->
                 <div>
                   <label for="tenant-exit-date" class="block text-sm font-medium text-gray-700 mb-2">
-                    Date de sortie <span class="text-gray-400 text-xs">(optionnelle)</span>
+                    {{ $t('tenants.exitDateOptional') }} <span class="text-gray-400 text-xs">({{ $t('common.optional') }})</span>
                   </label>
                   <input
                     id="tenant-exit-date"
@@ -104,7 +104,7 @@
                 <!-- Loyer -->
                 <div>
                   <label for="tenant-rent" class="block text-sm font-medium text-gray-700 mb-2">
-                    Loyer mensuel (€) <span class="text-red-500">*</span>
+                    {{ $t('tenants.monthlyRent') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="tenant-rent"
@@ -114,14 +114,14 @@
                     min="0"
                     step="10"
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="950"
+                    :placeholder="$t('tenants.placeholders.rent')"
                   />
                 </div>
 
                 <!-- Statut de paiement -->
                 <div>
                   <label for="tenant-status" class="block text-sm font-medium text-gray-700 mb-2">
-                    Statut de paiement <span class="text-red-500">*</span>
+                    {{ $t('tenants.paymentStatus') }} <span class="text-red-500">*</span>
                   </label>
                   <select
                     id="tenant-status"
@@ -129,9 +129,9 @@
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                   >
-                    <option value="">Sélectionner un statut</option>
-                    <option :value="PAYMENT_STATUS.ON_TIME">À jour</option>
-                    <option :value="PAYMENT_STATUS.LATE">En retard</option>
+                    <option value="">{{ $t('tenants.selectStatus') }}</option>
+                    <option :value="PAYMENT_STATUS.ON_TIME">{{ $t('status.onTime') }}</option>
+                    <option :value="PAYMENT_STATUS.LATE">{{ $t('status.late') }}</option>
                   </select>
                 </div>
               </div>
@@ -143,7 +143,7 @@
                   @click="handleClose"
                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
                 >
-                  Annuler
+                  {{ $t('common.cancel') }}
                 </button>
                 <button
                   type="submit"
@@ -152,7 +152,7 @@
                   <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                   </svg>
-                  Ajouter
+                  {{ $t('common.add') }}
                 </button>
               </div>
             </form>
@@ -165,11 +165,14 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { useToastStore } from '@/stores/toastStore'
 import { formatCurrency } from '@/utils/formatters'
 import { PROPERTY_STATUS } from '@/utils/constants'
 import { tenantSchema, validate } from '@/utils/validators'
+
+const { t } = useI18n()
 
 const props = defineProps({
   isOpen: {

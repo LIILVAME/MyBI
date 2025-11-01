@@ -8,8 +8,8 @@
       <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
         <!-- Header -->
         <div class="mb-8">
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">Alertes</h1>
-          <p class="text-gray-600">Surveillez les paiements en retard, fins de bail et événements importants</p>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $t('alerts.title') }}</h1>
+          <p class="text-gray-600">{{ $t('alerts.subtitle') }}</p>
         </div>
 
         <!-- Statistiques des alertes -->
@@ -18,7 +18,7 @@
           <div class="bg-red-50 border border-red-200 rounded-lg p-6">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-red-600 mb-1">Alertes critiques</p>
+                <p class="text-sm text-red-600 mb-1">{{ $t('alerts.criticalAlerts') }}</p>
                 <p class="text-3xl font-bold text-red-700">{{ alertsStore.highSeverityAlerts.length }}</p>
               </div>
               <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -33,7 +33,7 @@
           <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-orange-600 mb-1">Alertes moyennes</p>
+                <p class="text-sm text-orange-600 mb-1">{{ $t('alerts.mediumAlerts') }}</p>
                 <p class="text-3xl font-bold text-orange-700">{{ alertsStore.mediumSeverityAlerts.length }}</p>
               </div>
               <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
@@ -48,7 +48,7 @@
           <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-blue-600 mb-1">Informations</p>
+                <p class="text-sm text-blue-600 mb-1">{{ $t('alerts.information') }}</p>
                 <p class="text-3xl font-bold text-blue-700">{{ alertsStore.lowSeverityAlerts.length }}</p>
               </div>
               <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -63,7 +63,7 @@
         <!-- État de chargement -->
         <div v-if="alertsStore.loading" class="text-center py-16">
           <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
-          <p class="text-gray-500">Chargement des alertes...</p>
+          <p class="text-gray-500">{{ $t('alerts.loading') }}</p>
         </div>
 
         <!-- Erreur -->
@@ -72,7 +72,7 @@
             <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p class="text-red-700 font-medium">Erreur : {{ alertsStore.error }}</p>
+            <p class="text-red-700 font-medium">{{ $t('common.errorWithColon') }} {{ alertsStore.error }}</p>
           </div>
         </div>
 
@@ -99,23 +99,23 @@
                       'bg-blue-100 text-blue-700': alert.severity === 'low'
                     }"
                   >
-                    {{ alert.severity === 'high' ? 'Critique' : alert.severity === 'medium' ? 'Important' : 'Info' }}
+                    {{ alert.severity === 'high' ? $t('alerts.severity.critical') : alert.severity === 'medium' ? $t('alerts.severity.important') : $t('alerts.severity.info') }}
                   </span>
                   <h3 class="text-lg font-semibold text-gray-900">{{ alert.title }}</h3>
                 </div>
                 <p class="text-gray-700 mb-3">{{ alert.message }}</p>
                 <div class="flex items-center gap-4 text-sm text-gray-500">
                   <span v-if="alert.date">
-                    Date : {{ formatDate(alert.date) }}
+                    {{ $t('common.date') }} : {{ formatDate(alert.date) }}
                   </span>
                   <span v-if="alert.daysLate !== undefined">
-                    Retard : {{ alert.daysLate }} jour(s)
+                    {{ $t('alerts.daysLate') }} : {{ alert.daysLate }} {{ $t('common.days') }}
                   </span>
                   <span v-if="alert.daysOverdue !== undefined">
-                    Impayé depuis : {{ alert.daysOverdue }} jour(s)
+                    {{ $t('alerts.daysOverdue') }} : {{ alert.daysOverdue }} {{ $t('common.days') }}
                   </span>
                   <span v-if="alert.daysUntilExit !== undefined">
-                    Dans : {{ alert.daysUntilExit }} jour(s)
+                    {{ $t('alerts.daysUntil') }} : {{ alert.daysUntilExit }} {{ $t('common.days') }}
                   </span>
                 </div>
               </div>
@@ -125,13 +125,13 @@
                   :to="alert.actionUrl"
                   class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium"
                 >
-                  Voir
+                  {{ $t('alerts.view') }}
                 </router-link>
                 <button
                   @click="alertsStore.markAsResolved(alert.id)"
                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm font-medium"
                 >
-                  Marquer comme résolu
+                  {{ $t('alerts.markAsResolved') }}
                 </button>
               </div>
             </div>
@@ -143,8 +143,8 @@
           <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Aucune alerte</h3>
-          <p class="text-gray-600">Tout est en ordre ! Aucune action requise pour le moment.</p>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $t('alerts.noAlerts') }}</h3>
+          <p class="text-gray-600">{{ $t('alerts.allGood') }}</p>
         </div>
       </div>
     </main>
@@ -153,9 +153,12 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import { useAlertsStore } from '@/stores/alertsStore'
 import { formatDate } from '@/utils/formatters'
+
+const { t } = useI18n()
 
 const alertsStore = useAlertsStore()
 

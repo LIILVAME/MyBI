@@ -1,4 +1,4 @@
-# ✅ Checklist Production - MyBI v0.1.0
+# ✅ Checklist Production - Vylo v0.1.0
 
 **Date** : Décembre 2024  
 **Version** : v0.1.0

@@ -5,7 +5,7 @@
     
     <!-- Main Content -->
     <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+      <div class="max-w-7xl mx-auto px-3 pt-16 pb-20 sm:px-6 lg:px-8 sm:pt-10 sm:pb-10">
         <!-- Header -->
         <div class="mb-8">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -87,12 +87,18 @@
                     <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="text-red-700 font-medium">Erreur : {{ paymentsStore.error }}</p>
+                    <p class="text-red-700 font-medium">{{ $t('common.errorWithColon') }} {{ paymentsStore.error }}</p>
                   </div>
                 </div>
 
                 <!-- Liste complète des paiements -->
-                <PaymentsSection v-else :payments="payments" :show-view-all="false" />
+                <PaymentsSection 
+                  v-else 
+                  :payments="payments" 
+                  :show-view-all="false"
+                  @edit-payment="handleEditPayment"
+                  @delete-payment="handleDeletePayment"
+                />
       </div>
     </main>
 
@@ -102,14 +108,24 @@
       @close="isModalOpen = false"
       @submit="handleAddPayment"
     />
+
+    <!-- Modal d'édition de paiement -->
+    <EditPaymentModal
+      :isOpen="isEditModalOpen"
+      :payment="selectedPayment"
+      @close="isEditModalOpen = false"
+      @submit="handleUpdatePayment"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import PaymentsSection from '../components/dashboard/PaymentsSection.vue'
 import AddPaymentModal from '../components/payments/AddPaymentModal.vue'
+import EditPaymentModal from '../components/payments/EditPaymentModal.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
 import { usePaymentsStore } from '@/stores/paymentsStore'
 import { TRANSACTION_STATUS } from '@/utils/constants'
@@ -135,8 +151,10 @@ onUnmounted(() => {
 // Utilise les paiements du store Pinia (synchronisé avec DashboardPage)
 const payments = computed(() => paymentsStore.payments)
 
-// État du modal
+// État des modals
 const isModalOpen = ref(false)
+const isEditModalOpen = ref(false)
+const selectedPayment = ref(null)
 
 /**
  * Paiements en attente
@@ -172,5 +190,43 @@ const paidPayments = computed(() => {
             console.error('Erreur lors de l\'ajout du paiement:', error)
           }
         }
+
+/**
+ * Gère l'édition d'un paiement
+ */
+const handleEditPayment = (payment) => {
+  selectedPayment.value = payment
+  isEditModalOpen.value = true
+}
+
+/**
+ * Gère la mise à jour d'un paiement
+ */
+const handleUpdatePayment = async (updatedData) => {
+  if (!selectedPayment.value) return
+
+  try {
+    await paymentsStore.updatePayment(selectedPayment.value.id, updatedData)
+    isEditModalOpen.value = false
+    selectedPayment.value = null
+    // Le toast est géré dans le store
+  } catch (error) {
+    // Le toast d'erreur est géré dans le store
+    console.error('Erreur lors de la mise à jour du paiement:', error)
+  }
+}
+
+/**
+ * Gère la suppression d'un paiement
+ */
+const handleDeletePayment = async (paymentId) => {
+  try {
+    await paymentsStore.removePayment(paymentId)
+    // Le toast est géré dans le store
+  } catch (error) {
+    // Le toast d'erreur est géré dans le store
+    console.error('Erreur lors de la suppression du paiement:', error)
+  }
+}
 </script>
 

@@ -1,4 +1,4 @@
-# 🔗 Configuration Supabase CLI - MyBI
+# 🔗 Configuration Supabase CLI - Vylo
 
 ## ✅ Statut actuel
 

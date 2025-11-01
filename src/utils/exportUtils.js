@@ -140,7 +140,7 @@ export const exportMonthlyReport = (reportData) => {
 
   // En-tête
   doc.setFontSize(20)
-  doc.text('Rapport Mensuel - MyBI', 14, 20)
+  doc.text('Rapport Mensuel - Vylo', 14, 20)
   
   doc.setFontSize(12)
   doc.text(`Période : ${month}`, 14, 30)

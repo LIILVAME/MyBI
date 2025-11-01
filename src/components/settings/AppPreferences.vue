@@ -46,7 +46,7 @@
           <option value="fr">{{ $t('language.fr') }}</option>
           <option value="en">{{ $t('language.en') }}</option>
         </select>
-        <p class="text-xs text-gray-500 mt-1">Langue de l'interface utilisateur</p>
+        <p class="text-xs text-gray-500 mt-1">{{ $t('settings.languageDescription') }}</p>
       </div>
 
       <!-- Seuil d'alerte -->

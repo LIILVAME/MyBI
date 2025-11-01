@@ -1,4 +1,4 @@
-# 🔍 Audit Technique - Pages MyBI
+# 🔍 Audit Technique - Pages Vylo
 
 **Date** : Décembre 2024  
 **Version analysée** : v0.1.1 (Pages de navigation complètes)  

@@ -32,7 +32,7 @@
         <!-- État de chargement -->
         <div v-if="propertiesStore.loading && tenants.length === 0" class="text-center py-16">
           <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
-          <p class="text-gray-500">Chargement des locataires...</p>
+          <p class="text-gray-500">{{ $t('tenants.loading') }}</p>
         </div>
         
         <!-- Loader inline si données déjà chargées -->
@@ -63,6 +63,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import TenantsHeader from '../components/tenants/TenantsHeader.vue'
 import TenantsList from '../components/tenants/TenantsList.vue'
@@ -72,6 +73,7 @@ import { useTenantsStore } from '@/stores/tenantsStore'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { PAYMENT_STATUS } from '@/utils/constants'
 
+const { t } = useI18n()
 const tenantsStore = useTenantsStore()
 const propertiesStore = usePropertiesStore()
 
@@ -111,11 +113,11 @@ const stats = computed(() => ({
 /**
  * Filtres disponibles
  */
-const filters = [
-  { label: 'Tous', value: 'all' },
-  { label: 'À jour', value: PAYMENT_STATUS.ON_TIME },
-  { label: 'En retard', value: PAYMENT_STATUS.LATE }
-]
+const filters = computed(() => [
+  { label: t('common.all'), value: 'all' },
+  { label: t('status.onTime'), value: PAYMENT_STATUS.ON_TIME },
+  { label: t('status.late'), value: PAYMENT_STATUS.LATE }
+])
 
 /**
  * Vérifie si des filtres sont actifs

@@ -2,19 +2,30 @@
   "common": {
     "loading": "Loading...",
     "error": "Error",
+    "errorWithColon": "Error:",
     "success": "Success",
     "cancel": "Cancel",
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
     "add": "Add",
+    "addProperty": "Add property",
     "close": "Close",
     "search": "Search",
     "filter": "Filter",
     "reset": "Reset",
     "viewAll": "View all",
+    "view": "View",
     "noData": "No data",
-    "actions": "Actions"
+    "actions": "Actions",
+    "all": "All",
+    "date": "Date",
+    "days": "day(s)",
+    "optional": "optional",
+    "close": "Close",
+    "selectStatus": "Select a status",
+    "selectProperty": "Select a property",
+    "unknown": "Unknown"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -44,43 +55,86 @@
     "title": "Properties management",
     "subtitle": "Manage all your real estate properties",
     "addProperty": "Add property",
+    "editProperty": "Edit property",
     "noProperties": "No properties registered",
     "noPropertiesDescription": "Start by adding your first real estate property",
+    "myProperties": "My apartments",
     "name": "Property name",
     "address": "Address",
     "city": "City",
     "type": "Type",
     "rent": "Rent",
+    "monthlyRent": "Monthly rent (€)",
     "status": "Status",
     "occupied": "Occupied",
     "vacant": "Vacant",
-    "underMaintenance": "Under maintenance"
+    "free": "Free",
+    "underMaintenance": "Under maintenance",
+    "selectStatus": "Select a status",
+    "selectProperty": "Select a property",
+    "tenantInfo": "Tenant information",
+    "tenantName": "Tenant name",
+    "propertyRent": "Property rent",
+    "placeholders": {
+      "name": "Ex: 2BR Apartment - Paris 15th",
+      "address": "Ex: 45 Rue de Vaugirard, 75015 Paris",
+      "city": "Ex: Paris"
+    }
   },
   "payments": {
     "title": "Payment tracking",
     "subtitle": "Manage all your rental payments in one place",
     "addPayment": "Add payment",
+    "editPayment": "Edit payment",
+    "deletePayment": "Delete payment",
     "noPayments": "No payments registered",
     "pending": "Pending",
     "late": "Late",
     "paidThisMonth": "Paid this month",
     "amount": "Amount",
+    "amountEuro": "Amount (€)",
     "dueDate": "Due date",
     "paymentDate": "Payment date",
     "tenant": "Tenant",
     "property": "Property",
+    "relatedProperty": "Related property",
     "status": "Status",
-    "downloadInvoice": "Download invoice (PDF)"
+    "selectStatus": "Select a status",
+    "downloadInvoice": "Download invoice (PDF)",
+    "otherProperty": "Other (manual entry)",
+    "propertyName": "Property name",
+    "confirmDelete": "Are you sure you want to delete this payment of {amount}?",
+    "invoiceDownloaded": "Invoice PDF downloaded successfully",
+    "invoiceError": "Error generating invoice",
+    "noPaymentSelected": "No payment selected",
+    "placeholders": {
+      "tenant": "Ex: John Doe",
+      "amount": "950"
+    }
   },
   "tenants": {
     "title": "Tenants management",
     "subtitle": "Manage your tenants and their information",
+    "loading": "Loading tenants...",
     "addTenant": "Add tenant",
+    "editTenant": "Edit tenant",
+    "deleteTenant": "Delete tenant",
     "noTenants": "No tenants registered",
     "name": "Name",
+    "tenantName": "Tenant name",
     "entryDate": "Entry date",
     "exitDate": "Exit date",
-    "rent": "Rent"
+    "exitDateOptional": "Exit date (optional)",
+    "inProgress": "In progress",
+    "rent": "Rent",
+    "monthlyRent": "Monthly rent (€)",
+    "paymentStatus": "Payment status",
+    "associatedProperty": "Associated property",
+    "selectStatus": "Select a status",
+    "placeholders": {
+      "name": "Ex: John Doe",
+      "rent": "950"
+    }
   },
   "stats": {
     "title": "Statistics",
@@ -152,10 +206,25 @@
   },
   "alerts": {
     "title": "Alerts",
-    "subtitle": "Stay informed of important events",
+    "subtitle": "Monitor late payments, lease ends and important events",
+    "loading": "Loading alerts...",
     "noAlerts": "No alerts",
+    "allGood": "Everything is fine! No action required at this time.",
+    "criticalAlerts": "Critical alerts",
+    "mediumAlerts": "Medium alerts",
+    "information": "Information",
     "latePayments": "Late payments",
-    "upcomingPayments": "Upcoming payments"
+    "upcomingPayments": "Upcoming payments",
+    "severity": {
+      "critical": "Critical",
+      "important": "Important",
+      "info": "Info"
+    },
+    "daysLate": "Late",
+    "daysOverdue": "Overdue for",
+    "daysUntil": "In",
+    "markAsResolved": "Mark as resolved",
+    "view": "View"
   },
   "settings": {
     "title": "Settings",
@@ -195,14 +264,74 @@
     "themeDarkDescription": "Dark interface for visual comfort",
     "themeAutoDescription": "Follows system preferences",
     "integrationsComingSoon": "Integrations coming soon",
-    "integrationsDescription": "Connect MyBI to your favorite tools"
+    "integrationsDescription": "Connect Vylo to your favorite tools"
+  },
+  "auth": {
+    "tagline": "Smart property management",
+    "login": {
+      "title": "Login",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "cta": "Sign in",
+      "ctaLoading": "Signing in..."
+    },
+    "signup": {
+      "title": "Create an account",
+      "subtitle": "Join Vylo in seconds",
+      "fullName": "Full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+1 234 567 8900",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Confirm password",
+      "passwordHint": "At least 6 characters",
+      "hasAccount": "Already have an account?",
+      "cta": "Create my account",
+      "ctaLoading": "Creating..."
+    },
+    "reset": {
+      "title": "Reset password",
+      "subtitle": "Enter your email address to receive a reset link",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "cta": "Send link",
+      "ctaLoading": "Sending...",
+      "successTitle": "Email sent!",
+      "successMessage": "A reset link has been sent to {email}",
+      "backToLogin": "Back to login"
+    },
+    "confirm": {
+      "title": "Email confirmed",
+      "message": "Your account has been successfully confirmed. You can now sign in.",
+      "cta": "Go to login"
+    },
+    "oauth": {
+      "separator": "OR",
+      "label": "Quick login with",
+      "google": "Google",
+      "apple": "Apple"
+    }
   },
   "login": {
     "title": "Login",
+    "subtitle": "Sign in to your account",
+    "tagline": "Smart property management",
     "email": "Email",
+    "emailPlaceholder": "your@email.com",
     "password": "Password",
+    "passwordPlaceholder": "••••••••",
     "login": "Sign in",
-    "signup": "Sign up",
+    "logging": "Signing in...",
+    "signup": "Create an account",
+    "signupSubtitle": "Join Vylo today",
+    "creating": "Creating...",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
@@ -333,6 +462,26 @@
   },
   "degradedMode": {
     "message": "⚠️ Degraded mode — some data may be incomplete"
+  },
+  "landing": {
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "getStarted": "Get started",
+    "tryIt": "Try it",
+    "tryFree": "Try for free",
+    "heroTitle": "Supervise your real estate properties from a single platform",
+    "heroDescription": "Real-time monitoring, smart alerts, payment management. Everything you need to manage your properties remotely.",
+    "featuresTitle": "Everything you need",
+    "featuresDescription": "A complete solution for managing and monitoring your real estate properties",
+    "featureMonitoring": "Real-time monitoring",
+    "featureMonitoringDesc": "Track temperature, humidity and air quality in real time from your dashboard",
+    "featureAlerts": "Smart alerts",
+    "featureAlertsDesc": "Receive instant notifications in case of anomalies or incidents",
+    "featurePayments": "Payment management",
+    "featurePaymentsDesc": "Track your rents and rental payments in real time",
+    "testimonialsTitle": "What our clients say",
+    "ctaTitle": "Ready to optimize your property management?",
+    "ctaDescription": "Join hundreds of property owners who trust Vylo"
   }
 }
 

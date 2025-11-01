@@ -22,8 +22,8 @@ export const propertySchema = z.object({
   rent: z.number()
     .min(0, 'Le loyer doit être positif')
     .max(1000000, 'Le loyer ne peut pas dépasser 1 000 000'),
-  status: z.enum(['occupied', 'free'], {
-    errorMap: () => ({ message: 'Le statut doit être "occupied" ou "free"' })
+  status: z.enum(['occupied', 'vacant'], {
+    errorMap: () => ({ message: 'Le statut doit être "occupied" ou "vacant"' })
   }),
   tenant: z.object({
     name: z.string().min(2, 'Le nom du locataire doit contenir au moins 2 caractères'),

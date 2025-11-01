@@ -1,4 +1,4 @@
-# 🔍 Audit 360° Pré-Publication - MyBI v0.2.0 MVP
+# 🔍 Audit 360° Pré-Publication - Vylo v0.2.0 MVP
 
 **Date** : 31 janvier 2025  
 **Version cible** : v0.2.0  
@@ -8,7 +8,7 @@
 
 ## 📋 Résumé Exécutif
 
-L'audit complet du projet MyBI révèle une application **stable et fonctionnelle** prête pour la publication du MVP (v0.2.0). L'application utilise Vue 3, Pinia, Tailwind CSS et Supabase pour la gestion immobilière en temps réel.
+L'audit complet du projet Vylo révèle une application **stable et fonctionnelle** prête pour la publication du MVP (v0.2.0). L'application utilise Vue 3, Pinia, Tailwind CSS et Supabase pour la gestion immobilière en temps réel.
 
 ### ✅ Points Forts
 - Architecture propre et modulaire
@@ -30,7 +30,7 @@ L'audit complet du projet MyBI révèle une application **stable et fonctionnell
 
 ### ✅ Organisation du Projet
 ```
-MyBI/
+Vylo/
 ├── src/
 │   ├── components/        ✅ Bien organisé (common/, dashboard/, properties/, etc.)
 │   ├── pages/             ✅ Toutes les pages présentes
@@ -51,7 +51,7 @@ MyBI/
 | Fichier | Statut | Notes |
 |---------|--------|-------|
 | `package.json` | ⚠️ | Version `1.0.0` au lieu de `0.2.0` |
-| `vite.config.js` | ✅ | Base path `/MyBI/` pour GitHub Pages, minify: `esbuild` |
+| `vite.config.js` | ✅ | Base path `/Vylo/` pour GitHub Pages, minify: `esbuild` |
 | `tailwind.config.js` | ✅ | Palette verte configurée |
 | `.env.example` | ✅ | Variables Supabase documentées |
 | `.gitignore` | ✅ | `.env` exclu, `dist/` exclu, `.supabase/` exclu |
@@ -239,7 +239,7 @@ npm run build
 - ⚠️ Chunk ApexCharts volumineux : `index-DiMxag2p.js` (1.6 MB / 477.71 KB gzip)
 - ✅ Code splitting : `vue-vendor` séparé (102.50 KB)
 - ✅ Minification : `esbuild` (plus rapide que terser)
-- ✅ Base path : `/MyBI/` pour GitHub Pages
+- ✅ Base path : `/Vylo/` pour GitHub Pages
 
 **Recommandation** : Le chunk ApexCharts est acceptable pour un MVP, mais pourrait être optimisé avec lazy loading en v0.3.0.
 
@@ -309,7 +309,7 @@ npm run preview
 
 ### ✅ Préparation
 
-- ✅ `vite.config.js` : Base path `/MyBI/` configuré
+- ✅ `vite.config.js` : Base path `/Vylo/` configuré
 - ✅ Build de production : Réussi
 - ✅ Routes protégées : Configurées
 - ✅ Variables d'environnement : Documentées
@@ -325,7 +325,7 @@ git add .
 git commit -m "chore(audit): finalize pre-release 360° review and prepare MVP publication (v0.2.0)"
 
 # 3. Créer tag de version
-git tag -a v0.2.0 -m "MVP release - MyBI stable (v0.2.0)"
+git tag -a v0.2.0 -m "MVP release - Vylo stable (v0.2.0)"
 
 # 4. Push
 git push origin main
@@ -335,7 +335,7 @@ git push origin v0.2.0
 ### ✅ Déploiement GitHub Pages
 
 - Workflow GitHub Actions présent (`Build and Deploy to GitHub Pages`)
-- Base path `/MyBI/` configuré dans `vite.config.js`
+- Base path `/Vylo/` configuré dans `vite.config.js`
 - `public/404.html` présent pour SPA routing
 
 ### ✅ Déploiement Netlify (Alternative)
@@ -371,7 +371,7 @@ git push origin v0.2.0
 
 ## ✅ Conclusion
 
-Le projet **MyBI v0.2.0** est **stable et prêt pour publication** après les corrections mineures suivantes :
+Le projet **Vylo v0.2.0** est **stable et prêt pour publication** après les corrections mineures suivantes :
 
 1. ✅ Build corrigé (esbuild)
 2. ⚠️ Mise à jour version package.json

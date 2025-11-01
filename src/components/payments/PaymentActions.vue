@@ -26,14 +26,46 @@
         class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
       >
         <div class="py-1">
+          <!-- Modifier le paiement -->
+          <button
+            @click="handleEdit"
+            class="flex items-center w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            :aria-label="`${t('payments.editPayment')} ${payment.id}`"
+          >
+            <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <span class="font-medium">{{ $t('payments.editPayment') }}</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="border-t border-gray-100 my-1"></div>
+
+          <!-- Supprimer le paiement -->
+          <button
+            @click="handleDelete"
+            class="flex items-center w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+            :aria-label="`${t('payments.deletePayment')} ${payment.id}`"
+          >
+            <svg class="w-5 h-5 mr-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span class="font-medium">{{ $t('payments.deletePayment') }}</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="border-t border-gray-100 my-1"></div>
+
+          <!-- Télécharger la facture PDF -->
           <button
             @click="generatePDF"
             class="flex items-center w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            :aria-label="`${t('payments.downloadInvoice')} ${payment.id}`"
           >
             <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
-            <span class="font-medium">Télécharger la facture (PDF)</span>
+            <span class="font-medium">{{ $t('payments.downloadInvoice') }}</span>
           </button>
         </div>
       </div>
@@ -43,10 +75,13 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { jsPDF } from 'jspdf'
 import { useToastStore } from '@/stores/toastStore'
 import { useAuthStore } from '@/stores/authStore'
 import { formatCurrency, formatDate } from '@/utils/formatters'
+
+const { t } = useI18n()
 
 const props = defineProps({
   payment: {
@@ -54,6 +89,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['edit', 'delete'])
 
 const toast = useToastStore()
 const authStore = useAuthStore()
@@ -82,6 +119,40 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
+
+// Gestion du clavier (Escape pour fermer)
+const handleKeydown = (event) => {
+  if (event.key === 'Escape' && open.value) {
+    closeMenu()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
+
+/**
+ * Ouvre le modal d'édition
+ */
+const handleEdit = () => {
+  open.value = false
+  emit('edit', props.payment)
+}
+
+/**
+ * Demande confirmation et supprime le paiement
+ */
+const handleDelete = () => {
+  open.value = false
+  
+  if (window.confirm(t('payments.confirmDelete', { amount: formatCurrency(props.payment.amount) }))) {
+    emit('delete', props.payment.id)
+  }
+}
 
 /**
  * Génère et télécharge la facture PDF
@@ -124,7 +195,7 @@ const generatePDF = async () => {
     
     doc.setFontSize(10)
     doc.setFont('helvetica', 'normal')
-    doc.text('MyBI - Gestion Locative', margin, 32)
+    doc.text('Vylo - Gestion Locative', margin, 32)
 
     yPosition = 50
 
@@ -273,7 +344,7 @@ const generatePDF = async () => {
     doc.setTextColor(...grayColor)
     doc.text('Merci de votre confiance.', margin, yPosition)
     yPosition += 5
-    doc.text('Cette facture a été générée automatiquement par MyBI.', margin, yPosition)
+    doc.text('Cette facture a été générée automatiquement par Vylo.', margin, yPosition)
 
     // Génère le nom de fichier
     const sanitizeName = (name) => name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
@@ -284,10 +355,10 @@ const generatePDF = async () => {
     // Sauvegarde le PDF
     doc.save(filename)
 
-    toast.success('Facture PDF téléchargée avec succès')
+    toast.success(t('payments.invoiceDownloaded'))
   } catch (error) {
     console.error('Erreur lors de la génération du PDF:', error)
-    toast.error('Erreur lors de la génération de la facture')
+    toast.error(t('payments.invoiceError'))
   }
 }
 </script>

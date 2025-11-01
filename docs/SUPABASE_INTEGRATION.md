@@ -1,4 +1,4 @@
-# 🗄️ Intégration Supabase - MyBI
+# 🗄️ Intégration Supabase - Vylo
 
 ## ✅ Tables créées dans Supabase
 

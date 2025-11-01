@@ -1,6 +1,6 @@
 # 🚀 Guide de déploiement
 
-Ce guide explique comment déployer MyBI sur GitHub Pages et d'autres plateformes.
+Ce guide explique comment déployer Vylo sur GitHub Pages et d'autres plateformes.
 
 ## 📋 Prérequis
 
@@ -33,7 +33,7 @@ Le déploiement se déclenche automatiquement sur :
 
 Votre application sera disponible sur :
 ```
-https://votre-username.github.io/mybi/
+https://votre-username.github.io/vylo/
 ```
 
 ### Configuration manuelle
@@ -57,13 +57,13 @@ Le fichier `vite.config.js` doit être configuré avec la base correcte :
 ```javascript
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' 
-    ? '/mybi/'  // Remplacez 'mybi' par votre nom de repo
+    ? '/vylo/'  // Remplacez 'vylo' par votre nom de repo
     : '/',
   // ... reste de la config
 })
 ```
 
-**Important** : Remplacez `/mybi/` par le nom exact de votre repository GitHub.
+**Important** : Remplacez `/vylo/` par le nom exact de votre repository GitHub.
 
 ---
 
@@ -233,10 +233,10 @@ Configuration `firebase.json` :
 <html>
   <head>
     <meta charset="utf-8">
-    <title>MyBI</title>
+    <title>Vylo</title>
     <script>
       sessionStorage.redirect = location.href;
-      location.replace(location.href.replace(/\/mybi\/.*/, '/mybi/'));
+      location.replace(location.href.replace(/\/vylo\/.*/, '/vylo/'));
     </script>
   </head>
   <body></body>

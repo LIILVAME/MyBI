@@ -18,11 +18,11 @@
           >
             <!-- Header -->
             <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-              <h2 class="text-xl font-semibold text-gray-900">Ajouter un bien</h2>
+              <h2 class="text-xl font-semibold text-gray-900">{{ $t('properties.addProperty') }}</h2>
               <button
                 @click="handleClose"
                 class="text-gray-400 hover:text-gray-600 transition-colors"
-                aria-label="Fermer"
+                :aria-label="$t('common.close')"
               >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -36,7 +36,7 @@
                 <!-- Nom du bien -->
                 <div>
                   <label for="property-name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Nom du bien <span class="text-red-500">*</span>
+                    {{ $t('properties.name') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="property-name"
@@ -44,14 +44,14 @@
                     type="text"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Ex: Appartement T2 - Paris 15e"
+                    :placeholder="$t('properties.placeholders.name')"
                   />
                 </div>
 
                 <!-- Adresse -->
                 <div>
                   <label for="property-address" class="block text-sm font-medium text-gray-700 mb-2">
-                    Adresse <span class="text-red-500">*</span>
+                    {{ $t('properties.address') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="property-address"
@@ -59,14 +59,14 @@
                     type="text"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Ex: 45 Rue de Vaugirard, 75015 Paris"
+                    :placeholder="$t('properties.placeholders.address')"
                   />
                 </div>
 
                 <!-- Ville -->
                 <div>
                   <label for="property-city" class="block text-sm font-medium text-gray-700 mb-2">
-                    Ville <span class="text-red-500">*</span>
+                    {{ $t('properties.city') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="property-city"
@@ -74,14 +74,14 @@
                     type="text"
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Ex: Paris"
+                    :placeholder="$t('properties.placeholders.city')"
                   />
                 </div>
 
                 <!-- Loyer -->
                 <div>
                   <label for="property-rent" class="block text-sm font-medium text-gray-700 mb-2">
-                    Loyer mensuel (€) <span class="text-red-500">*</span>
+                    {{ $t('properties.monthlyRent') }} <span class="text-red-500">*</span>
                   </label>
                   <input
                     id="property-rent"
@@ -91,14 +91,14 @@
                     min="0"
                     step="10"
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="950"
+                    :placeholder="$t('payments.placeholders.amount')"
                   />
                 </div>
 
                 <!-- Statut -->
                 <div>
                   <label for="property-status" class="block text-sm font-medium text-gray-700 mb-2">
-                    Statut <span class="text-red-500">*</span>
+                    {{ $t('properties.status') }} <span class="text-red-500">*</span>
                   </label>
                   <select
                     id="property-status"
@@ -106,21 +106,21 @@
                     required
                     class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                   >
-                    <option value="">Sélectionner un statut</option>
-                    <option value="vacant">Libre</option>
-                    <option value="occupied">Occupé</option>
+                    <option value="">{{ $t('properties.selectStatus') }}</option>
+                    <option value="vacant">{{ $t('properties.free') }}</option>
+                    <option value="occupied">{{ $t('properties.occupied') }}</option>
                   </select>
                 </div>
 
                 <!-- Informations du locataire (affiché uniquement si bien occupé) -->
                 <div v-if="form.status === PROPERTY_STATUS.OCCUPIED" class="border-t border-gray-200 pt-4 mt-4">
-                  <h3 class="text-sm font-semibold mb-3 text-gray-700">Informations du locataire</h3>
+                  <h3 class="text-sm font-semibold mb-3 text-gray-700">{{ $t('properties.tenantInfo') }}</h3>
                   
                   <div class="space-y-3">
                     <!-- Nom du locataire -->
                     <div>
                       <label for="tenant-name" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nom du locataire <span class="text-red-500">*</span>
+                        {{ $t('properties.tenantName') }} <span class="text-red-500">*</span>
                       </label>
                       <input
                         id="tenant-name"
@@ -128,14 +128,14 @@
                         type="text"
                         required
                         class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                        placeholder="Ex: Jean Dupont"
+                        :placeholder="$t('payments.placeholders.tenant')"
                       />
                     </div>
 
                     <!-- Date d'entrée -->
                     <div>
                       <label for="tenant-entry-date" class="block text-sm font-medium text-gray-700 mb-2">
-                        Date d'entrée <span class="text-red-500">*</span>
+                        {{ $t('tenants.entryDate') }} <span class="text-red-500">*</span>
                       </label>
                       <input
                         id="tenant-entry-date"
@@ -149,7 +149,7 @@
                     <!-- Statut de paiement -->
                     <div>
                       <label for="tenant-status" class="block text-sm font-medium text-gray-700 mb-2">
-                        Statut de paiement <span class="text-red-500">*</span>
+                        {{ $t('tenants.paymentStatus') }} <span class="text-red-500">*</span>
                       </label>
                       <select
                         id="tenant-status"
@@ -157,8 +157,8 @@
                         required
                         class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                       >
-                        <option value="on_time">À jour</option>
-                        <option value="late">En retard</option>
+                        <option value="on_time">{{ $t('status.onTime') }}</option>
+                        <option value="late">{{ $t('status.late') }}</option>
                       </select>
                     </div>
                   </div>
@@ -172,7 +172,7 @@
                   @click="handleClose"
                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
                 >
-                  Annuler
+                  {{ $t('common.cancel') }}
                 </button>
                 <button
                   type="submit"
@@ -181,7 +181,7 @@
                   <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                   </svg>
-                  Ajouter
+                  {{ $t('common.add') }}
                 </button>
               </div>
             </form>
@@ -194,10 +194,13 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { useToastStore } from '@/stores/toastStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
 import { propertySchema, validate } from '@/utils/validators'
+
+const { t } = useI18n()
 
 const props = defineProps({
   isOpen: {

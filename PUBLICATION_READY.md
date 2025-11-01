@@ -1,4 +1,4 @@
-# ✅ Projet MyBI - Prêt pour publication GitHub
+# ✅ Projet Vylo - Prêt pour publication GitHub
 
 ## 🎉 Statut : PRÊT POUR PUBLICATION
 
@@ -75,9 +75,9 @@ Suivez la checklist **RELEASE_CHECKLIST.md** :
 
 ### Avant de pousser sur GitHub
 
-- [ ] Base path dans `vite.config.js` mis à jour (remplacer `/mybi/`)
+- [ ] Base path dans `vite.config.js` mis à jour (remplacer `/vylo/`)
 - [ ] Base path dans `public/404.html` mis à jour
-- [ ] Liens dans `README.md` mis à jour (`votre-username/mybi`)
+- [ ] Liens dans `README.md` mis à jour (`votre-username/vylo`)
 - [ ] `package.json` avec version `0.1.0`
 - [ ] `CHANGELOG.md` avec entrée `[0.1.0]` complète
 - [ ] Code testé localement (`npm run build` fonctionne)
@@ -109,7 +109,7 @@ Suivez la checklist **RELEASE_CHECKLIST.md** :
    ```
 
 3. **`README.md`** :
-   - Remplacer tous les `votre-username/mybi` par votre repo
+   - Remplacer tous les `votre-username/vylo` par votre repo
    - Mettre à jour les URLs des badges
    - Mettre à jour le lien "Démo Live"
 
@@ -118,7 +118,7 @@ Suivez la checklist **RELEASE_CHECKLIST.md** :
 ## 📊 Structure finale du projet
 
 ```
-MyBI/
+Vylo/
 ├── .github/
 │   ├── workflows/
 │   │   ├── deploy.yml          # Déploiement GitHub Pages

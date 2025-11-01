@@ -1,6 +1,6 @@
 # 🚀 Guide de configuration GitHub
 
-Ce guide vous accompagne dans la configuration complète de votre repository GitHub pour MyBI.
+Ce guide vous accompagne dans la configuration complète de votre repository GitHub pour Vylo.
 
 ## 📋 Prérequis
 
@@ -15,7 +15,7 @@ Ce guide vous accompagne dans la configuration complète de votre repository Git
 ### 1. Créer le repository sur GitHub
 
 1. Aller sur [GitHub](https://github.com/new)
-2. **Repository name** : `mybi` (ou votre nom préféré)
+2. **Repository name** : `vylo` (ou votre nom préféré)
 3. **Description** : "Plateforme web de monitoring de biens immobiliers"
 4. **Visibilité** : Public (recommandé) ou Private
 5. Ne pas initialiser avec README, .gitignore ou licence (déjà présents)
@@ -24,13 +24,13 @@ Ce guide vous accompagne dans la configuration complète de votre repository Git
 ### 2. Configurer le repository local
 
 ```bash
-# Dans le dossier MyBI
+# Dans le dossier Vylo
 git init
 git add .
 git commit -m "chore: initial commit - version 0.1.0"
 
 # Ajouter le remote (remplacez votre-username)
-git remote add origin https://github.com/votre-username/mybi.git
+git remote add origin https://github.com/votre-username/vylo.git
 
 # Pousser vers GitHub
 git branch -M main
@@ -39,7 +39,7 @@ git push -u origin main
 
 ### 3. Mettre à jour les configurations
 
-**⚠️ IMPORTANT** : Remplacez `votre-username` et `mybi` par vos valeurs réelles dans :
+**⚠️ IMPORTANT** : Remplacez `votre-username` et `vylo` par vos valeurs réelles dans :
 
 #### `vite.config.js`
 ```javascript
@@ -54,7 +54,7 @@ const base = '/mon-nom-de-repo/'; // ⚠️ À modifier
 ```
 
 #### `README.md`
-- Remplacer tous les `votre-username/mybi` par votre repo
+- Remplacer tous les `votre-username/vylo` par votre repo
 - Mettre à jour les liens de badges CI/CD
 - Mettre à jour le lien "Démo Live"
 
@@ -107,7 +107,7 @@ git push origin v0.1.0
 
 ### 3. Vérifier le déploiement
 
-- L'application sera disponible sur : `https://votre-username.github.io/mybi/`
+- L'application sera disponible sur : `https://votre-username.github.io/vylo/`
 - Vérifier que toutes les routes fonctionnent
 - Tester sur mobile et desktop
 

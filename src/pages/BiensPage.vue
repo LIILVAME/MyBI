@@ -5,7 +5,7 @@
     
     <!-- Main Content -->
     <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-6 pt-16 pb-8 md:px-10 md:pt-10 md:pb-10">
+      <div class="max-w-7xl mx-auto px-3 pt-16 pb-20 sm:px-6 lg:px-8 sm:pt-10 sm:pb-10">
         <!-- Header avec statistiques -->
         <PropertiesHeader 
           :stats="stats"
@@ -22,7 +22,7 @@
         />
 
         <!-- État de chargement avec skeletons -->
-        <div v-if="propertiesStore.loading && propertiesStore.properties.length === 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-if="propertiesStore.loading && propertiesStore.properties.length === 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <SkeletonCard v-for="n in 6" :key="n" />
         </div>
         
@@ -37,7 +37,7 @@
             <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p class="text-red-700 font-medium">Erreur : {{ propertiesStore.error }}</p>
+            <p class="text-red-700 font-medium">{{ $t('common.errorWithColon') }} {{ propertiesStore.error }}</p>
           </div>
         </div>
 
@@ -67,11 +67,18 @@
       @close="isEditModalOpen = false"
       @submit="handleUpdateProperty"
     />
+
+    <!-- Floating Action Button (mobile only) -->
+    <FloatingActionButton 
+      :aria-label="$t('common.addProperty')"
+      @click="isAddModalOpen = true"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Sidebar from '../components/Sidebar.vue'
 import PropertiesHeader from '../components/properties/PropertiesHeader.vue'
 import PropertiesFilters from '../components/properties/PropertiesFilters.vue'
@@ -80,6 +87,7 @@ import AddPropertyModal from '../components/dashboard/AddPropertyModal.vue'
 import EditPropertyModal from '../components/properties/EditPropertyModal.vue'
 import SkeletonCard from '../components/common/SkeletonCard.vue'
 import InlineLoader from '../components/common/InlineLoader.vue'
+import FloatingActionButton from '../components/common/FloatingActionButton.vue'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
 

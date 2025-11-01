@@ -6,7 +6,7 @@
 
 **Action requise** : Activer GitHub Pages avec GitHub Actions
 
-1. Aller sur : https://github.com/LIILVAME/MyBI/settings/pages
+1. Aller sur : https://github.com/LIILVAME/Vylo/settings/pages
 2. **Source** : Sélectionner **"GitHub Actions"**
 3. Cliquer sur **Save**
 
@@ -37,11 +37,11 @@ Le workflow utilise :
 
 **Fichier** : `vite.config.js`
 
-✅ **Base path** : `/MyBI/` (configuré correctement)
+✅ **Base path** : `/Vylo/` (configuré correctement)
 
 ```javascript
 const base = process.env.NODE_ENV === 'production' 
-  ? '/MyBI/'  // ✅ Correct
+  ? '/Vylo/'  // ✅ Correct
   : '/'
 ```
 
@@ -51,7 +51,7 @@ const base = process.env.NODE_ENV === 'production'
 
 **Fichier** : `public/404.html`
 
-✅ **Base path** : `/MyBI/` (configuré correctement)
+✅ **Base path** : `/Vylo/` (configuré correctement)
 
 Ce fichier gère le routing SPA pour GitHub Pages.
 
@@ -59,13 +59,13 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 
 ### 5. URLs de déploiement
 
-**URL attendue** : https://liilvame.github.io/MyBI/
+**URL attendue** : https://liilvame.github.io/Vylo/
 
 **Routes à tester** :
 - ✅ `/` → Landing page
 - ✅ `/dashboard` → Dashboard
-- ✅ `/MyBI/` → Landing page (avec base path)
-- ✅ `/MyBI/dashboard` → Dashboard (avec base path)
+- ✅ `/Vylo/` → Landing page (avec base path)
+- ✅ `/Vylo/dashboard` → Dashboard (avec base path)
 
 ---
 
@@ -73,20 +73,20 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 
 ### Étape 1 : Activer GitHub Pages
 
-1. Ouvrir : https://github.com/LIILVAME/MyBI/settings/pages
+1. Ouvrir : https://github.com/LIILVAME/Vylo/settings/pages
 2. **Source** : Sélectionner **"GitHub Actions"**
 3. **Save**
 
 ### Étape 2 : Vérifier le workflow
 
-1. Ouvrir : https://github.com/LIILVAME/MyBI/actions
+1. Ouvrir : https://github.com/LIILVAME/Vylo/actions
 2. Vérifier que le workflow "Build and Deploy to GitHub Pages" apparaît
 3. Attendre l'exécution (environ 2-3 minutes)
 
 ### Étape 3 : Vérifier le déploiement
 
 1. Une fois le workflow terminé (✅ vert)
-2. Ouvrir : https://liilvame.github.io/MyBI/
+2. Ouvrir : https://liilvame.github.io/Vylo/
 3. Vérifier que la landing page s'affiche
 4. Tester la navigation vers `/dashboard`
 
@@ -108,7 +108,7 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 - [ ] Workflow déclenché automatiquement
 - [ ] Build réussi (vérifier dans Actions)
 - [ ] Déploiement réussi (vérifier dans Actions)
-- [ ] Application accessible sur https://liilvame.github.io/MyBI/
+- [ ] Application accessible sur https://liilvame.github.io/Vylo/
 - [ ] Landing page s'affiche correctement
 - [ ] Dashboard accessible via navigation
 - [ ] Badges CI/CD fonctionnent dans README
@@ -135,7 +135,7 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 ### Problème : Page blanche
 
 **Solution** :
-1. Vérifier le base path dans `vite.config.js` (`/MyBI/`)
+1. Vérifier le base path dans `vite.config.js` (`/Vylo/`)
 2. Vérifier le base path dans `public/404.html`
 3. Vérifier la console du navigateur pour erreurs
 4. Vérifier que les assets se chargent correctement
@@ -145,7 +145,7 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 **Solution** :
 1. Vérifier que `public/404.html` est présent
 2. Vérifier que le base path est correct
-3. Tester avec `/MyBI/` et `/MyBI/dashboard`
+3. Tester avec `/Vylo/` et `/Vylo/dashboard`
 
 ---
 
@@ -153,7 +153,7 @@ Ce fichier gère le routing SPA pour GitHub Pages.
 
 ### GitHub Actions
 
-Consulter : https://github.com/LIILVAME/MyBI/actions
+Consulter : https://github.com/LIILVAME/Vylo/actions
 
 **Workflows** :
 - ✅ Build and Deploy to GitHub Pages

@@ -1,6 +1,6 @@
 # ✅ Checklist de release v0.1.0
 
-Cette checklist vous guide pour préparer et publier la première release de MyBI.
+Cette checklist vous guide pour préparer et publier la première release de Vylo.
 
 ## 📋 Préparation
 
@@ -101,7 +101,7 @@ git push origin v0.1.0
 - [ ] GitHub Actions workflow déclenché automatiquement
 - [ ] Build réussi dans l'onglet **Actions**
 - [ ] Déploiement sur GitHub Pages réussi
-- [ ] Application accessible sur `https://votre-username.github.io/mybi/`
+- [ ] Application accessible sur `https://votre-username.github.io/vylo/`
 - [ ] Toutes les routes fonctionnent (`/` et `/dashboard`)
 
 ---
@@ -135,7 +135,7 @@ git push origin v0.1.0
 
 ### Base path dans vite.config.js
 
-**⚠️ Important** : Remplacez `/mybi/` par le nom exact de votre repository :
+**⚠️ Important** : Remplacez `/vylo/` par le nom exact de votre repository :
 
 ```javascript
 const base = process.env.NODE_ENV === 'production' 

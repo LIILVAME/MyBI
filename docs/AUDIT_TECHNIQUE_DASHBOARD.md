@@ -1,4 +1,4 @@
-# 🔍 Audit Technique - Dashboard Locatif MyBI
+# 🔍 Audit Technique - Dashboard Locatif Vylo
 
 **Date** : Décembre 2024  
 **Version analysée** : v0.1.0 (post-refactorisation)  

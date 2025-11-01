@@ -485,7 +485,7 @@ export const usePaymentsStore = defineStore('payments', () => {
 }, {
   // Configuration de persistance avec pinia-plugin-persistedstate
   persist: {
-    key: 'mybi-payments',
+    key: 'vylo-payments',
     paths: ['payments'], // Seulement persister les données, pas loading/error
     storage: localStorage
   }
