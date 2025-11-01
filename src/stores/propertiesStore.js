@@ -154,9 +154,19 @@ export const usePropertiesStore = defineStore('properties', () => {
           image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'
         }
       }
+
+      // Track property added event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PROPERTY_ADDED, {
+            property_type: data.type || 'unknown',
+            rent_amount: data.rent || 0
+          })
+        }).catch(() => {})
+      }
       
       if (toastStore) {
-        toastStore.success('Modification appliquée')
+        toastStore.success('Bien ajouté avec succès')
       }
 
       // Si le bien est occupé et qu'un locataire est fourni, créer le locataire
@@ -288,6 +298,15 @@ export const usePropertiesStore = defineStore('properties', () => {
 
       // Recharge les propriétés pour avoir les données à jour
       await fetchProperties()
+
+      // Track property updated event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PROPERTY_UPDATED, {
+            property_id: id
+          })
+        }).catch(() => {})
+      }
 
       const toast = useToastStore()
       toast.success(`Bien modifié avec succès`)

@@ -119,6 +119,16 @@ export const useAuthStore = defineStore('auth', () => {
 
       user.value = data.user
       session.value = data.session
+
+      // Track signup event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.USER_SIGNED_UP, {
+            email: email
+          })
+        }).catch(() => {})
+      }
+
           toastStore.success('Compte créé avec succès !')
         } else {
           // Confirmation email requise - le trigger créera le profil à la confirmation
