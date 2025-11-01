@@ -149,13 +149,32 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'esbuild', // Utilise esbuild au lieu de terser (plus rapide, inclus par défaut)
+    cssCodeSplit: true, // Split CSS pour améliorer le cache
     rollupOptions: {
       output: {
         manualChunks: {
-          'vue-vendor': ['vue', 'vue-router']
+          'vue-vendor': ['vue', 'vue-router', 'pinia'],
+          'apexcharts': ['vue3-apexcharts', 'apexcharts'],
+          'supabase': ['@supabase/supabase-js']
+        },
+        // Optimise les noms de fichiers pour le cache
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'assets/css/[name]-[hash][extname]'
+          }
+          return 'assets/[name]-[hash][extname]'
         }
       }
-    }
+    },
+    // Augmente la limite de taille pour les warnings (ApexCharts peut être volumineux)
+    chunkSizeWarningLimit: 1000
+  },
+  // Optimisations pour la production
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'pinia'],
+    exclude: ['vue3-apexcharts'] // Chargé dynamiquement
   }
 })
 

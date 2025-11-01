@@ -1,14 +1,15 @@
 <template>
   <!-- Menu hamburger mobile -->
-  <button
-    @click="toggleSidebar"
-    :class="[
-      'lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md border border-gray-200 transition-transform duration-300 ease-in-out',
-      // Cache le bouton hamburger au scroll down sur mobile
-      isScrollVisible || isDesktop ? 'translate-y-0' : '-translate-y-full'
-    ]"
-    aria-label="Toggle menu"
-  >
+    <button
+      @click="toggleSidebar"
+      :class="[
+        'lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md border border-gray-200 transition-transform duration-300 ease-in-out',
+        // Cache le bouton hamburger au scroll down sur mobile
+        isScrollVisible || isDesktop ? 'translate-y-0' : '-translate-y-full'
+      ]"
+      :aria-label="isOpen ? $t('common.closeMenu') : $t('common.openMenu')"
+      :aria-expanded="isOpen"
+    >
     <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path v-if="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -32,7 +33,9 @@
     ]"
   >
     <div class="p-6">
-      <h1 class="text-2xl font-bold text-primary-600 mb-8">Doogoo</h1>
+      <router-link to="/dashboard" class="block mb-8" aria-label="Doogoo - Retour au tableau de bord">
+        <h1 class="text-2xl font-bold text-primary-600">Doogoo</h1>
+      </router-link>
       <nav class="space-y-2">
         <router-link
           v-for="item in menuItems"

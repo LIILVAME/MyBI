@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://liilvame.github.io/Doogoo/sitemap.xml
+# Pages privées (authentification requise) - peuvent être indexées mais nécessitent login
+Disallow: /diagnostics
+Disallow: /test-supabase
+
+Sitemap: https://doogoo.vercel.app/sitemap.xml
 

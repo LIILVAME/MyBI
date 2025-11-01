@@ -19,13 +19,29 @@ const routes = [
     path: '/',
     name: 'Landing',
     component: LandingPage,
-    meta: { requiresAuth: false }
+    meta: {
+      requiresAuth: false,
+      seo: {
+        title: 'Doogoo — Gestion Immobilière Simplifiée et Intelligente',
+        description: 'Plateforme de gestion et de suivi intelligent de biens immobiliers avec monitoring en temps réel. Gérez vos propriétés, locataires et paiements en un seul endroit.',
+        ogTitle: 'Doogoo — Gestion Immobilière Simplifiée et Intelligente',
+        ogDescription: 'Plateforme de gestion et de suivi intelligent de biens immobiliers avec monitoring en temps réel.'
+      }
+    }
   },
   {
     path: '/login',
     name: 'Login',
     component: LoginPage,
-    meta: { requiresAuth: false }
+    meta: {
+      requiresAuth: false,
+      seo: {
+        title: 'Connexion — Doogoo',
+        description: 'Connectez-vous à votre compte Doogoo pour gérer vos biens immobiliers, locataires et paiements.',
+        ogTitle: 'Connexion — Doogoo',
+        ogDescription: 'Connectez-vous à votre compte Doogoo pour accéder à votre dashboard de gestion immobilière.'
+      }
+    }
   },
   {
     path: '/login-debug',
@@ -37,67 +53,155 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: SignupPage,
-    meta: { requiresAuth: false }
+    meta: {
+      requiresAuth: false,
+      seo: {
+        title: 'Créer un compte — Doogoo',
+        description: 'Rejoignez Doogoo et commencez à gérer vos biens immobiliers en quelques secondes.',
+        ogTitle: 'Créer un compte — Doogoo',
+        ogDescription: 'Rejoignez Doogoo et commencez à gérer vos biens immobiliers en quelques secondes.'
+      }
+    }
   },
   {
     path: '/reset-password',
     name: 'ResetPassword',
     component: ResetPasswordPage,
-    meta: { requiresAuth: false }
+    meta: {
+      requiresAuth: false,
+      seo: {
+        title: 'Réinitialiser le mot de passe — Doogoo',
+        description: 'Réinitialisez votre mot de passe Doogoo pour accéder à votre compte.',
+        ogTitle: 'Réinitialiser le mot de passe — Doogoo',
+        ogDescription: 'Réinitialisez votre mot de passe Doogoo.'
+      }
+    }
   },
   {
     path: '/confirm-email',
     name: 'ConfirmEmail',
     component: ConfirmEmailPage,
-    meta: { requiresAuth: false }
+    meta: {
+      requiresAuth: false,
+      seo: {
+        title: 'Confirmation email — Doogoo',
+        description: 'Confirmez votre adresse email pour activer votre compte Doogoo.',
+        ogTitle: 'Confirmation email — Doogoo',
+        ogDescription: 'Confirmez votre adresse email pour activer votre compte.'
+      }
+    }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Tableau de bord — Suivez vos revenus et biens en temps réel | Doogoo',
+        description: 'Vue d\'ensemble de vos biens immobiliers, revenus mensuels, propriétés occupées et paiements en attente. Suivez vos performances en temps réel.',
+        ogTitle: 'Tableau de bord — Doogoo',
+        ogDescription: 'Vue d\'ensemble de vos biens immobiliers et revenus en temps réel.'
+      }
+    }
   },
   {
     path: '/biens',
     name: 'Biens',
     component: BiensPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Vos biens immobiliers — Suivi, locataires et performances | Doogoo',
+        description: 'Gérez tous vos biens immobiliers en un seul endroit. Ajoutez, modifiez et suivez l\'état de vos propriétés, locataires et loyers.',
+        ogTitle: 'Vos biens immobiliers — Doogoo',
+        ogDescription: 'Gérez tous vos biens immobiliers en un seul endroit.'
+      }
+    }
   },
   {
     path: '/paiements',
     name: 'Paiements',
     component: PaiementsPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Paiements — Suivi des loyers et transactions | Doogoo',
+        description: 'Gérez tous vos paiements locatifs. Suivez les paiements en attente, en retard et payés ce mois.',
+        ogTitle: 'Paiements — Doogoo',
+        ogDescription: 'Gérez tous vos paiements locatifs en un seul endroit.'
+      }
+    }
   },
   {
     path: '/locataires',
     name: 'Locataires',
     component: LocatairesPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Locataires — Gestion de vos locataires | Doogoo',
+        description: 'Gérez vos locataires, leurs informations et leur statut de paiement. Suivez les locataires à jour et en retard.',
+        ogTitle: 'Locataires — Doogoo',
+        ogDescription: 'Gérez tous vos locataires en un seul endroit.'
+      }
+    }
   },
   {
     path: '/stats',
     name: 'Stats',
     component: StatsPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Statistiques — Visualisez la rentabilité de votre portefeuille | Doogoo',
+        description: 'Analysez les performances de votre portefeuille immobilier avec des graphiques et statistiques détaillés. Revenus, taux d\'occupation, revenus par bien.',
+        ogTitle: 'Statistiques — Doogoo',
+        ogDescription: 'Visualisez la rentabilité de votre portefeuille immobilier avec des graphiques détaillés.'
+      }
+    }
   },
   {
     path: '/rapports',
     name: 'Rapports',
     component: ReportsPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Rapports — Rapports détaillés de votre activité | Doogoo',
+        description: 'Générez et exportez des rapports mensuels détaillés sur vos revenus, biens et paiements. Analysez vos performances sur différentes périodes.',
+        ogTitle: 'Rapports — Doogoo',
+        ogDescription: 'Générez et exportez des rapports détaillés sur votre activité immobilière.'
+      }
+    }
   },
   {
     path: '/alertes',
     name: 'Alertes',
     component: AlertsPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Alertes — Notifications et rappels importants | Doogoo',
+        description: 'Restez informé avec les alertes en temps réel : paiements en retard, contrats à renouveler, maintenance à prévoir.',
+        ogTitle: 'Alertes — Doogoo',
+        ogDescription: 'Restez informé avec les alertes en temps réel sur votre portefeuille.'
+      }
+    }
   },
   {
     path: '/parametres',
     name: 'Parametres',
     component: ParametresPage,
-    meta: { requiresAuth: true }
+    meta: {
+      requiresAuth: true,
+      seo: {
+        title: 'Paramètres — Configuration de votre compte | Doogoo',
+        description: 'Configurez votre profil, préférences de langue et devise, notifications et sécurité de votre compte Doogoo.',
+        ogTitle: 'Paramètres — Doogoo',
+        ogDescription: 'Configurez votre compte et vos préférences Doogoo.'
+      }
+    }
   },
   {
     path: '/diagnostics',
@@ -116,6 +220,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+// Initialise le SEO après la création du router
+router.afterEach((to) => {
+  // Le composable useSEO sera appelé dans App.vue après le montage
+  // pour mettre à jour les meta tags dynamiquement
 })
 
 /**

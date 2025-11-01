@@ -1,12 +1,15 @@
 <template>
   <div class="min-h-screen bg-white">
     <!-- Navigation -->
-    <nav class="border-b border-gray-100 bg-white sticky top-0 z-50">
+    <header>
+      <nav class="border-b border-gray-100 bg-white sticky top-0 z-50" role="navigation" aria-label="Navigation principale">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <h1 class="text-2xl font-bold text-primary-600">Doogoo</h1>
+              <router-link to="/" aria-label="Doogoo - Accueil">
+                <h1 class="text-2xl font-bold text-primary-600">Doogoo</h1>
+              </router-link>
             </div>
           </div>
           <div class="hidden md:flex items-center space-x-8">
@@ -20,6 +23,7 @@
         </div>
       </div>
     </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
@@ -44,8 +48,9 @@
           <div class="card p-2 shadow-xl">
             <img 
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" 
-              alt="Dashboard Preview" 
+              alt="Aperçu du tableau de bord Doogoo avec statistiques et graphiques immobiliers" 
               class="rounded-lg w-full"
+              loading="lazy"
             />
           </div>
         </div>
@@ -130,8 +135,9 @@
         <div class="card p-4 shadow-2xl">
           <img 
             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200" 
-            alt="Dashboard Interface" 
+            alt="Interface du tableau de bord Doogoo montrant la gestion de biens immobiliers" 
             class="rounded-lg w-full"
+            loading="lazy"
           />
         </div>
       </div>

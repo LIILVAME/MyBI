@@ -21,8 +21,8 @@
 
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
-import VueApexCharts from 'vue3-apexcharts'
 import InlineLoader from '@/components/common/InlineLoader.vue'
+import VueApexCharts from 'vue3-apexcharts'
 
 const props = defineProps({
   title: {

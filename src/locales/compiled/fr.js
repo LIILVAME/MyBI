@@ -30,7 +30,9 @@ export default {
     "selectStatus": "Sélectionner un statut",
     "selectProperty": "Sélectionner un bien",
     "unknown": "Inconnu",
-    "refreshing": "Actualisation..."
+    "refreshing": "Actualisation...",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "sidebar": {
     "dashboard": "Tableau de bord",

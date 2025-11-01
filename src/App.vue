@@ -36,6 +36,7 @@ import { useSettingsStore } from '@/stores/settingsStore'
 import { useConnectionStore } from '@/stores/connectionStore'
 import { useDiagnosticStore } from '@/stores/diagnosticStore'
 import { setSettingsStoreCache } from '@/utils/formatters'
+import { useSEO } from '@/composables/useSEO'
 import Toast from '@/components/common/Toast.vue'
 import ConnectionBanner from '@/components/common/ConnectionBanner.vue'
 import DegradedModeBanner from '@/components/common/DegradedModeBanner.vue'
@@ -47,6 +48,9 @@ const paymentsStore = usePaymentsStore()
 const settingsStore = useSettingsStore()
 const connectionStore = useConnectionStore()
 const diagnosticStore = useDiagnosticStore()
+
+// Initialise le SEO
+const { initSEO } = useSEO()
 
 // Initialise le cache du store settings pour formatCurrency
 // Crée un proxy pour exposer currency et language comme propriétés
@@ -133,6 +137,9 @@ const handleAuthHash = async () => {
  */
 onMounted(async () => {
   try {
+    // Initialise le SEO pour les métadonnées dynamiques
+    initSEO()
+    
     // Initialise le watcher de connexion en premier
     connectionStore.initConnectionWatcher()
 

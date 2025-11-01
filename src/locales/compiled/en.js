@@ -30,7 +30,9 @@ export default {
     "selectStatus": "Select a status",
     "selectProperty": "Select a property",
     "unknown": "Unknown",
-    "refreshing": "Refreshing..."
+    "refreshing": "Refreshing...",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "sidebar": {
     "dashboard": "Dashboard",

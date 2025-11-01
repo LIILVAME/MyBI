@@ -4,7 +4,7 @@
     <Sidebar />
     
     <!-- Main Content -->
-    <main ref="mainElement" class="flex-1 overflow-y-auto">
+    <main ref="mainElement" class="flex-1 overflow-y-auto" role="main" aria-label="Tableau de bord principal">
       <PullToRefresh
         :is-pulling="isPulling"
         :pull-distance="pullDistance"
