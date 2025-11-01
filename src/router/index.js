@@ -73,6 +73,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/diagnostics',
+    name: 'Diagnostics',
+    component: () => import('@/pages/DiagnosticPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/test-supabase',
     name: 'TestSupabase',
     component: () => import('@/components/dev/TestSupabase.vue'),

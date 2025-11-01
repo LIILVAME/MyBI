@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sentry/tracing": "^7.120.4",
+    "@sentry/vue": "^10.22.0",
     "@supabase/supabase-js": "^2.78.0",
     "apexcharts": "^5.3.5",
     "file-saver": "^2.0.5",

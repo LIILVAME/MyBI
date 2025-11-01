@@ -330,6 +330,9 @@
   "connection": {
     "online": "Connecté — Données synchronisées",
     "offline": "Hors ligne — Lecture seule"
+  },
+  "degradedMode": {
+    "message": "⚠️ Mode dégradé — certaines données peuvent être incomplètes"
   }
 }
 

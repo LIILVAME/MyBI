@@ -1,4 +1,5 @@
 import { useToastStore } from '@/stores/toastStore'
+import { useDiagnosticStore } from '@/stores/diagnosticStore'
 import { isRetryableError } from './retry'
 
 /**
@@ -43,6 +44,15 @@ export function handleApiError(error, context = '') {
     message = userFriendlyMessages[friendlyMessage]
   }
 
+  // Enregistre l'erreur dans le diagnosticStore
+  try {
+    const diagnosticStore = useDiagnosticStore()
+    diagnosticStore.recordError(error, { context, message })
+  } catch (diagError) {
+    // Si le diagnosticStore n'est pas disponible, on continue
+    console.warn('Impossible d\'enregistrer dans diagnosticStore:', diagError)
+  }
+
   // Affiche un toast d'erreur (si le toastStore est disponible)
   try {
     const toastStore = useToastStore()
@@ -54,10 +64,18 @@ export function handleApiError(error, context = '') {
     console.warn('Impossible d\'afficher un toast:', toastError)
   }
 
-  // TODO v0.4.0+ : Remonter les erreurs critiques vers Sentry
-  // if (error.severity === 'critical') {
-  //   Sentry.captureException(error, { tags: { context } })
-  // }
+  // Capture les erreurs critiques dans Sentry (si configuré)
+  try {
+    const sentryDsn = import.meta.env.VITE_SENTRY_DSN
+    if (sentryDsn && window.Sentry) {
+      window.Sentry.captureException(error, {
+        tags: { context },
+        extra: { message, userMessage: message }
+      })
+    }
+  } catch (sentryError) {
+    // Sentry non disponible, on continue
+  }
 
   return {
     success: false,
@@ -76,9 +94,14 @@ export async function withErrorHandling(apiCall, context = '') {
   const { retry } = await import('./retry')
   const { useConnectionStore } = await import('@/stores/connectionStore')
   const { useToastStore } = await import('@/stores/toastStore')
+  const diagnosticStore = useDiagnosticStore()
   
   const connectionStore = useConnectionStore()
   const toastStore = useToastStore()
+
+  // Démarre la mesure de latence
+  const startTime = performance.now()
+  const endpoint = context || 'unknown'
 
   // Fonction wrapper pour le retry
   const wrappedApiCall = async () => {
@@ -159,9 +182,14 @@ export async function withErrorHandling(apiCall, context = '') {
     connectionStore.setOnline(false)
   }
 
-  // Si succès, met à jour la connexion
+  // Calcule et enregistre la latence
+  const duration = performance.now() - startTime
+  diagnosticStore.trackLatency(endpoint, duration)
+
+  // Si succès, met à jour la connexion et enregistre le succès
   if (retryResult.success) {
     connectionStore.setOnline(true)
+    diagnosticStore.recordSuccess(endpoint)
     if (retryToastShown && toastStore) {
       // Le toast "reconnexion" sera automatiquement remplacé par le toast de succès de l'API
     }

@@ -18,9 +18,63 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 
+// Initialise Sentry si DSN configuré (optionnel)
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN
+if (sentryDsn) {
+  import('@sentry/vue').then((Sentry) => {
+    Sentry.init({
+      app,
+      dsn: sentryDsn,
+      integrations: [
+        new Sentry.BrowserTracing({
+          routingInstrumentation: Sentry.vueRouterInstrumentation(router)
+        })
+      ],
+      tracesSampleRate: import.meta.env.MODE === 'production' ? 0.1 : 1.0,
+      environment: import.meta.env.MODE,
+      beforeSend(event) {
+        // Ne pas envoyer les erreurs non critiques en production
+        if (import.meta.env.MODE === 'production' && !event.level) {
+          return null
+        }
+        return event
+      }
+    })
+    
+    // Expose Sentry globalement pour l'utiliser dans apiErrorHandler
+    window.Sentry = Sentry
+  }).catch(() => {
+    // Sentry non disponible, on continue sans
+    console.warn('Sentry initialization failed')
+  })
+}
+
 // Gestion d'erreur globale pour éviter l'écran blanc
 app.config.errorHandler = (err, instance, info) => {
   console.error('Erreur Vue globale:', err, info)
+  
+  // Capture l'erreur dans Sentry si disponible
+  if (window.Sentry) {
+    window.Sentry.captureException(err, {
+      contexts: {
+        vue: {
+          componentName: instance?.$options?.name || 'Unknown',
+          propsData: instance?.$props,
+          lifecycleHook: info
+        }
+      }
+    })
+  }
+  
+  // Enregistre dans le diagnosticStore
+  try {
+    const { useDiagnosticStore } = await import('@/stores/diagnosticStore')
+    const diagnosticStore = useDiagnosticStore()
+    diagnosticStore.recordError(err, { context: 'vue-global-error', info })
+  } catch (diagError) {
+    // DiagnosticStore non disponible, on continue
+  }
+  
   // Ne pas bloquer le rendu
 }
 

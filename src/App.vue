@@ -2,6 +2,9 @@
   <!-- Bannière de connexion (offline/online) -->
   <ConnectionBanner />
 
+  <!-- Bannière mode dégradé -->
+  <DegradedModeBanner />
+
   <!-- Loader global pendant l'initialisation de la session -->
   <div v-if="authStore.loadingSession" class="flex justify-center items-center min-h-screen bg-gray-50">
     <div class="text-center">
@@ -26,12 +29,14 @@ import { useConnectionStore } from '@/stores/connectionStore'
 import { setSettingsStoreCache } from '@/utils/formatters'
 import Toast from '@/components/common/Toast.vue'
 import ConnectionBanner from '@/components/common/ConnectionBanner.vue'
+import DegradedModeBanner from '@/components/common/DegradedModeBanner.vue'
 
 const authStore = useAuthStore()
 const propertiesStore = usePropertiesStore()
 const paymentsStore = usePaymentsStore()
 const settingsStore = useSettingsStore()
 const connectionStore = useConnectionStore()
+const diagnosticStore = useDiagnosticStore()
 
 // Initialise le cache du store settings pour formatCurrency
 // Crée un proxy pour exposer currency et language comme propriétés
@@ -58,6 +63,11 @@ onMounted(async () => {
 
     // Étape 1 — Restaurer la session Supabase
     await authStore.initSession()
+
+    // Met à jour la session dans le diagnosticStore
+    if (authStore.user) {
+      diagnosticStore.setUserSession({ user: authStore.user })
+    }
 
     // Étape 2 — Si session active, charger les données des stores
     if (authStore.user) {
