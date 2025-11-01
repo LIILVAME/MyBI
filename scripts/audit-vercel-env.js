@@ -283,16 +283,14 @@ try {
   console.log('\n⚠️  IMPORTANT: Ce script vérifie uniquement la configuration locale.')
   console.log('   Pour vérifier Vercel, allez dans le Dashboard → Settings → Environment Variables\n')
   
-  // Sauvegarde le rapport JSON
-  const reportPath = join(rootDir, 'docs', 'VERCEL_ENV_AUDIT_REPORT.md')
-  const fs = require('fs')
-  const path = require('path')
-  
   // Assure que le dossier docs existe
   const docsDir = join(rootDir, 'docs')
   if (!existsSync(docsDir)) {
-    fs.mkdirSync(docsDir, { recursive: true })
+    mkdirSync(docsDir, { recursive: true })
   }
+  
+  // Sauvegarde le rapport JSON
+  const reportPath = join(docsDir, 'VERCEL_ENV_AUDIT_REPORT.md')
   
   // Génère le rapport Markdown
   let markdown = `# 🔍 Rapport d'Audit - Variables d'Environnement Vercel\n\n`
