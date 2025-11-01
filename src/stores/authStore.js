@@ -50,6 +50,13 @@ export const useAuthStore = defineStore('auth', () => {
       session.value = data.session
       loading.value = false
 
+      // Track login event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.USER_LOGGED_IN)
+        }).catch(() => {})
+      }
+
       return { success: true, user: data.user }
     } catch (err) {
       error.value = err.message
