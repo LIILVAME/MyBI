@@ -66,14 +66,17 @@ app.config.errorHandler = (err, instance, info) => {
     })
   }
   
-  // Enregistre dans le diagnosticStore
-  try {
-    const { useDiagnosticStore } = await import('@/stores/diagnosticStore')
-    const diagnosticStore = useDiagnosticStore()
-    diagnosticStore.recordError(err, { context: 'vue-global-error', info })
-  } catch (diagError) {
-    // DiagnosticStore non disponible, on continue
-  }
+  // Enregistre dans le diagnosticStore (asynchrone mais ne bloque pas)
+  import('@/stores/diagnosticStore').then(({ useDiagnosticStore }) => {
+    try {
+      const diagnosticStore = useDiagnosticStore()
+      diagnosticStore.recordError(err, { context: 'vue-global-error', info })
+    } catch (diagError) {
+      // DiagnosticStore non disponible, on continue
+    }
+  }).catch(() => {
+    // Import échoué, on continue
+  })
   
   // Ne pas bloquer le rendu
 }
