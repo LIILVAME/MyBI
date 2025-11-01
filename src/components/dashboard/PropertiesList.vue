@@ -39,7 +39,7 @@
 
 <script setup>
 import { useI18n } from '@/composables/useLingui'
-import PropertyCard from '../PropertyCard.vue'
+import PropertyCard from '../properties/PropertyCard.vue'
 
 const { t } = useI18n()
 
