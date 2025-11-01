@@ -6,6 +6,7 @@ import { usePropertiesStore } from './propertiesStore'
 import { useToastStore } from './toastStore'
 import { TRANSACTION_STATUS } from '@/utils/constants'
 import { formatCurrency } from '@/utils/formatters'
+import { paymentsApi } from '@/api'
 
 /**
  * Store Pinia pour gérer les paiements
@@ -47,31 +48,13 @@ export const usePaymentsStore = defineStore('payments', () => {
     loading.value = true
     error.value = null
 
-    try {
+    const result = await paymentsApi.getPayments(authStore.user.id)
 
-      const { data, error: fetchError } = await supabase
-        .from('payments_view')
-        .select(`
-          *,
-          properties (
-            id,
-            name,
-            city
-          ),
-          tenants (
-            id,
-            name
-          )
-        `)
-        .eq('user_id', authStore.user.id)
-        .order('due_date', { ascending: false })
-
+    if (result.success && result.data) {
       lastFetchTime = Date.now()
 
-      if (fetchError) throw fetchError
-
       // Transforme les données Supabase pour correspondre au format attendu
-      payments.value = (data || []).map(payment => ({
+      payments.value = (result.data || []).map(payment => ({
         id: payment.id,
         propertyId: payment.property_id,
         property: payment.properties?.name || 'N/A',
@@ -80,13 +63,11 @@ export const usePaymentsStore = defineStore('payments', () => {
         dueDate: payment.due_date,
         status: payment.status
       }))
-
-      loading.value = false
-    } catch (err) {
-      error.value = err.message
-      loading.value = false
-      console.error('Error fetching payments:', err)
+    } else {
+      error.value = result.message || 'Erreur lors de la récupération des paiements'
     }
+
+    loading.value = false
   }
 
   /**
@@ -114,43 +95,29 @@ export const usePaymentsStore = defineStore('payments', () => {
         }
       }
 
-      // Insère le paiement dans Supabase (table payments, colonne date)
-      const { data, error: insertError } = await supabase
-        .from('payments')
-        .insert([
-          {
-            property_id: paymentData.propertyId || null,
-            tenant_id: tenantId,
-            amount: Number(paymentData.amount),
-            date: paymentData.dueDate, // La table utilise 'date', pas 'due_date'
-            status: paymentData.status || TRANSACTION_STATUS.PENDING,
-            user_id: authStore.user.id // Le trigger va le remplir automatiquement si null
-          }
-        ])
-        .select(`
-          *,
-          properties (
-            id,
-            name,
-            city
-          ),
-          tenants (
-            id,
-            name
-          )
-        `)
-        .single()
+      // Crée le paiement via l'API
+      const result = await paymentsApi.createPayment({
+        ...paymentData,
+        tenantId
+      }, authStore.user.id)
 
-      if (insertError) throw insertError
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
+
+      const data = result.data
 
       // Transforme pour le format attendu
+      // Note: La vue payments_view expose due_date, mais la table utilise 'date'
       const newPayment = {
         id: data.id,
         propertyId: data.property_id,
         property: data.properties?.name || paymentData.property || 'N/A',
         tenant: data.tenants?.name || paymentData.tenant || 'N/A',
         amount: Number(data.amount),
-        dueDate: data.due_date,
+        dueDate: data.due_date || data.date, // Utilise due_date de la vue ou date de la table
         status: data.status
       }
 
@@ -165,11 +132,6 @@ export const usePaymentsStore = defineStore('payments', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error adding payment:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de l'ajout du paiement : ${err.message}`)
-      
       throw err
     }
   }
@@ -184,39 +146,35 @@ export const usePaymentsStore = defineStore('payments', () => {
     error.value = null
 
     try {
-      const supabaseUpdates = {
+      const authStore = useAuthStore()
+      if (!authStore.user) {
+        throw new Error('User not authenticated')
+      }
+
+      // Prépare les données de mise à jour
+      const updateData = {
         amount: updates.amount ? Number(updates.amount) : undefined,
-        date: updates.dueDate || undefined, // La table utilise 'date', pas 'due_date'
+        dueDate: updates.dueDate || undefined,
         status: updates.status || undefined
-        // updated_at est géré automatiquement par le trigger
       }
 
       // Supprime les propriétés undefined
-      Object.keys(supabaseUpdates).forEach(key => {
-        if (supabaseUpdates[key] === undefined) {
-          delete supabaseUpdates[key]
+      Object.keys(updateData).forEach(key => {
+        if (updateData[key] === undefined) {
+          delete updateData[key]
         }
       })
 
-      const { data, error: updateError } = await supabase
-        .from('payments')
-        .update(supabaseUpdates)
-        .eq('id', id)
-        .select(`
-          *,
-          properties (
-            id,
-            name,
-            city
-          ),
-          tenants (
-            id,
-            name
-          )
-        `)
-        .single()
+      // Met à jour via l'API
+      const result = await paymentsApi.updatePayment(id, updateData, authStore.user.id)
 
-      if (updateError) throw updateError
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
+
+      const data = result.data
 
       // Met à jour dans la liste locale
       const index = payments.value.findIndex(p => p.id === id)
@@ -227,7 +185,7 @@ export const usePaymentsStore = defineStore('payments', () => {
           property: data.properties?.name || 'N/A',
           tenant: data.tenants?.name || 'N/A',
           amount: Number(data.amount),
-          dueDate: data.due_date,
+          dueDate: data.due_date || data.date,
           status: data.status
         }
       }
@@ -239,11 +197,6 @@ export const usePaymentsStore = defineStore('payments', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error updating payment:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de la mise à jour : ${err.message}`)
-      
       throw err
     }
   }

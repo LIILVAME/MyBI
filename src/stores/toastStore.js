@@ -10,9 +10,15 @@ export const useToastStore = defineStore('toasts', () => {
 
   /**
    * Ajoute un nouveau toast
+   * Limite à 1 toast visible à la fois pour éviter la surcharge
    * @param {Object} toast - { type: 'success'|'error'|'info', message: string, timeout?: number, action?: { label, onClick } }
    */
   const push = (toast) => {
+    // Supprime le toast précédent s'il existe (limite à 1 toast visible)
+    if (items.value.length > 0) {
+      clear()
+    }
+
     const id = crypto.randomUUID?.() || Date.now().toString() + Math.random().toString(36).substr(2, 9)
     
     const toastItem = {

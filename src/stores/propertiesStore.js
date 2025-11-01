@@ -4,6 +4,8 @@ import { supabase } from '@/lib/supabaseClient'
 import { useAuthStore } from './authStore'
 import { useToastStore } from './toastStore'
 import { PROPERTY_STATUS } from '@/utils/constants'
+import { propertiesApi } from '@/api'
+import { tenantsApi } from '@/api'
 
 /**
  * Store Pinia pour gérer les biens immobiliers
@@ -45,23 +47,13 @@ export const usePropertiesStore = defineStore('properties', () => {
     loading.value = true
     error.value = null
 
-    try {
+    const result = await propertiesApi.getProperties(authStore.user.id)
 
-      const { data, error: fetchError } = await supabase
-        .from('properties')
-        .select(`
-          *,
-          tenants (*)
-        `)
-        .eq('user_id', authStore.user.id)
-        .order('created_at', { ascending: false })
-
-      if (fetchError) throw fetchError
-
+    if (result.success && result.data) {
       lastFetchTime = Date.now()
 
       // Transforme les données Supabase pour correspondre au format attendu
-      properties.value = data.map(prop => ({
+      properties.value = result.data.map(prop => ({
         id: prop.id,
         name: prop.name,
         address: prop.address || '',
@@ -80,13 +72,11 @@ export const usePropertiesStore = defineStore('properties', () => {
           : null,
         image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400' // Image par défaut
       }))
-
-      loading.value = false
-    } catch (err) {
-      error.value = err.message
-      loading.value = false
-      console.error('Error fetching properties:', err)
+    } else {
+      error.value = result.message || 'Erreur lors de la récupération des biens'
     }
+
+    loading.value = false
   }
 
   /**
@@ -104,48 +94,36 @@ export const usePropertiesStore = defineStore('properties', () => {
         throw new Error('User not authenticated')
       }
 
-      // Insère le bien dans Supabase
-      const { data, error: insertError } = await supabase
-        .from('properties')
-        .insert([
-          {
-            name: propertyData.name,
-            address: propertyData.address || '',
-            city: propertyData.city,
-            rent: Number(propertyData.rent),
-            status: propertyData.status,
-            user_id: authStore.user.id
-          }
-        ])
-        .select()
-        .single()
+      // Crée le bien via l'API
+      const result = await propertiesApi.createProperty(propertyData, authStore.user.id)
 
-      if (insertError) throw insertError
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
+
+      const data = result.data
 
       // Si le bien est occupé et qu'un locataire est fourni, créer le locataire
       if (propertyData.status === PROPERTY_STATUS.OCCUPIED && propertyData.tenant) {
-        const { data: tenantData, error: tenantError } = await supabase
-          .from('tenants')
-          .insert([
-            {
-              property_id: data.id,
-              name: propertyData.tenant.name,
-              entry_date: propertyData.tenant.entryDate,
-              rent: Number(propertyData.rent),
-              status: propertyData.tenant.status || 'on_time'
-            }
-          ])
-          .select()
-          .single()
+        const tenantResult = await tenantsApi.createTenant({
+          propertyId: data.id,
+          name: propertyData.tenant.name,
+          entryDate: propertyData.tenant.entryDate,
+          exitDate: propertyData.tenant.exitDate || null,
+          rent: Number(propertyData.rent),
+          status: propertyData.tenant.status || 'on_time'
+        }, authStore.user.id)
 
-        if (!tenantError && tenantData) {
+        if (tenantResult.success && tenantResult.data) {
           data.tenant = {
-            id: tenantData.id,
-            name: tenantData.name,
-            entryDate: tenantData.entry_date,
-            exitDate: tenantData.exit_date || null,
-            rent: Number(tenantData.rent),
-            status: tenantData.status
+            id: tenantResult.data.id,
+            name: tenantResult.data.name,
+            entryDate: tenantResult.data.entry_date,
+            exitDate: tenantResult.data.exit_date || null,
+            rent: Number(tenantResult.data.rent),
+            status: tenantResult.data.status
           }
         }
       }
@@ -173,11 +151,6 @@ export const usePropertiesStore = defineStore('properties', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error adding property:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de l'ajout du bien : ${err.message}`)
-      
       throw err
     }
   }
@@ -192,70 +165,66 @@ export const usePropertiesStore = defineStore('properties', () => {
     error.value = null
 
     try {
+      const authStore = useAuthStore()
+      if (!authStore.user) {
+        throw new Error('User not authenticated')
+      }
+
       // Prépare les données pour Supabase
       const supabaseUpdates = {
         name: updates.name,
         address: updates.address,
         city: updates.city,
         rent: Number(updates.rent),
-        status: updates.status,
-        updated_at: new Date().toISOString()
+        status: updates.status
       }
 
-      const { data, error: updateError } = await supabase
-        .from('properties')
-        .update(supabaseUpdates)
-        .eq('id', id)
-        .select(`
-          *,
-          tenants (*)
-        `)
-        .single()
+      // Met à jour le bien via l'API
+      const result = await propertiesApi.updateProperty(id, supabaseUpdates, authStore.user.id)
 
-      if (updateError) throw updateError
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
+
+      const data = result.data
 
       // Gère le locataire si nécessaire
       if (updates.status === PROPERTY_STATUS.OCCUPIED && updates.tenant) {
-        // Vérifie si un locataire existe déjà
-        const existingTenant = data.tenants && data.tenants.length > 0 ? data.tenants[0] : null
+        // Récupère le bien avec ses locataires pour vérifier
+        const propertyResult = await propertiesApi.getPropertyById(id, authStore.user.id)
+        const existingTenant = propertyResult.success && propertyResult.data?.tenants && propertyResult.data.tenants.length > 0
+          ? propertyResult.data.tenants[0]
+          : null
 
         if (existingTenant) {
           // Met à jour le locataire existant
-          const { error: tenantError } = await supabase
-            .from('tenants')
-            .update({
-              name: updates.tenant.name,
-              entry_date: updates.tenant.entryDate,
-              rent: Number(updates.rent),
-              status: updates.tenant.status || 'on_time',
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', existingTenant.id)
-
-          if (tenantError) throw tenantError
+          await tenantsApi.updateTenant(existingTenant.id, {
+            name: updates.tenant.name,
+            entry_date: updates.tenant.entryDate,
+            exit_date: updates.tenant.exitDate || null,
+            rent: Number(updates.rent),
+            status: updates.tenant.status || 'on_time'
+          }, authStore.user.id)
         } else {
           // Crée un nouveau locataire
-          const { error: tenantError } = await supabase
-            .from('tenants')
-            .insert([
-              {
-                property_id: id,
-                name: updates.tenant.name,
-                entry_date: updates.tenant.entryDate,
-                rent: Number(updates.rent),
-                status: updates.tenant.status || 'on_time'
-              }
-            ])
-
-          if (tenantError) throw tenantError
+          await tenantsApi.createTenant({
+            propertyId: id,
+            name: updates.tenant.name,
+            entryDate: updates.tenant.entryDate,
+            exitDate: updates.tenant.exitDate || null,
+            rent: Number(updates.rent),
+            status: updates.tenant.status || 'on_time'
+          }, authStore.user.id)
         }
       } else if (updates.status === PROPERTY_STATUS.VACANT) {
         // Supprime le locataire si le bien devient libre
-        if (data.tenants && data.tenants.length > 0) {
-          await supabase
-            .from('tenants')
-            .delete()
-            .eq('property_id', id)
+        const propertyResult = await propertiesApi.getPropertyById(id, authStore.user.id)
+        if (propertyResult.success && propertyResult.data?.tenants && propertyResult.data.tenants.length > 0) {
+          for (const tenant of propertyResult.data.tenants) {
+            await tenantsApi.deleteTenant(tenant.id, authStore.user.id)
+          }
         }
       }
 
@@ -269,11 +238,6 @@ export const usePropertiesStore = defineStore('properties', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error updating property:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de la mise à jour : ${err.message}`)
-      
       throw err
     }
   }
@@ -287,12 +251,18 @@ export const usePropertiesStore = defineStore('properties', () => {
     error.value = null
 
     try {
-      const { error: deleteError } = await supabase
-        .from('properties')
-        .delete()
-        .eq('id', id)
+      const authStore = useAuthStore()
+      if (!authStore.user) {
+        throw new Error('User not authenticated')
+      }
 
-      if (deleteError) throw deleteError
+      const result = await propertiesApi.deleteProperty(id, authStore.user.id)
+
+      if (!result.success) {
+        error.value = result.message
+        loading.value = false
+        throw new Error(result.message)
+      }
 
       // Supprime de la liste locale
       properties.value = properties.value.filter(p => p.id !== id)
@@ -304,11 +274,6 @@ export const usePropertiesStore = defineStore('properties', () => {
     } catch (err) {
       error.value = err.message
       loading.value = false
-      console.error('Error deleting property:', err)
-      
-      const toast = useToastStore()
-      toast.error(`Erreur lors de la suppression : ${err.message}`)
-      
       throw err
     }
   }
