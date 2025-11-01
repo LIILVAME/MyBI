@@ -340,8 +340,8 @@
     "loginWithGoogle": "Se connecter avec Google",
     "loginWithApple": "Se connecter avec Apple",
     "oauthLoading": "Connexion...",
-    "oauthSuccess": "✅ Connexion réussie",
-    "oauthError": "❌ Connexion via {provider} échouée"
+    "oauthSuccess": "Connexion réussie",
+    "oauthError": "Connexion via {provider} échouée"
   },
   "currency": {
     "EUR": "Euro (€)",
@@ -460,7 +460,7 @@
     "offline": "Hors ligne — Lecture seule"
   },
   "degradedMode": {
-    "message": "⚠️ Mode dégradé — certaines données peuvent être incomplètes"
+    "message": "Mode dégradé — certaines données peuvent être incomplètes"
   },
   "landing": {
     "features": "Fonctionnalités",

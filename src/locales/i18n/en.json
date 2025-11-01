@@ -341,8 +341,8 @@
     "loginWithGoogle": "Sign in with Google",
     "loginWithApple": "Sign in with Apple",
     "oauthLoading": "Connecting...",
-    "oauthSuccess": "✅ Login successful",
-    "oauthError": "❌ {provider} login failed"
+    "oauthSuccess": "Login successful",
+    "oauthError": "{provider} login failed"
   },
   "currency": {
     "EUR": "Euro (€)",
@@ -461,7 +461,7 @@
     "offline": "Offline — Read only"
   },
   "degradedMode": {
-    "message": "⚠️ Degraded mode — some data may be incomplete"
+    "message": "Degraded mode — some data may be incomplete"
   },
   "landing": {
     "features": "Features",
