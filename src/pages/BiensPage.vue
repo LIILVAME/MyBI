@@ -5,7 +5,7 @@
     
     <!-- Main Content -->
     <main class="flex-1 overflow-y-auto">
-      <div class="max-w-7xl mx-auto px-3 pt-16 pb-20 sm:px-6 lg:px-8 sm:pt-10 sm:pb-10">
+      <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-6 xl:px-8 pt-16 pb-20 sm:pt-10 sm:pb-10">
         <!-- Header avec statistiques -->
         <PropertiesHeader 
           :stats="stats"
