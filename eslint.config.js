@@ -2,29 +2,20 @@ import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 import tseslint from 'typescript-eslint'
 
-export default tseslint.config(
+export default [
+  // Base configs
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  {
-    files: ['**/*.{js,mjs,cjs,ts,vue}'],
-    plugins: {
-      vue
-    },
-    languageOptions: {
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
-    },
-    rules: {
-      // Vue specific
-      'vue/multi-word-component-names': 'off',
-      'vue/no-v-html': 'warn',
-      'vue/require-default-prop': 'off',
-      'vue/require-explicit-emits': 'warn',
-      'vue/component-name-in-template-casing': ['warn', 'PascalCase'],
 
-      // General
+  // Global ignores
+  {
+    ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.config.js', '*.config.ts']
+  },
+
+  // JavaScript/TypeScript files
+  {
+    files: ['**/*.{js,mjs,cjs,ts}'],
+    rules: {
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-unused-vars': 'off', // Disabled because we use TypeScript's no-unused-vars
@@ -40,11 +31,17 @@ export default tseslint.config(
       'no-var': 'error'
     }
   },
+
+  // Vue files
+  ...vue.configs['flat/essential'],
   {
     files: ['**/*.vue'],
-    ...vue.configs['flat/essential']
-  },
-  {
-    ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.config.js', '*.config.ts']
+    rules: {
+      'vue/multi-word-component-names': 'off',
+      'vue/no-v-html': 'warn',
+      'vue/require-default-prop': 'off',
+      'vue/require-explicit-emits': 'warn',
+      'vue/component-name-in-template-casing': ['warn', 'PascalCase']
+    }
   }
-)
+]
