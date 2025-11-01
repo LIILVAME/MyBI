@@ -376,7 +376,7 @@ try {
   const jsonPath = join(rootDir, 'docs', 'VERCEL_ENV_AUDIT_REPORT.json')
   writeFileSync(jsonPath, JSON.stringify(report, null, 2), 'utf-8')
   
-  process.exit(envVars.missing.length > 0 ? 1 : 0)
+  process.exit(report.localEnvironment.missingVars.length > 0 ? 1 : 0)
 } catch (error) {
   console.error('\n❌ Erreur lors de l\'audit:', error.message)
   console.error(error.stack)
