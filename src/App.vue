@@ -1,4 +1,7 @@
 <template>
+  <!-- Bannière de connexion (offline/online) -->
+  <ConnectionBanner />
+
   <!-- Loader global pendant l'initialisation de la session -->
   <div v-if="authStore.loadingSession" class="flex justify-center items-center min-h-screen bg-gray-50">
     <div class="text-center">
@@ -19,13 +22,16 @@ import { useAuthStore } from '@/stores/authStore'
 import { usePropertiesStore } from '@/stores/propertiesStore'
 import { usePaymentsStore } from '@/stores/paymentsStore'
 import { useSettingsStore } from '@/stores/settingsStore'
+import { useConnectionStore } from '@/stores/connectionStore'
 import { setSettingsStoreCache } from '@/utils/formatters'
 import Toast from '@/components/common/Toast.vue'
+import ConnectionBanner from '@/components/common/ConnectionBanner.vue'
 
 const authStore = useAuthStore()
 const propertiesStore = usePropertiesStore()
 const paymentsStore = usePaymentsStore()
 const settingsStore = useSettingsStore()
+const connectionStore = useConnectionStore()
 
 // Initialise le cache du store settings pour formatCurrency
 // Crée un proxy pour exposer currency et language comme propriétés
@@ -47,6 +53,9 @@ setSettingsStoreCache(storeForCache)
  */
 onMounted(async () => {
   try {
+    // Initialise le watcher de connexion en premier
+    connectionStore.initConnectionWatcher()
+
     // Étape 1 — Restaurer la session Supabase
     await authStore.initSession()
 

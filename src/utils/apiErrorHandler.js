@@ -1,4 +1,5 @@
 import { useToastStore } from '@/stores/toastStore'
+import { isRetryableError } from './retry'
 
 /**
  * Gestionnaire d'erreur centralisé pour les appels API Supabase
@@ -66,25 +67,106 @@ export function handleApiError(error, context = '') {
 }
 
 /**
- * Wrapper pour les appels API avec gestion d'erreur automatique
+ * Wrapper pour les appels API avec gestion d'erreur automatique et retry
  * @param {Function} apiCall - Fonction async qui retourne { data, error }
  * @param {string} context - Contexte pour les logs
- * @returns {Promise<Object>} { success: boolean, data?: any, error?: Error }
+ * @returns {Promise<Object>} { success: boolean, data?: any, error?: Error, retries?: number }
  */
 export async function withErrorHandling(apiCall, context = '') {
-  try {
-    const result = await apiCall()
-    
-    if (result.error) {
-      return handleApiError(result.error, context)
+  const { retry } = await import('./retry')
+  const { useConnectionStore } = await import('@/stores/connectionStore')
+  const { useToastStore } = await import('@/stores/toastStore')
+  
+  const connectionStore = useConnectionStore()
+  const toastStore = useToastStore()
+
+  // Fonction wrapper pour le retry
+  const wrappedApiCall = async () => {
+    try {
+      const result = await apiCall()
+      
+      if (result.error) {
+        // Vérifie si l'erreur est réessayable
+        if (isRetryableError(result.error)) {
+          // Retourne un objet avec success: false pour déclencher le retry
+          return {
+            success: false,
+            error: result.error,
+            message: result.error.message || 'Network error'
+          }
+        }
+        // Erreur non réessayable, retourne directement
+        return handleApiError(result.error, context)
+      }
+      
+      // Succès
+      return {
+        success: true,
+        data: result.data
+      }
+    } catch (error) {
+      // Erreur non réessayable, retourne directement
+      if (!isRetryableError(error)) {
+        return handleApiError(error, context)
+      }
+      // Erreur réessayable, retourne pour le retry
+      return {
+        success: false,
+        error,
+        message: error.message || 'Network error'
+      }
     }
-    
-    return {
-      success: true,
-      data: result.data
-    }
-  } catch (error) {
-    return handleApiError(error, context)
   }
+
+  // Si on n'est pas en ligne, ne pas essayer
+  if (!connectionStore.isOnline) {
+    return {
+      success: false,
+      error: new Error('No internet connection'),
+      message: 'Pas de connexion internet'
+    }
+  }
+
+  // Affiche un toast de reconnexion si nécessaire
+  let retryToastShown = false
+  const showRetryToast = () => {
+    if (!retryToastShown && toastStore) {
+      toastStore.info('Tentative de reconnexion...')
+      retryToastShown = true
+    }
+  }
+
+  // Exécute avec retry pour les erreurs réseau
+  const retryResult = await retry(wrappedApiCall, {
+    maxRetries: 3,
+    initialDelay: 500,
+    maxDelay: 2000,
+    shouldRetry: (error) => {
+      // Réessaye seulement pour les erreurs réseau
+      if (isRetryableError(error)) {
+        showRetryToast()
+        return true
+      }
+      return false
+    }
+  })
+
+  // Si le retry a échoué après toutes les tentatives
+  if (!retryResult.success && retryResult.retries > 0) {
+    if (toastStore) {
+      toastStore.error('Connexion perdue. Vérifiez votre réseau.')
+    }
+    connectionStore.setOnline(false)
+  }
+
+  // Si succès, met à jour la connexion
+  if (retryResult.success) {
+    connectionStore.setOnline(true)
+    if (retryToastShown && toastStore) {
+      // Le toast "reconnexion" sera automatiquement remplacé par le toast de succès de l'API
+    }
+  }
+
+  return retryResult
 }
 

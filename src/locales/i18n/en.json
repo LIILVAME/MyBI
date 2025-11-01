@@ -326,6 +326,10 @@
       "signedOutSuccess": "Successfully signed out all devices",
       "signOutError": "Error signing out"
     }
+  },
+  "connection": {
+    "online": "Connected — Data synchronized",
+    "offline": "Offline — Read only"
   }
 }
 

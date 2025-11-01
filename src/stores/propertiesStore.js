@@ -74,6 +74,19 @@ export const usePropertiesStore = defineStore('properties', () => {
       }))
     } else {
       error.value = result.message || 'Erreur lors de la récupération des biens'
+      
+      // Si erreur réseau et qu'on a des données en cache, les utiliser
+      const { useConnectionStore } = await import('@/stores/connectionStore')
+      const { useToastStore } = await import('@/stores/toastStore')
+      const connectionStore = useConnectionStore()
+      const toastStore = useToastStore()
+      
+      if (!connectionStore.isOnline && properties.value.length > 0) {
+        // Affiche un toast informatif mais continue avec les données du cache
+        if (toastStore) {
+          toastStore.info('⚠️ Données locales affichées (connexion perdue)')
+        }
+      }
     }
 
     loading.value = false
@@ -90,20 +103,61 @@ export const usePropertiesStore = defineStore('properties', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
+
+      // Optimistic UI : Ajoute temporairement le bien à la liste
+      const optimisticProperty = {
+        id: `temp-${Date.now()}`, // ID temporaire
+        ...propertyData,
+        tenant: propertyData.tenant || null,
+        image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'
+      }
+      const oldProperties = [...properties.value]
+      properties.value.unshift(optimisticProperty)
 
       // Crée le bien via l'API
       const result = await propertiesApi.createProperty(propertyData, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        properties.value = oldProperties
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
       }
 
       const data = result.data
+      
+      // Remplace le bien temporaire par le vrai bien retourné par l'API
+      const tempIndex = properties.value.findIndex(p => p.id === optimisticProperty.id)
+      if (tempIndex !== -1) {
+        properties.value[tempIndex] = {
+          id: data.id,
+          name: data.name,
+          address: data.address || '',
+          city: data.city,
+          status: data.status,
+          rent: Number(data.rent),
+          tenant: data.tenants && data.tenants.length > 0
+            ? {
+                id: data.tenants[0].id,
+                name: data.tenants[0].name,
+                entryDate: data.tenants[0].entry_date,
+                exitDate: data.tenants[0].exit_date || null,
+                rent: Number(data.tenants[0].rent),
+                status: data.tenants[0].status || 'on_time'
+              }
+            : null,
+          image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'
+        }
+      }
+      
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
+      }
 
       // Si le bien est occupé et qu'un locataire est fourni, créer le locataire
       if (propertyData.status === PROPERTY_STATUS.OCCUPIED && propertyData.tenant) {
@@ -128,26 +182,10 @@ export const usePropertiesStore = defineStore('properties', () => {
         }
       }
 
-      // Transforme pour le format attendu
-      const newProperty = {
-        id: data.id,
-        name: data.name,
-        address: data.address || '',
-        city: data.city,
-        status: data.status,
-        rent: Number(data.rent),
-        tenant: data.tenant || null,
-        image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'
-      }
-
-      properties.value.unshift(newProperty)
-      
-      const toast = useToastStore()
-      toast.success(`Bien "${newProperty.name}" ajouté avec succès`)
-      
+      // Le bien a déjà été ajouté via l'optimistic update et remplacé plus haut
       loading.value = false
 
-      return newProperty
+      return properties.value[tempIndex]
     } catch (err) {
       error.value = err.message
       loading.value = false
@@ -166,9 +204,23 @@ export const usePropertiesStore = defineStore('properties', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
+
+      // Optimistic UI : Sauvegarde l'ancien état et applique les modifications
+      const propertyIndex = properties.value.findIndex(p => p.id === id)
+      if (propertyIndex === -1) {
+        throw new Error('Property not found')
+      }
+      const oldProperty = { ...properties.value[propertyIndex] }
+      const optimisticUpdates = {
+        ...oldProperty,
+        ...updates,
+        rent: Number(updates.rent || oldProperty.rent)
+      }
+      properties.value[propertyIndex] = optimisticUpdates
 
       // Prépare les données pour Supabase
       const supabaseUpdates = {
@@ -183,9 +235,15 @@ export const usePropertiesStore = defineStore('properties', () => {
       const result = await propertiesApi.updateProperty(id, supabaseUpdates, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        properties.value[propertyIndex] = oldProperty
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
+      }
+      
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
       }
 
       const data = result.data
@@ -252,23 +310,33 @@ export const usePropertiesStore = defineStore('properties', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
 
+      // Optimistic UI : Supprime temporairement de la liste
+      const propertyIndex = properties.value.findIndex(p => p.id === id)
+      if (propertyIndex === -1) {
+        throw new Error('Property not found')
+      }
+      const oldProperties = [...properties.value]
+      const deletedProperty = properties.value[propertyIndex]
+      properties.value = properties.value.filter(p => p.id !== id)
+
       const result = await propertiesApi.deleteProperty(id, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        properties.value = oldProperties
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
       }
-
-      // Supprime de la liste locale
-      properties.value = properties.value.filter(p => p.id !== id)
       
-      const toast = useToastStore()
-      toast.success('Bien supprimé avec succès')
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
+      }
       
       loading.value = false
     } catch (err) {
@@ -491,6 +559,13 @@ export const usePropertiesStore = defineStore('properties', () => {
     occupiedProperties,
     vacantProperties,
     totalRent
+  }
+}, {
+  // Configuration de persistance avec pinia-plugin-persistedstate
+  persist: {
+    key: 'mybi-properties',
+    paths: ['properties'], // Seulement persister les données, pas loading/error
+    storage: localStorage
   }
 })
 

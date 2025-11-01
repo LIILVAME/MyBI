@@ -5,10 +5,14 @@ import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
 import { useSettingsStore } from '@/stores/settingsStore'
+import persistedState from '@/plugins/piniaPersistedState'
 import './style.css'
 
 const app = createApp(App)
 const pinia = createPinia()
+
+// Ajoute le plugin de persistance Pinia
+pinia.use(persistedState)
 
 app.use(pinia)
 app.use(router)

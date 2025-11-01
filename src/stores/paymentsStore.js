@@ -65,6 +65,19 @@ export const usePaymentsStore = defineStore('payments', () => {
       }))
     } else {
       error.value = result.message || 'Erreur lors de la récupération des paiements'
+      
+      // Si erreur réseau et qu'on a des données en cache, les utiliser
+      const { useConnectionStore } = await import('@/stores/connectionStore')
+      const { useToastStore } = await import('@/stores/toastStore')
+      const connectionStore = useConnectionStore()
+      const toastStore = useToastStore()
+      
+      if (!connectionStore.isOnline && payments.value.length > 0) {
+        // Affiche un toast informatif mais continue avec les données du cache
+        if (toastStore) {
+          toastStore.info('⚠️ Données locales affichées (connexion perdue)')
+        }
+      }
     }
 
     loading.value = false
@@ -81,6 +94,7 @@ export const usePaymentsStore = defineStore('payments', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
@@ -95,6 +109,19 @@ export const usePaymentsStore = defineStore('payments', () => {
         }
       }
 
+      // Optimistic UI : Ajoute temporairement le paiement à la liste
+      const optimisticPayment = {
+        id: `temp-${Date.now()}`,
+        propertyId: paymentData.propertyId,
+        property: paymentData.property || 'N/A',
+        tenant: paymentData.tenant || 'N/A',
+        amount: Number(paymentData.amount),
+        dueDate: paymentData.dueDate || paymentData.date,
+        status: paymentData.status || 'pending'
+      }
+      const oldPayments = [...payments.value]
+      payments.value.unshift(optimisticPayment)
+
       // Crée le paiement via l'API
       const result = await paymentsApi.createPayment({
         ...paymentData,
@@ -102,6 +129,8 @@ export const usePaymentsStore = defineStore('payments', () => {
       }, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        payments.value = oldPayments
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
@@ -121,10 +150,15 @@ export const usePaymentsStore = defineStore('payments', () => {
         status: data.status
       }
 
-      payments.value.unshift(newPayment)
+      // Remplace le paiement temporaire par le vrai paiement retourné par l'API
+      const tempIndex = payments.value.findIndex(p => p.id === optimisticPayment.id)
+      if (tempIndex !== -1) {
+        payments.value[tempIndex] = newPayment
+      }
       
-      const toast = useToastStore()
-      toast.success(`Paiement de ${formatCurrency(newPayment.amount)} ajouté`)
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
+      }
       
       loading.value = false
 
@@ -147,9 +181,23 @@ export const usePaymentsStore = defineStore('payments', () => {
 
     try {
       const authStore = useAuthStore()
+      const toastStore = useToastStore()
       if (!authStore.user) {
         throw new Error('User not authenticated')
       }
+
+      // Optimistic UI : Sauvegarde l'ancien état et applique les modifications
+      const paymentIndex = payments.value.findIndex(p => p.id === id)
+      if (paymentIndex === -1) {
+        throw new Error('Payment not found')
+      }
+      const oldPayment = { ...payments.value[paymentIndex] }
+      const optimisticUpdates = {
+        ...oldPayment,
+        ...updates,
+        amount: updates.amount ? Number(updates.amount) : oldPayment.amount
+      }
+      payments.value[paymentIndex] = optimisticUpdates
 
       // Prépare les données de mise à jour
       const updateData = {
@@ -169,6 +217,8 @@ export const usePaymentsStore = defineStore('payments', () => {
       const result = await paymentsApi.updatePayment(id, updateData, authStore.user.id)
 
       if (!result.success) {
+        // Revert l'optimistic update
+        payments.value[paymentIndex] = oldPayment
         error.value = result.message
         loading.value = false
         throw new Error(result.message)
@@ -176,22 +226,20 @@ export const usePaymentsStore = defineStore('payments', () => {
 
       const data = result.data
 
-      // Met à jour dans la liste locale
-      const index = payments.value.findIndex(p => p.id === id)
-      if (index !== -1) {
-        payments.value[index] = {
-          id: data.id,
-          propertyId: data.property_id,
-          property: data.properties?.name || 'N/A',
-          tenant: data.tenants?.name || 'N/A',
-          amount: Number(data.amount),
-          dueDate: data.due_date || data.date,
-          status: data.status
-        }
+      // Met à jour dans la liste locale avec les vraies données
+      payments.value[paymentIndex] = {
+        id: data.id,
+        propertyId: data.property_id,
+        property: data.properties?.name || 'N/A',
+        tenant: data.tenants?.name || 'N/A',
+        amount: Number(data.amount),
+        dueDate: data.due_date || data.date,
+        status: data.status
       }
 
-      const toast = useToastStore()
-      toast.success('Paiement mis à jour')
+      if (toastStore) {
+        toastStore.success('Modification appliquée')
+      }
       
       loading.value = false
     } catch (err) {
@@ -424,5 +472,12 @@ export const usePaymentsStore = defineStore('payments', () => {
     pendingPayments,
     latePayments,
     paidPayments
+  }
+}, {
+  // Configuration de persistance avec pinia-plugin-persistedstate
+  persist: {
+    key: 'mybi-payments',
+    paths: ['payments'], // Seulement persister les données, pas loading/error
+    storage: localStorage
   }
 })

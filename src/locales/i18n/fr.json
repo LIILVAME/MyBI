@@ -326,6 +326,10 @@
       "signedOutSuccess": "Déconnexion réussie de tous les appareils",
       "signOutError": "Erreur lors de la déconnexion"
     }
+  },
+  "connection": {
+    "online": "Connecté — Données synchronisées",
+    "offline": "Hors ligne — Lecture seule"
   }
 }
 
