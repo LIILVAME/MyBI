@@ -129,6 +129,12 @@ router.beforeEach(async (to, from, next) => {
         await new Promise(resolve => setTimeout(resolve, 100))
         attempts++
       }
+      
+      // Timeout de sécurité : si loadingSession reste true, on continue quand même
+      if (authStore.loadingSession) {
+        console.warn('Timeout: loadingSession reste true, continuation de la navigation')
+        authStore.loadingSession = false
+      }
     }
 
     // Si la route nécessite une authentification

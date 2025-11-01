@@ -155,35 +155,49 @@ const handleOAuth = async (provider) => {
  * Gère aussi le callback OAuth depuis l'URL
  */
 onMounted(async () => {
-  authStore.error = null
+  try {
+    authStore.error = null
 
-  // Vérifie s'il y a un token OAuth dans l'URL (callback)
-  const hashParams = new URLSearchParams(window.location.hash.substring(1))
-  const accessToken = hashParams.get('access_token')
-  const error = hashParams.get('error')
+    // Vérifie s'il y a un token OAuth dans l'URL (callback)
+    const hashParams = new URLSearchParams(window.location.hash.substring(1))
+    const accessToken = hashParams.get('access_token')
+    const error = hashParams.get('error')
 
-  if (error) {
-    toastStore.error(`Erreur d'authentification : ${error}`)
-    window.history.replaceState({}, document.title, window.location.pathname)
-  } else if (accessToken) {
-    setTimeout(async () => {
-      const user = await authStore.fetchUser(true)
-      if (user) {
-        const redirectTo = route.query.redirect || '/dashboard'
-        router.push(redirectTo)
-        toastStore.success(t('login.oauthSuccess'))
-      }
-    }, 500)
-  }
-
-  // Si l'utilisateur est déjà connecté, redirige vers le dashboard
-  if (authStore.user) {
-    router.push('/dashboard')
-  } else {
-    const user = await authStore.fetchUser(true)
-    if (user) {
-      router.push('/dashboard')
+    if (error) {
+      toastStore.error(`Erreur d'authentification : ${error}`)
+      window.history.replaceState({}, document.title, window.location.pathname)
+    } else if (accessToken) {
+      setTimeout(async () => {
+        try {
+          const user = await authStore.fetchUser(true)
+          if (user) {
+            const redirectTo = route.query.redirect || '/dashboard'
+            router.push(redirectTo)
+            toastStore.success(t('login.oauthSuccess'))
+          }
+        } catch (err) {
+          console.error('Erreur lors du callback OAuth:', err)
+        }
+      }, 500)
     }
+
+    // Si l'utilisateur est déjà connecté, redirige vers le dashboard
+    if (authStore.user) {
+      router.push('/dashboard')
+    } else {
+      try {
+        const user = await authStore.fetchUser(true)
+        if (user) {
+          router.push('/dashboard')
+        }
+      } catch (err) {
+        // Erreur silencieuse - l'utilisateur peut simplement se connecter
+        console.warn('Impossible de récupérer la session:', err)
+      }
+    }
+  } catch (err) {
+    console.error('Erreur dans onMounted de LoginPage:', err)
+    // Ne pas bloquer le rendu en cas d'erreur
   }
 })
 </script>
