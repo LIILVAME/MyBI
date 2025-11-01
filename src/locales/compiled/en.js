@@ -4,6 +4,7 @@
 
 export default {
   "common": {
+    "dashboard": "Dashboard",
     "goToDashboard": "Go to dashboard",
     "loading": "Loading...",
     "error": "Error",

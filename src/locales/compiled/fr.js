@@ -4,6 +4,7 @@
 
 export default {
   "common": {
+    "dashboard": "Tableau de bord",
     "goToDashboard": "Aller au tableau de bord",
     "loading": "Chargement...",
     "error": "Erreur",
