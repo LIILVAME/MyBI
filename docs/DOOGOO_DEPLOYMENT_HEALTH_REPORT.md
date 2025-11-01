@@ -1,34 +1,61 @@
 # 🏥 Rapport de Santé - Déploiement Doogoo
 
-**Date** : 2025-11-01T09:27:27.866Z
-**Statut Global** : ⚠️  INCOMPLETE
+**Date** : 2025-11-01T09:29:51.672Z
+**Statut Global** : ❌ CRITICAL
 
 ---
 
 ## 📊 Résumé Exécutif
 
-Le statut global du déploiement Doogoo est **⚠️  INCOMPLETE**.
+Le statut global du déploiement Doogoo est **❌ CRITICAL**.
 
 ### ⚠️  Problèmes Détectés
 
-1. Rapport Vercel non généré - exécutez "npm run audit:vercel"
-2. Rapport de connectivité non généré - exécutez "npm run audit:supabase"
+1. Tests de connectivité Supabase échoués
 
 ---
 
 ## 1️⃣ Variables d'Environnement Vercel
 
-⚠️  **Rapport non disponible**
+**Statut** : ✅ OK
 
-Exécutez `npm run audit:vercel` pour générer le rapport.
+- Variables requises présentes : 2/2
+
+### 💡 Recommandations
+
+🟡 **WARNING** : Modifications non commitées détectées
+
+   → Commit et push vos changements avant de déployer
+
+
+📄 **Rapport complet** : [VERCEL_ENV_AUDIT_REPORT.md](./VERCEL_ENV_AUDIT_REPORT.md)
 
 ---
 
 ## 2️⃣ Connectivité Supabase
 
-⚠️  **Rapport non disponible**
+**Statut** : ❌ **ÉCHEC**
 
-Exécutez `npm run audit:supabase` pour générer le rapport.
+- Tests réussis : 2/3
+
+### Détails des Tests
+
+#### 1. Disponibilité de l'Application
+- **Statut** : ✅ OK
+- **HTTP Status** : 200
+- **Point de montage** : ✅ Trouvé
+
+#### 2. Variables d'Environnement dans le Bundle
+- **Statut** : ⚠️  PARTIEL
+- **VITE_SUPABASE_URL** : ✅
+- **VITE_SUPABASE_ANON_KEY** : ✅
+- ⚠️  **Erreurs 'undefined' détectées**
+
+#### 3. Connexion Supabase Directe
+- **Statut** : ✅ OK
+- **HTTP Status** : 200
+
+📄 **Rapport complet** : [SUPABASE_CONNECTIVITY_LOG.md](./SUPABASE_CONNECTIVITY_LOG.md)
 
 ---
 
@@ -49,6 +76,13 @@ Exécutez `npm run audit:supabase` pour générer le rapport.
 ---
 
 ## 🔧 Actions Correctives
+
+### 2. Problèmes de Connectivité
+
+- **Variables non injectées** :
+  1. Vérifier "Included in Build" dans Vercel
+  2. Forcer un nouveau build (commit vide)
+  3. Vérifier que les variables ne sont pas vides
 
 ### 3. Configuration Supabase
 
@@ -82,12 +116,12 @@ npm run audit:health
 
 | Composant | Statut |
 |-----------|--------|
-| Variables Vercel | ⚪ Non vérifié |
-| Connectivité Supabase | ⚪ Non vérifié |
+| Variables Vercel | ✅ OK |
+| Connectivité Supabase | ❌ ÉCHEC |
 | Configuration Supabase | ⚪ Validation manuelle requise |
 
-**Statut Global** : **⚠️  INCOMPLETE**
+**Statut Global** : **❌ CRITICAL**
 
 ---
 
-**Dernière mise à jour** : 2025-11-01T09:27:27.866Z
+**Dernière mise à jour** : 2025-11-01T09:29:51.672Z
