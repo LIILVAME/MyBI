@@ -1,15 +1,31 @@
 # 🔍 Rapport d'Audit i18n - Doogoo
 
-**Date** : 2025-11-01T09:34:03.412Z
+**Date** : 2025-11-01T09:34:44.257Z
 
 ## 📊 Résumé
 
-- **Fichiers analysés** : 0
+- **Fichiers analysés** : 2
 - **Total d'erreurs détectées** : 0
 - **Erreurs critiques** : 0
 - **Corrections appliquées** : 0
 
 ## 📁 Détails par Fichier
+
+### fr.json
+
+✅ **Validation JSON** : Réussi
+
+✅ Aucun problème détecté
+
+---
+
+### en.json
+
+✅ **Validation JSON** : Réussi
+
+✅ Aucun problème détecté
+
+---
 
 ## ✅ Validation Finale
 

@@ -13,18 +13,29 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const rootDir = join(__dirname, '..')
 
-const LOCALES_DIR = join(rootDir, 'src', 'locales')
+const LOCALES_DIR = join(rootDir, 'src', 'locales', 'i18n')
 
 /**
  * Analyse un fichier JSON de traduction
  */
-function analyzeLocaleFile(filePath) {
+function analyzeLocaleFile(filePath, allLocaleFiles = []) {
   const issues = []
   const fixes = []
   
   try {
     const content = readFileSync(filePath, 'utf-8')
     let json
+    
+    // Charge tous les fichiers de locale pour valider les références @:
+    const allLocales = {}
+    allLocaleFiles.forEach(localeFile => {
+      try {
+        const localeContent = readFileSync(localeFile, 'utf-8')
+        allLocales[localeFile] = JSON.parse(localeContent)
+      } catch (e) {
+        // Ignore les erreurs de lecture des autres fichiers
+      }
+    })
     
     // Teste la validité JSON
     try {
@@ -39,6 +50,16 @@ function analyzeLocaleFile(filePath) {
       return { issues, fixes, json: null, content }
     }
     
+    // Fonction pour vérifier si une clé existe dans n'importe quel fichier de locale
+    function keyExistsAnywhere(keyPath) {
+      for (const localeName in allLocales) {
+        if (keyExists(allLocales[localeName], keyPath)) {
+          return true
+        }
+      }
+      return keyExists(json, keyPath)
+    }
+    
     // Parcourt toutes les clés de traduction
     function traverse(obj, path = '') {
       for (const key in obj) {
@@ -50,7 +71,7 @@ function analyzeLocaleFile(filePath) {
           const linkedRefs = value.match(/@:[a-zA-Z0-9_.-]+/g) || []
           linkedRefs.forEach(ref => {
             const targetKey = ref.substring(2) // Enlève '@:'
-            if (!keyExists(json, targetKey)) {
+            if (!keyExistsAnywhere(targetKey)) {
               issues.push({
                 type: 'INVALID_LINKED_REF',
                 severity: 'ERROR',
@@ -338,9 +359,14 @@ function main() {
   console.log('\n🔍 AUDIT DES FICHIERS I18N\n')
   console.log('═'.repeat(60))
   
-  // Trouve tous les fichiers JSON dans locales/
+  // Trouve tous les fichiers JSON dans locales/i18n/
   const localeFiles = ['fr.json', 'en.json']
   const results = []
+  
+  // Collecte tous les chemins de fichiers pour validation croisée
+  const allLocaleFilePaths = localeFiles
+    .map(fileName => join(LOCALES_DIR, fileName))
+    .filter(filePath => existsSync(filePath))
   
   localeFiles.forEach(fileName => {
     const filePath = join(LOCALES_DIR, fileName)
@@ -352,7 +378,7 @@ function main() {
     
     console.log(`\n📄 Analyse de ${fileName}...`)
     
-    const analysis = analyzeLocaleFile(filePath)
+    const analysis = analyzeLocaleFile(filePath, allLocaleFilePaths)
     const validation = validateWithVueI18n(filePath, fileName.replace('.json', ''))
     
     let fixedJson = analysis.json
