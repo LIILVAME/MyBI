@@ -4,7 +4,7 @@
     <p class="text-gray-600">{{ $t('dashboard.subtitle') }}</p>
     
     <!-- Statistiques globales -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+    <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-6">
       <StatCard
         :value="stats.totalProperties.toString()"
         :label="$t('dashboard.totalProperties')"

@@ -22,7 +22,7 @@
         />
 
         <!-- État de chargement avec skeletons -->
-        <div v-if="propertiesStore.loading && propertiesStore.properties.length === 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div v-if="propertiesStore.loading && propertiesStore.properties.length === 0" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
           <SkeletonCard v-for="n in 6" :key="n" />
         </div>
         

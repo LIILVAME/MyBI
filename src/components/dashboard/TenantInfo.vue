@@ -1,19 +1,19 @@
 <template>
   <div v-if="tenant" class="tenant-info">
-    <div class="flex items-start justify-between mb-3">
-      <div class="flex-1">
+    <div class="flex items-start justify-between mb-2 sm:mb-3">
+      <div class="flex-1 min-w-0 pr-2">
         <p class="text-xs text-gray-500 mb-1">{{ $t('payments.tenant') }}</p>
-        <p class="font-semibold text-gray-900">{{ tenant.name }}</p>
+        <p class="font-semibold text-gray-900 text-sm sm:text-base truncate">{{ tenant.name }}</p>
       </div>
       <span 
-        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+        class="inline-flex items-center px-1.5 sm:px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0"
         :class="statusClass"
       >
         {{ statusText }}
       </span>
     </div>
     
-    <div class="grid grid-cols-2 gap-3 text-sm">
+    <div class="grid grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
       <div>
         <p class="text-xs text-gray-500 mb-1">{{ $t('tenants.entryDate') }}</p>
         <p class="font-medium text-gray-900">{{ formatDate(tenant.entryDate, { shortMonth: true }) }}</p>
@@ -77,7 +77,7 @@ const statusText = computed(() => {
 
 <style scoped>
 .tenant-info {
-  @apply mt-4 pt-4 border-t border-gray-100;
+  @apply mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-gray-100;
 }
 </style>
 

@@ -11,7 +11,7 @@
 
         <!-- État de chargement initial avec skeletons -->
         <div v-if="(propertiesStore.loading || paymentsStore.loading) && propertiesStore.properties.length === 0" class="space-y-4 sm:space-y-6">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             <SkeletonCard v-for="n in 3" :key="n" />
           </div>
         </div>
