@@ -352,9 +352,18 @@ export const usePropertiesStore = defineStore('properties', () => {
         loading.value = false
         throw new Error(result.message)
       }
+
+      // Track property deleted event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PROPERTY_DELETED, {
+            property_id: id
+          })
+        }).catch(() => {})
+      }
       
       if (toastStore) {
-        toastStore.success('Modification appliquée')
+        toastStore.success('Bien supprimé avec succès')
       }
       
       loading.value = false

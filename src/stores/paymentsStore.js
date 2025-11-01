@@ -138,6 +138,16 @@ export const usePaymentsStore = defineStore('payments', () => {
 
       const data = result.data
 
+      // Track payment added event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PAYMENT_ADDED, {
+            amount: data.amount || 0,
+            status: data.status || 'pending'
+          })
+        }).catch(() => {})
+      }
+      
       // Transforme pour le format attendu
       // Note: La vue payments_view expose due_date, mais la table utilise 'date'
       const newPayment = {
@@ -237,6 +247,16 @@ export const usePaymentsStore = defineStore('payments', () => {
         status: data.status
       }
 
+      // Track payment updated event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PAYMENT_UPDATED, {
+            payment_id: id,
+            status: data.status || updates.status
+          })
+        }).catch(() => {})
+      }
+
       if (toastStore) {
         toastStore.success('Modification appliquée')
       }
@@ -281,9 +301,18 @@ export const usePaymentsStore = defineStore('payments', () => {
         loading.value = false
         throw new Error(result.message)
       }
+
+      // Track payment deleted event
+      if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+        import('@/utils/analytics').then(({ trackDoogooEvent, DoogooEvents }) => {
+          trackDoogooEvent(DoogooEvents.PAYMENT_DELETED, {
+            payment_id: id
+          })
+        }).catch(() => {})
+      }
       
       if (toastStore) {
-        toastStore.success('Modification appliquée')
+        toastStore.success('Paiement supprimé avec succès')
       }
       
       loading.value = false
