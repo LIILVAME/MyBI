@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 import tseslint from 'typescript-eslint'
+import globals from 'globals'
 
 export default [
   // Base configs
@@ -12,9 +13,28 @@ export default [
     ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.config.js', '*.config.ts']
   },
 
-  // JavaScript/TypeScript files
+  // Node.js scripts
   {
-    files: ['**/*.{js,mjs,cjs,ts}'],
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    },
+    rules: {
+      'no-console': 'off',
+      'no-process-env': 'off'
+    }
+  },
+
+  // JavaScript/TypeScript files (src/)
+  {
+    files: ['src/**/*.{js,mjs,cjs,ts}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser
+      }
+    },
     rules: {
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
@@ -36,6 +56,11 @@ export default [
   ...vue.configs['flat/essential'],
   {
     files: ['**/*.vue'],
+    languageOptions: {
+      globals: {
+        ...globals.browser
+      }
+    },
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/no-v-html': 'warn',
