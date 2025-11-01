@@ -16,6 +16,7 @@
     "audit:health": "node scripts/generate-health-report.js",
     "audit:all": "npm run audit:vercel && npm run audit:supabase && npm run audit:health",
     "lint:i18n": "node scripts/validate-i18n.js",
+    "test:i18n": "node scripts/test-i18n-ci.js",
     "pwa:icons": "node scripts/generate-pwa-icons.js",
     "pwa:validate": "./scripts/validate-pwa.sh",
     "email:audit": "node scripts/audit-email-templates.js"
