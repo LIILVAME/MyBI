@@ -441,6 +441,12 @@ export const useAuthStore = defineStore('auth', () => {
   const fetchProfile = async (force = false) => {
     // Évite les requêtes multiples si déjà en cours
     if (profileFetchInProgress && !force) {
+      // Attend que la requête en cours se termine (max 5 secondes)
+      let attempts = 0
+      while (profileFetchInProgress && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
       return profile.value
     }
 
