@@ -366,10 +366,12 @@ export const usePropertiesStore = defineStore('properties', () => {
   )
 
   /**
-   * Computed : Total des loyers mensuels
+   * Computed : Total des loyers mensuels (uniquement biens occupés)
    */
   const totalRent = computed(() => 
-    properties.value.reduce((sum, p) => sum + (p.rent || 0), 0)
+    properties.value
+      .filter(p => p.status === PROPERTY_STATUS.OCCUPIED)
+      .reduce((sum, p) => sum + (p.rent || 0), 0)
   )
 
   /**
