@@ -93,12 +93,13 @@
               :loading="analyticsStore.loading"
             >
               <BaseChart
+                :show-title="false"
                 type="bar"
                 :height="350"
-              :series="analyticsStore.revenueChartSeries"
-              :options="revenueChartOptionsWithColors"
-              :loading="analyticsStore.loading"
-            />
+                :series="analyticsStore.revenueChartSeries"
+                :options="revenueChartOptionsWithColors"
+                :loading="analyticsStore.loading"
+              />
             </ChartCard>
 
             <!-- Répartition des statuts de paiement -->
@@ -109,6 +110,7 @@
               :loading="analyticsStore.loading"
             >
               <BaseChart
+                :show-title="false"
                 type="donut"
                 :height="350"
                 :series="analyticsStore.paymentStatusChartSeries"
@@ -128,6 +130,7 @@
               :loading="analyticsStore.loading"
             >
               <BaseChart
+                :show-title="false"
                 type="bar"
                 :height="350"
                 :series="analyticsStore.revenueByPropertyChartSeries"
@@ -143,6 +146,7 @@
               :loading="analyticsStore.loading"
             >
               <BaseChart
+                :show-title="false"
                 type="radialBar"
                 :height="350"
                 :series="[{ name: 'Occupation', data: [analyticsStore.occupancyRate] }]"
