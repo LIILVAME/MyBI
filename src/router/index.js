@@ -24,14 +24,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => {
-      try {
-        return LoginPage
-      } catch (err) {
-        console.error('Erreur chargement LoginPage, fallback:', err)
-        return import('../pages/LoginPageFallback.vue')
-      }
-    },
+    component: LoginPage,
     meta: { requiresAuth: false }
   },
   {
